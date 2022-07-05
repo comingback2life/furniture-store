@@ -1,10 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
 const app = express();
 
-
-app.listen(8000,(req,res)=>{
-  console.log("Listening to port 8000");
-})
+app.listen(8000, (req, res) => {
+	console.log('Listening to port 8000');
+});
