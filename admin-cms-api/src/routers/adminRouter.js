@@ -26,6 +26,9 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 			  });
 	} catch (error) {
 		error.status = 500;
+		if (error.message.includes('E11000 duplicate key error')) {
+			(error.message = 'Email already exists'), (error.status = 400);
+		}
 		next(error);
 	}
 });
