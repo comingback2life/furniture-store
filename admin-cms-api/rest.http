@@ -14,7 +14,8 @@ Content-Type: application/json
   "dob":"11/02/2022",
   "email":"admin@admin.com",
   "userPassword":"apple123",
-  "address":"34 Batman Way"
+  "address":"34 Batman Way",
+  "phone":"0420420735"
 }
 
 ### PATCH Admin API 
