@@ -1,0 +1,10 @@
+########## Admin API #######
+
+### Get Admin API 
+GET http://localhost:8000/api/v1/admin
+
+### POST Admin API 
+POST http://localhost:8000/api/v1/admin
+
+### PATCH Admin API 
+PATCH http://localhost:8000/api/v1/admin
