@@ -1,10 +1,21 @@
 ########## Admin API #######
-
+### Root Domain
+GET http://localhost:8000
 ### Get Admin API 
 GET http://localhost:8000/api/v1/admin
 
 ### POST Admin API 
 POST http://localhost:8000/api/v1/admin
+Content-Type: application/json
+
+{
+  "fName":"admin",
+  "lName":"admin",
+  "dob":"11/02/2022",
+  "email":"admin@admin.com",
+  "userPassword":"apple123",
+  "address":"34 Batman Way"
+}
 
 ### PATCH Admin API 
 PATCH http://localhost:8000/api/v1/admin
