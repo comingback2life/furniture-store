@@ -18,15 +18,19 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		req.body.emailValidationCode = uuidv4();
 		//create unique email validation code for email validation
 		const result = await insertAdmin(req.body);
-		result?._id
-			? res.json({
-					status: 'success',
-					message: 'New admin has been created succesfully',
-			  })
-			: res.json({
-					status: 'success',
-					message: 'Unable to create admin',
-			  });
+		if (result?._id) {
+			//create unique url and send it to the user
+			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
+			res.json({
+				status: 'success',
+				message: 'New admin has been created succesfully',
+			});
+		} else {
+			res.json({
+				status: 'success',
+				message: 'Unable to create admin',
+			});
+		}
 	} catch (error) {
 		error.status = 500;
 		if (error.message.includes('E11000 duplicate key error')) {
