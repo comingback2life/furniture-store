@@ -1,6 +1,6 @@
-import AdminSchema from './Admin.schema';
+import AdminSchema from './Admin.schema.js';
 export const insertAdmin = (adminObj) => {
-	return AdminSchema(obj).save();
+	return AdminSchema(adminObj).save();
 };
 export const getAdminById = (_id) => {
 	return AdminSchema.findById(_id);

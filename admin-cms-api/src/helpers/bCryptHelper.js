@@ -1,6 +1,6 @@
-import bcyrpt from 'bcyrpt';
+import bcrypt from 'bcryptjs';
 const saltRounds = 10;
 
-const encyptPassword = (password) => {
-	return bcyrpt.hashSync(password, saltRounds);
+export const encryptPassword = (password) => {
+	return bcrypt.hashSync(password, saltRounds);
 };

@@ -16,6 +16,17 @@ mongoConnect();
 import adminRouter from './src/routers/adminRouter.js';
 
 app.use('/api/v1/admin', adminRouter);
-app.listen(8000, (req, res) => {
-	console.log('Listening to port 8000');
+
+//app error handling
+app.use((err, req, res, next) => {
+	console.log(err);
+	res.status(err.status || 400);
+	//log the error in file system of time series DB like cloudWatch
+	res.json({
+		status: 'error',
+		message: err.message,
+	});
+});
+app.listen(8000, (error) => {
+	error ? console.log(error) : console.log('Server is runnning on PORT 8000');
 });

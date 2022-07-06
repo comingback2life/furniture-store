@@ -37,6 +37,7 @@ const adminSchema = new mongoose.Schema(
 			minlength: [9, 'Phone number cannot be less than 9 characters'],
 		},
 		userPassword: {
+			type: String,
 			required: true,
 		},
 		address: {

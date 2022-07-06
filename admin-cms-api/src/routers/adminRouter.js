@@ -1,5 +1,7 @@
 import express from 'express';
-import { newAdminValidator } from '../middlewares/joi-validations/adminValidator';
+import { encryptPassword } from '../helpers/bCryptHelper.js';
+import { newAdminValidator } from '../middlewares/joi-validations/adminValidator.js';
+import { insertAdmin } from '../models/admin/Admin.models.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -8,12 +10,24 @@ router.get('/', (req, res) => {
 		message: 'Get Route for Admin got Hit',
 	});
 });
-router.post('/', newAdminValidator, (req, res) => {
-	console.log(req.body);
-	res.json({
-		status: 'success',
-		message: 'Post Route for Admin got Hit',
-	});
+router.post('/', newAdminValidator, async (req, res, next) => {
+	try {
+		const hashPassword = encryptPassword(req.body.userPassword);
+		req.body.userPassword = hashPassword;
+		const result = await insertAdmin(req.body);
+		result?._id
+			? res.json({
+					status: 'success',
+					message: 'New admin has been created succesfully',
+			  })
+			: res.json({
+					status: 'success',
+					message: 'Unable to create admin',
+			  });
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
 });
 router.patch('/', (req, res) => {
 	res.json({
