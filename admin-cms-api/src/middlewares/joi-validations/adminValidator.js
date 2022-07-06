@@ -8,7 +8,7 @@ export const newAdminValidator = (req, res, next) => {
 			minDomainSegments: 2,
 		}),
 		phone: Joi.string().min(9).max(15).required(),
-		address: Joi.string().required().allow(null),
+		address: Joi.string().required().allow(null).allow(''),
 		userPassword: Joi.string().required(),
 	});
 

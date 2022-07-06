@@ -11,7 +11,7 @@ Content-Type: application/json
 {
   "fName":"admin",
   "lName":"admin",
-  "dob":"11/02/2022",
+    "dob":"11/02/2022",
   "email":"admin@admin.com",
   "userPassword":"apple123",
   "address":"34 Batman Way",
