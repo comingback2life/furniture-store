@@ -1,70 +1,142 @@
 import React from 'react';
+import { useState } from 'react';
+import { Form } from 'react-bootstrap';
 import './RegisterForm.styles.css';
 export const RegisterForm = () => {
+	const [form, setForm] = useState({});
+	const handleOnChange = (e) => {
+		const { name, value } = e.target;
+		setForm({
+			...form,
+			[name]: value,
+		});
+	};
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		console.log(form);
+	};
 	return (
 		<div className="login-container">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-10 col-xl-9 mx-auto">
-						<div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
-							<div class="card-img-left d-none d-md-flex"></div>
-							<div class="card-body p-4 p-sm-5">
-								<h4 class="card-title text-center mb-5 fw-light">Register</h4>
-								<form>
-									<div class="form-floating mb-3">
+			<div className="container">
+				<div className="row">
+					<div className="col-lg-10 col-xl-9 mx-auto">
+						<div className="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+							<div className="card-img-left d-none d-md-flex"></div>
+							<div className="card-body p-4 p-sm-5">
+								<h4 className="card-title text-center mb-5 fw-light">
+									Register
+								</h4>
+								<form onSubmit={handleOnSubmit}>
+									<div className="form-floating mb-3">
 										<input
+											onChange={handleOnChange}
 											type="text"
-											class="form-control"
-											id="floatingInputUsername"
-											placeholder="myusername"
+											className="form-control"
+											id="firstName"
+											placeholder="First Name"
+											name="fName"
 											required
-											autofocus
+											autoFocus
 										/>
-										<label for="floatingInputUsername">Username</label>
+										<Form.Label>First Name</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="text"
+											className="form-control"
+											id="lastName"
+											placeholder="Last Name"
+											name="lName"
+											required
+										/>
+										<Form.Label>Last Name</Form.Label>
 									</div>
 
-									<div class="form-floating mb-3">
+									<div className="form-floating mb-3">
 										<input
+											onChange={handleOnChange}
 											type="email"
-											class="form-control"
+											className="form-control"
 											id="floatingInputEmail"
+											name="email"
 											placeholder="name@example.com"
+											required
 										/>
-										<label for="floatingInputEmail">Email address</label>
+										<Form.Label>Email Address</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="date"
+											className="form-control"
+											id="dateOfBirth"
+											name="dob"
+											required
+										/>
+										<Form.Label>DOB</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="text"
+											className="form-control"
+											id="floatingAddress"
+											placeholder="Address"
+											name="address"
+											required
+										/>
+										<Form.Label>Address</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="text"
+											className="form-control"
+											id="floatingPhone"
+											placeholder="1111"
+											name="phone"
+											required
+										/>
+										<Form.Label>Phone</Form.Label>
 									</div>
 
-									<div class="form-floating mb-3">
+									<div className="form-floating mb-3">
 										<input
+											onChange={handleOnChange}
 											type="password"
-											class="form-control"
+											className="form-control"
 											id="floatingPassword"
 											placeholder="Password"
+											name="userPassword"
+											required
 										/>
-										<label for="floatingPassword">Password</label>
+										<Form.Label>Password</Form.Label>
 									</div>
 
-									<div class="form-floating mb-3">
+									<div className="form-floating mb-3">
 										<input
+											onChange={handleOnChange}
 											type="password"
-											class="form-control"
+											className="form-control"
 											id="floatingPasswordConfirm"
 											placeholder="Confirm Password"
+											name="confirmPassword"
+											required
 										/>
-										<label for="floatingPasswordConfirm">
-											Confirm Password
-										</label>
+										<Form.Label>confirm Password</Form.Label>
 									</div>
 
-									<div class="d-grid mb-2">
+									<div className="d-grid mb-2">
 										<button
-											class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
+											className="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
 											type="submit"
 										>
 											Register
 										</button>
 									</div>
 
-									<a class="d-block text-center mt-2 small" href="#">
+									<a className="d-block text-center mt-2 small" href="#">
 										Have an account? Sign In
 									</a>
 								</form>

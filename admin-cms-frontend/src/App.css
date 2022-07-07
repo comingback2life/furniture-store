@@ -1,4 +1,4 @@
 /**Layout CSS **/
 .main {
-	min-height: 89vh;
+	min-height: fit-content;
 }
