@@ -4,7 +4,11 @@ import {
 	newAdminValidator,
 	loginValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
-import { insertAdmin, updateAdmin } from '../models/admin/Admin.models.js';
+import {
+	insertAdmin,
+	updateAdmin,
+	getAdmin,
+} from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
 import { sendActivationEmail } from '../helpers/emailHelper.js';
 import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
@@ -48,33 +52,27 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 	}
 });
 
-router.post(
-	'/email-verification',
-	emailVerificationValidation,
-	async (req, res) => {
-		//URL endpoint for email verification
-		const filter = req.body;
-		const update = {
-			status: 'active',
-			emailValidationCode: '',
-		};
-		const result = await updateAdmin(filter, update);
-		console.log(result);
-
-		result?._id
-			? res.json({
-					status: 'success',
-					message: 'Email verified successfully, You may login now!',
-			  })
-			: res.json({
-					status: 'error',
-					message: 'Invalid or Expired Verification Link',
-			  });
-	}
-);
+router.post('/verify-email', emailVerificationValidation, async (req, res) => {
+	//URL endpoint for email verification
+	const filter = req.body;
+	const update = {
+		status: 'active',
+		emailValidationCode: '',
+	};
+	const result = await updateAdmin(filter, update);
+	result?._id
+		? res.json({
+				status: 'success',
+				message: 'Email verified successfully, You may login now!',
+		  })
+		: res.json({
+				status: 'error',
+				message: 'Invalid or Expired Verification Link',
+		  });
+});
 router.post('/login', loginValidation, async (req, res, next) => {
 	try {
-		const { email, password } = req.body;
+		const { email, userPassword } = req.body;
 
 		// query get user by email
 		const user = await getAdmin({ email });
@@ -88,9 +86,9 @@ router.post('/login', loginValidation, async (req, res, next) => {
 				});
 
 			//if user exist compare password,
-			const isMatched = verifyPassword(password, user.password);
+			const isMatched = verifyPassword(userPassword, user.userPassword);
 			if (isMatched) {
-				user.password = undefined;
+				user.userPassword = undefined;
 				//for now
 				res.json({
 					status: 'success',

@@ -20,12 +20,21 @@ Content-Type: application/json
 
 ### POST admin verification API 
 
-POST http://localhost:8000/api/v1/admin/email-verification
+POST http://localhost:8000/api/v1/admin/verify-email
 Content-Type: application/json
 
 {
- "emailValidationCode":"4b47dd3c-08d4-46a9-998b-9378bd790704",
- "email":"admin@admin.com"
+ "emailValidationCode":"96584feb-5266-43ab-bee2-208d2e9e0240",
+ "email":"callmesamip@gmail.com"
+}
+
+### Login Admin verification API 
+POST http://localhost:8000/api/v1/admin/login
+Content-Type: application/json
+
+{
+  "email":"callmesamip@gmail.com",
+  "userPassword":"123Samip"
 }
 
 

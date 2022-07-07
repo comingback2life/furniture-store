@@ -26,7 +26,7 @@ export const loginUser = async (userObj) => {
 
 export const postEmailVerification = async (userObj) => {
 	try {
-		const { data } = await axios.post(adminEP + '/email-verification', userObj);
+		const { data } = await axios.post(adminEP + '/verify-email', userObj);
 		return data;
 	} catch (error) {
 		return {

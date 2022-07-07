@@ -1,13 +1,15 @@
 import React from 'react';
 import { useRef } from 'react';
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './LoginForm.css';
-import { postUserAction } from '../../pages/register-login/signInUpAction';
+import { postLoginAction } from '../../pages/register-login/signInUpAction';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
 	const emailRef = useRef();
 	const passRef = useRef(); //
+	// const { isLoading } = useSelector((state) => state.signInUp);
+
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		const email = emailRef.current.value;
