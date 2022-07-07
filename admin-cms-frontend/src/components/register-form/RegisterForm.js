@@ -15,11 +15,8 @@ export const RegisterForm = () => {
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		const { userPassword, confirmPassword } = form;
-		if (userPassword === confirmPassword) {
-			setError(false);
-		} else {
-			setError(true);
-		}
+		userPassword === confirmPassword ? setError(false) : setError(true);
+		//Call the API
 	};
 	return (
 		<div className="login-container">
