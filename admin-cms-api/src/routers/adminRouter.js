@@ -3,6 +3,7 @@ import { encryptPassword } from '../helpers/bCryptHelper.js';
 import { newAdminValidator } from '../middlewares/joi-validations/adminValidator.js';
 import { insertAdmin } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
+import { sendActivationEmail } from '../helpers/emailHelper.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -11,6 +12,7 @@ router.get('/', (req, res) => {
 		message: 'Get Route for Admin got Hit',
 	});
 });
+
 router.post('/', newAdminValidator, async (req, res, next) => {
 	try {
 		const hashPassword = encryptPassword(req.body.userPassword);
@@ -21,6 +23,7 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		if (result?._id) {
 			//create unique url and send it to the user
 			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
+			sendActivationEmail({ fName: result.fName, activationLink });
 			res.json({
 				status: 'success',
 				message: 'New admin has been created succesfully',
@@ -38,6 +41,14 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		}
 		next(error);
 	}
+});
+
+router.post('/email-verification', (req, res) => {
+	//URL endpoint for email verification
+	res.json({
+		status: 'success',
+		message: 'Email verified successfully, You may login now!',
+	});
 });
 router.patch('/', (req, res) => {
 	res.json({

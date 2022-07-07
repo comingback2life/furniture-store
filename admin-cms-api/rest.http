@@ -18,5 +18,16 @@ Content-Type: application/json
   "phone":"0420420735"
 }
 
+### POST admin verification API 
+
+POST http://localhost:8000/api/v1/admin/email-verification
+Content-Type: application/json
+
+{
+ "emailValidationCode":"4b47dd3c-08d4-46a9-998b-9378bd790704",
+ "email":"admin@admin.com"
+}
+
+
 ### PATCH Admin API 
 PATCH http://localhost:8000/api/v1/admin
