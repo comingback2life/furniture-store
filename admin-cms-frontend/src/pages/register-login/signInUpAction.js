@@ -1,4 +1,4 @@
-import { postUser } from '../../helpers/axiosHelpers';
+import { loginUser, postUser } from '../../helpers/axiosHelpers';
 import { isPending, responseResolved } from './signInUpSlice';
 import { toast } from 'react-toastify';
 export const postUserAction = (user) => async (dispatch) => {
@@ -17,7 +17,7 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	dispatch(isPending());
 	//Axios Call
 
-	const promiseData = postUser(user);
+	const promiseData = loginUser(user);
 	toast.promise(promiseData, {
 		pending: 'Please wait',
 	});

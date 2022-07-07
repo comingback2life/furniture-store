@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import './LoginForm.css';
-import { postLoginAction } from '../../pages/register-login/signInUpAction';
+import { postLoginUserAction } from '../../pages/register-login/signInUpAction';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
 	const emailRef = useRef();
@@ -17,6 +17,7 @@ export const LoginForm = () => {
 		if (!email || !userPassword) {
 			return alert('Both fields must be filled');
 		}
+		dispatch(postLoginUserAction({ email, userPassword }));
 		//Call the API through action file
 	};
 	return (
@@ -38,6 +39,7 @@ export const LoginForm = () => {
 											className="form-control"
 											id="floatingInputEmail"
 											name="email"
+											value="callmesamip@gmail.com"
 											placeholder="name@example.com"
 											required
 										/>
@@ -48,6 +50,7 @@ export const LoginForm = () => {
 										<input
 											ref={passRef}
 											type="password"
+											value="123Samip"
 											className="form-control"
 											id="floatingPassword"
 											placeholder="Password"
