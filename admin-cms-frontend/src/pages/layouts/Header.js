@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 export const Header = () => {
 	return (
 		<div>
-			<Navbar bg="light" expand="md">
+			<Navbar bg="none" expand="md" className="p-3">
 				<Container>
 					<LinkContainer to="/">
 						<Navbar.Brand>Furniture Store Admin</Navbar.Brand>
