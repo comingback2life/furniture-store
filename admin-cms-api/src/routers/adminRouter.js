@@ -1,12 +1,13 @@
 import express from 'express';
-import { encryptPassword } from '../helpers/bCryptHelper.js';
 import {
 	emailVerificationValidation,
 	newAdminValidator,
+	loginValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
 import { insertAdmin, updateAdmin } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
 import { sendActivationEmail } from '../helpers/emailHelper.js';
+import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -23,6 +24,7 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		req.body.emailValidationCode = uuidv4();
 		//create unique email validation code for email validation
 		const result = await insertAdmin(req.body);
+		console.log(result);
 		if (result?._id) {
 			//create unique url and send it to the user
 			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
@@ -70,6 +72,49 @@ router.post(
 			  });
 	}
 );
+router.post('/login', loginValidation, async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+
+		// query get user by email
+		const user = await getAdmin({ email });
+
+		if (user?._id) {
+			if (user.status === 'inactive')
+				return res.json({
+					status: 'error',
+					message:
+						'Your account is not active yet, Please check your email and follow the instruction to activate your account.',
+				});
+
+			//if user exist compare password,
+			const isMatched = verifyPassword(password, user.password);
+			if (isMatched) {
+				user.password = undefined;
+				//for now
+				res.json({
+					status: 'success',
+					message: 'User logged in successfully',
+					user,
+				});
+
+				return;
+			}
+
+			// if match, process for crateing JWT and etc.... for future
+			// for now, send login sccess message with user
+		}
+
+		res.status(401).json({
+			status: 'error',
+			message: 'Invalid login credentials',
+		});
+		//check for the authentication.
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
+});
 router.patch('/', (req, res) => {
 	res.json({
 		status: 'success',

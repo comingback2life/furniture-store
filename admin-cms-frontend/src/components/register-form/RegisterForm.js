@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './RegisterForm.styles.css';
 import { postUserAction } from '../../pages/register-login/signInUpAction';
 export const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({});
 	const [error, setError] = useState(false);
+	const { isLoading, response } = useSelector((state) => state.signInUp);
 	const handleOnChange = (e) => {
 		const { name, value } = e.target;
 		setForm({
@@ -17,12 +18,12 @@ export const RegisterForm = () => {
 	};
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		const { userPassword, confirmPassword } = form;
-		if (userPassword !== confirmPassword) {
+		if (form.userPassword !== form.confirmPassword) {
 			return setError(true);
 		}
 		setError(false);
-		dispatch(postUserAction());
+		const { confirmPassword, ...rest } = form;
+		dispatch(postUserAction(rest));
 		//Call the API
 	};
 	return (
@@ -148,7 +149,10 @@ export const RegisterForm = () => {
 										</button>
 									</div>
 
-									<a className="d-block text-center mt-2 small" href="#">
+									<a
+										className="d-block text-center mt-2 small"
+										href="/admin/login"
+									>
 										Have an account? Sign In
 									</a>
 								</Form>

@@ -1,12 +1,11 @@
 import React from 'react';
-import { useState, useRef } from 'react';
-import { Alert, Form } from 'react-bootstrap';
+import { useRef } from 'react';
+import { Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import './LoginForm.css';
 import { postUserAction } from '../../pages/register-login/signInUpAction';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
-	const [form, setForm] = useState({});
 	const emailRef = useRef();
 	const passRef = useRef(); //
 	const handleOnSubmit = (e) => {
@@ -16,7 +15,7 @@ export const LoginForm = () => {
 		if (!email || !userPassword) {
 			return alert('Both fields must be filled');
 		}
-		//Call the API
+		//Call the API through action file
 	};
 	return (
 		<div className="login-container">
