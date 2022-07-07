@@ -1,7 +1,10 @@
 import express from 'express';
 import { encryptPassword } from '../helpers/bCryptHelper.js';
-import { newAdminValidator } from '../middlewares/joi-validations/adminValidator.js';
-import { insertAdmin } from '../models/admin/Admin.models.js';
+import {
+	emailVerificationValidation,
+	newAdminValidator,
+} from '../middlewares/joi-validations/adminValidator.js';
+import { insertAdmin, updateAdmin } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
 import { sendActivationEmail } from '../helpers/emailHelper.js';
 const router = express.Router();
@@ -43,13 +46,30 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 	}
 });
 
-router.post('/email-verification', (req, res) => {
-	//URL endpoint for email verification
-	res.json({
-		status: 'success',
-		message: 'Email verified successfully, You may login now!',
-	});
-});
+router.post(
+	'/email-verification',
+	emailVerificationValidation,
+	async (req, res) => {
+		//URL endpoint for email verification
+		const filter = req.body;
+		const update = {
+			status: 'active',
+			emailValidationCode: '',
+		};
+		const result = await updateAdmin(filter, update);
+		console.log(result);
+
+		result?._id
+			? res.json({
+					status: 'success',
+					message: 'Email verified successfully, You may login now!',
+			  })
+			: res.json({
+					status: 'error',
+					message: 'Invalid or Expired Verification Link',
+			  });
+	}
+);
 router.patch('/', (req, res) => {
 	res.json({
 		status: 'success',
