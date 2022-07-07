@@ -4,7 +4,7 @@ const initialState = {
 	response: { status: '', message: '' },
 };
 
-const signInUpSlice = createReducer({
+const signInUpSlice = createSlice({
 	name: 'signInUp',
 	initialState,
 	reducers: {
