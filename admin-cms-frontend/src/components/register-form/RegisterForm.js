@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import './RegisterForm.styles.css';
 export const RegisterForm = () => {
 	const [form, setForm] = useState({});
+	const [error, setError] = useState(false);
 	const handleOnChange = (e) => {
 		const { name, value } = e.target;
 		setForm({
@@ -13,7 +14,12 @@ export const RegisterForm = () => {
 	};
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		console.log(form);
+		const { userPassword, confirmPassword } = form;
+		if (userPassword === confirmPassword) {
+			setError(false);
+		} else {
+			setError(true);
+		}
 	};
 	return (
 		<div className="login-container">
@@ -26,7 +32,7 @@ export const RegisterForm = () => {
 								<h4 className="card-title text-center mb-5 fw-light">
 									Register
 								</h4>
-								<form onSubmit={handleOnSubmit}>
+								<Form onSubmit={handleOnSubmit}>
 									<div className="form-floating mb-3">
 										<input
 											onChange={handleOnChange}
@@ -126,7 +132,9 @@ export const RegisterForm = () => {
 										/>
 										<Form.Label>confirm Password</Form.Label>
 									</div>
-
+									<Alert variant="danger" show={error}>
+										Passwords do not match
+									</Alert>
 									<div className="d-grid mb-2">
 										<button
 											className="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
@@ -139,7 +147,7 @@ export const RegisterForm = () => {
 									<a className="d-block text-center mt-2 small" href="#">
 										Have an account? Sign In
 									</a>
-								</form>
+								</Form>
 							</div>
 						</div>
 					</div>
