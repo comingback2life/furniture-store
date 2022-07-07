@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import './LoginForm.css';
@@ -7,22 +7,15 @@ import { postUserAction } from '../../pages/register-login/signInUpAction';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({});
-	const [error, setError] = useState(false);
-	const handleOnChange = (e) => {
-		const { name, value } = e.target;
-		setForm({
-			...form,
-			[name]: value,
-		});
-	};
+	const emailRef = useRef();
+	const passRef = useRef(); //
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		const { userPassword, confirmPassword } = form;
-		if (userPassword !== confirmPassword) {
-			return setError(true);
+		const email = emailRef.current.value;
+		const userPassword = passRef.current.value; //if we want values without the component being re-rendered, useRef is a good idea.
+		if (!email || !userPassword) {
+			return alert('Both fields must be filled');
 		}
-		setError(false);
-		dispatch(postUserAction());
 		//Call the API
 	};
 	return (
@@ -33,11 +26,13 @@ export const LoginForm = () => {
 						<div className="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
 							<div className="card-img-left d-none d-md-flex"></div>
 							<div className="card-body p-4 p-sm-5">
-								<h4 className="card-title text-center mb-5 fw-light">Login</h4>
+								<h4 className="card-title text-center mb-5 fw-light">
+									Welcome Back !
+								</h4>
 								<Form onSubmit={handleOnSubmit}>
 									<div className="form-floating mb-3">
 										<input
-											onChange={handleOnChange}
+											ref={emailRef}
 											type="email"
 											className="form-control"
 											id="floatingInputEmail"
@@ -50,7 +45,7 @@ export const LoginForm = () => {
 
 									<div className="form-floating mb-3">
 										<input
-											onChange={handleOnChange}
+											ref={passRef}
 											type="password"
 											className="form-control"
 											id="floatingPassword"
@@ -60,9 +55,6 @@ export const LoginForm = () => {
 										/>
 										<Form.Label>Password</Form.Label>
 									</div>
-									<Alert variant="danger" show={error}>
-										Passwords do not match
-									</Alert>
 									<div className="d-grid mb-2">
 										<button
 											className="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
@@ -71,10 +63,6 @@ export const LoginForm = () => {
 											Login
 										</button>
 									</div>
-
-									<a className="d-block text-center mt-2 small" href="#">
-										Have an account? Sign In
-									</a>
 								</Form>
 							</div>
 						</div>
