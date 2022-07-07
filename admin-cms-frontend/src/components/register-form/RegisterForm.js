@@ -1,8 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import './RegisterForm.styles.css';
+import { postUserAction } from '../../pages/register-login/signInUpAction';
 export const RegisterForm = () => {
+	const dispatch = useDispatch();
 	const [form, setForm] = useState({});
 	const [error, setError] = useState(false);
 	const handleOnChange = (e) => {
@@ -15,7 +18,11 @@ export const RegisterForm = () => {
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		const { userPassword, confirmPassword } = form;
-		userPassword === confirmPassword ? setError(false) : setError(true);
+		if (userPassword !== confirmPassword) {
+			return setError(true);
+		}
+		setError(false);
+		dispatch(postUserAction());
 		//Call the API
 	};
 	return (

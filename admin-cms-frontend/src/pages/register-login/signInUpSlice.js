@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 	isLoading: false,
 	response: { status: '', message: '' },
