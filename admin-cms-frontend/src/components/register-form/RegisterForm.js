@@ -4,7 +4,9 @@ import { Alert, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import './RegisterForm.styles.css';
 import { postUserAction } from '../../pages/register-login/signInUpAction';
+import { useNavigate } from 'react-router-dom';
 export const RegisterForm = () => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({});
 	const [error, setError] = useState(false);
@@ -26,6 +28,7 @@ export const RegisterForm = () => {
 		dispatch(postUserAction(rest));
 		//Call the API
 	};
+
 	return (
 		<div className="login-container">
 			<div className="container">

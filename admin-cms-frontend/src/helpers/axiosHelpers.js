@@ -29,9 +29,13 @@ export const postEmailVerification = async (userObj) => {
 		const { data } = await axios.post(adminEP + '/verify-email', userObj);
 		return data;
 	} catch (error) {
+		let message = error.message;
+		if (error.response && error.response.data) {
+			message = error.response.data.message;
+		}
 		return {
 			status: 'error',
-			message: error.message,
+			message,
 		};
 	}
 };

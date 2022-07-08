@@ -8,6 +8,7 @@ import {
 	insertAdmin,
 	updateAdmin,
 	getAdmin,
+	getAdminFiltered,
 } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
 import { sendActivationEmail } from '../helpers/emailHelper.js';
@@ -28,7 +29,6 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		req.body.emailValidationCode = uuidv4();
 		//create unique email validation code for email validation
 		const result = await insertAdmin(req.body);
-		console.log(result);
 		if (result?._id) {
 			//create unique url and send it to the user
 			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
@@ -53,22 +53,22 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 });
 
 router.post('/verify-email', emailVerificationValidation, async (req, res) => {
-	//URL endpoint for email verification
 	const filter = req.body;
-	const update = {
-		status: 'active',
-		emailValidationCode: '',
-	};
-	const result = await updateAdmin(filter, update);
-	result?._id
-		? res.json({
-				status: 'success',
-				message: 'Email verified successfully, You may login now!',
-		  })
-		: res.json({
-				status: 'error',
-				message: 'Invalid or Expired Verification Link',
-		  });
+	const update = { status: 'active' };
+	const result = await getAdminFiltered(filter, update);
+
+	if (result?._id) {
+		res.json({
+			status: 'success',
+			message: 'Email Succesfully Verified',
+		});
+		await getAdminFiltered(filter, { emailValidationCode: null });
+		return;
+	}
+	res.json({
+		status: 'Invalid',
+		message: 'Expired verification link',
+	});
 });
 router.post('/login', loginValidation, async (req, res, next) => {
 	try {
@@ -76,11 +76,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 
 		// query get user by email
 		const user = await getAdmin({ email });
-		user.status === 'inactive' &&
-			res.json({
-				status: 'error',
-				message: 'Your account is not active yet, please check your email !',
-			});
+
 		if (user?._id) {
 			if (user.status === 'inactive')
 				return res.json({

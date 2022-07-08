@@ -12,3 +12,6 @@ export const getAdmin = (filter) => {
 export const updateAdmin = (filter, updatedObj) => {
 	return AdminSchema.findOneAndUpdate(filter, updatedObj, { new: true });
 };
+export const getAdminFiltered = (filter, objFilter) => {
+	return AdminSchema.findOneAndUpdate(filter, objFilter, { new: true });
+};
