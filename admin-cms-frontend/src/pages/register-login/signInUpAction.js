@@ -21,6 +21,9 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 		toastID: 'Login Toast',
 	});
 	const data = await promiseData;
+	if (data.status === 'success') {
+		//create user state and store it
+	}
 	toast[data.status](data.message);
 	dispatch(responseResolved(data));
 };
