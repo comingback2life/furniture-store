@@ -3,7 +3,7 @@ const initialState = {
 	showAdminSideBar: false,
 };
 const systemSlice = createSlice({
-	name: 'System Slice',
+	name: 'systemSlice',
 	initialState,
 	reducers: {
 		toggleSideBar: (state) => {

@@ -4,11 +4,19 @@ import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import './LoginForm.css';
 import { postLoginUserAction } from '../../pages/register-login/signInUpAction';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	// const { isLoading } = useSelector((state) => state.signInUp);
+	const { user } = useSelector((state) => state.admin);
 	const emailRef = useRef();
 	const passRef = useRef(); //
-	// const { isLoading } = useSelector((state) => state.signInUp);
+
+	useEffect(() => {
+		user._id && navigate('/admin/dashboard');
+	}, [user]);
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
