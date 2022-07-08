@@ -76,7 +76,11 @@ router.post('/login', loginValidation, async (req, res, next) => {
 
 		// query get user by email
 		const user = await getAdmin({ email });
-
+		user.status === 'inactive' &&
+			res.json({
+				status: 'error',
+				message: 'Your account is not active yet, please check your email !',
+			});
 		if (user?._id) {
 			if (user.status === 'inactive')
 				return res.json({

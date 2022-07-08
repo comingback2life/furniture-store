@@ -8,7 +8,7 @@ export const postUser = async (userObj) => {
 	} catch (error) {
 		return {
 			status: 'error',
-			message: error.response.data.message,
+			message: error?.response?.data?.message || error.message,
 		};
 	}
 };
@@ -19,7 +19,7 @@ export const loginUser = async (userObj) => {
 	} catch (error) {
 		return {
 			status: 'error',
-			message: error.message,
+			message: error?.response?.data?.message || error.message,
 		};
 	}
 };
