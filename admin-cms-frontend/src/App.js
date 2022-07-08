@@ -5,11 +5,16 @@ import { LoginPage } from './pages/register-login/LoginPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EmailVerification } from './pages/register-login/EmailVerification';
+import { AdminProfile } from './pages/admin-profile/AdminProfile';
+import { Dashboard } from './pages/dashboard-page/Dashboard';
 function App() {
 	return (
 		<div>
 			<BrowserRouter>
 				<Routes>
+					{/* private route */}
+					<Route path="/admin/dashboard" element={<Dashboard />}></Route>
+					<Route path="/admin/profile" element={<AdminProfile />}></Route>
 					<Route path="/admin/register" element={<RegisterPage />}></Route>
 					<Route path="/admin/login" element={<LoginPage />}></Route>
 					<Route

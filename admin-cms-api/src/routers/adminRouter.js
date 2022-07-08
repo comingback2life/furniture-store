@@ -54,16 +54,15 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 
 router.post('/verify-email', emailVerificationValidation, async (req, res) => {
 	const filter = req.body;
-	const update = { status: 'active' };
+	const update = { $set: { status: 'active', emailValidationCode: '' } };
 	const result = await getAdminFiltered(filter, update);
-
+	console.log(result);
 	if (result?._id) {
-		res.json({
+		return res.json({
 			status: 'success',
 			message: 'Email Succesfully Verified',
 		});
-		await getAdminFiltered(filter, { emailValidationCode: null });
-		return;
+		// await getAdminFiltered(filter, { emailValidationCode: null });
 	}
 	res.json({
 		status: 'Invalid',

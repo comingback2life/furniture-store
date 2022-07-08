@@ -43,7 +43,7 @@ export const EmailVerification = () => {
 				)}
 				{response.status === 'success' && (
 					<Button variant="btn btn-outline-danger">
-						<Link to="/login" className=" text-dark text-decoration-none">
+						<Link to="/admin/login" className=" text-dark text-decoration-none">
 							Login Now
 						</Link>
 					</Button>
