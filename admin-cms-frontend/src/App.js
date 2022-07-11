@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { EmailVerification } from './pages/register-login/EmailVerification';
 import { AdminProfile } from './pages/admin-profile/AdminProfile';
 import { Dashboard } from './pages/dashboard-page/Dashboard';
+import CategoriesPage from './pages/categories/CategoriesPage';
 function App() {
 	return (
 		<div>
@@ -21,6 +22,9 @@ function App() {
 						path="/admin/verify-email"
 						element={<EmailVerification />}
 					></Route>
+					<Route path="/categories" element={<CategoriesPage />}>
+						{' '}
+					</Route>
 					<Route path="*" element={<h2>404, Page Not Found</h2>}></Route>
 				</Routes>
 			</BrowserRouter>
