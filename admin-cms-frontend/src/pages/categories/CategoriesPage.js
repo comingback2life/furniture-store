@@ -6,6 +6,7 @@ const CategoriesPage = () => {
 	return (
 		<AdminLayout>
 			{/* form */}
+			<h3 className="mt-2 mb-4 text-center">Categories</h3>
 			<CategoryForm />
 
 			<hr />

@@ -14,8 +14,10 @@ import { mongoConnect } from './src/config/dbConfig.js';
 mongoConnect();
 
 import adminRouter from './src/routers/adminRouter.js';
+import categoryRouter from './src/routers/categoryRouter.js';
 
 app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/categories', categoryRouter);
 
 //app error handling
 app.use((err, req, res, next) => {
