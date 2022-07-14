@@ -11,7 +11,6 @@ router.post('/', newCategoryValidation, async (req, res, next) => {
 			lower: true,
 			trim: true,
 		});
-		req.body.catName = slug;
 		const result = await insertCategory(req.body);
 		console.log(result);
 		result?._id
