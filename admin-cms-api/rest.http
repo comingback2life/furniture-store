@@ -51,6 +51,17 @@ POST  http://localhost:8000/api/v1/categories
 Content-Type: application/json
 
 {
-  "parentCatId":"",
-  "catName":" Home Ware "
+  "parentCatId":"62cf84451619dc2c13b2505c",
+  "catName":" Water Filter "
+}
+###GET CATEGORY 
+GET http://localhost:8000/api/v1/categories
+
+###UPDATE  CATEGORY 
+PATCH http://localhost:8000/api/v1/categories
+Content-Type: application/json
+
+{
+  "_id":"62cf84a43463ad9844ed93c3",
+  "status":"inactive"
 }
