@@ -3,6 +3,7 @@ import { newCategoryValidation } from '../middlewares/joi-validations/categoryVa
 const router = express.Router();
 
 router.post('/', newCategoryValidation, (req, res, next) => {
+	//newCategoryvalidation is validating if there are two properties that remain
 	try {
 		console.log(req.body);
 		res.json({
