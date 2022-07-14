@@ -1,7 +1,8 @@
 import express from 'express';
+import { newCategoryValidation } from '../middlewares/joi-validations/categoryValidation.js';
 const router = express.Router();
 
-router.post('/', (req, res, next) => {
+router.post('/', newCategoryValidation, (req, res, next) => {
 	try {
 		console.log(req.body);
 		res.json({

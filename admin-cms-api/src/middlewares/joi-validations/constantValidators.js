@@ -7,3 +7,14 @@ export const DOB = Joi.date().allow(null);
 export const ADDRESS = Joi.string().allow(null).allow('');
 export const PASSWORD = Joi.string().required();
 export const REQUIREDSTR = Joi.string().required();
+export const SHORTSTR = Joi.string().max(100);
+export const LONGSTR = Joi.string().max(5000);
+
+export const validator = (schema, req, res, next) => {
+	const { value, error } = schema.validate(req.body);
+	if (error) {
+		error.status = 200;
+		return next(error);
+	}
+	next();
+};
