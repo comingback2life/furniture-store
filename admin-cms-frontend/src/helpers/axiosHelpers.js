@@ -42,3 +42,12 @@ export const getCategories = () => {
 	const url = catEP;
 	return apiProcessor({ method: 'GET', url });
 };
+export const postCategories = (dataObj) => {
+	const url = catEP;
+	return apiProcessor({ method: 'POST', url, dataObj });
+};
+
+export const deleteCategories = (_id) => {
+	const url = catEP;
+	return apiProcessor({ method: 'DELETE', url, dataObj: _id });
+};
