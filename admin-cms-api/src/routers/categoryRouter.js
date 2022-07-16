@@ -70,6 +70,10 @@ router.patch('/', async (req, res, next) => {
 					result,
 			  });
 	} catch (error) {
+		error.status = 500;
+		if (error.message.includes('Cast to ObjectId failed')) {
+			(error.status = 200), (error.message = 'Invalid ID supplied');
+		}
 		next(error);
 	}
 });

@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 const CategoryTable = () => {
+	useEffect(
+		{
+			//api call to fetch all the categories and set in the store.
+		},
+		[]
+	);
 	return (
 		<Table striped bordered hover>
 			<thead>

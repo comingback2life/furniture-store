@@ -22,9 +22,7 @@ function App() {
 						path="/admin/verify-email"
 						element={<EmailVerification />}
 					></Route>
-					<Route path="/categories" element={<CategoriesPage />}>
-						{' '}
-					</Route>
+					<Route path="/categories" element={<CategoriesPage />}></Route>
 					<Route path="*" element={<h2>404, Page Not Found</h2>}></Route>
 				</Routes>
 			</BrowserRouter>
