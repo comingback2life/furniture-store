@@ -1,32 +1,15 @@
 import axios from 'axios';
 const rootURL = 'http://localhost:8000/api/v1';
 const adminEP = rootURL + '/admin';
-export const postUser = async (userObj) => {
+const catEP = rootURL + '/categories';
+// Admin APIs
+const apiProcessor = async ({ method, url, dataObj }) => {
 	try {
-		const { data } = await axios.post(adminEP, userObj);
-		return data;
-	} catch (error) {
-		return {
-			status: 'error',
-			message: error?.response?.data?.message || error.message,
-		};
-	}
-};
-export const loginUser = async (userObj) => {
-	try {
-		const { data } = await axios.post(adminEP + '/login', userObj);
-		return data;
-	} catch (error) {
-		return {
-			status: 'error',
-			message: error?.response?.data?.message || error.message,
-		};
-	}
-};
-
-export const postEmailVerification = async (userObj) => {
-	try {
-		const { data } = await axios.post(adminEP + '/verify-email', userObj);
+		const { data } = await axios({
+			method,
+			url,
+			data: dataObj,
+		});
 		return data;
 	} catch (error) {
 		let message = error.message;
@@ -38,4 +21,24 @@ export const postEmailVerification = async (userObj) => {
 			message,
 		};
 	}
+};
+
+export const postUser = async (dataObj) => {
+	const url = adminEP;
+	return apiProcessor({ method: 'POST', url, dataObj });
+};
+
+export const loginUser = async (dataObj) => {
+	const url = adminEP + '/login';
+	return apiProcessor({ method: 'POST', url, dataObj });
+};
+export const postEmailVerification = async (dataObj) => {
+	const url = adminEP + '/verify-email';
+	return apiProcessor({ method: 'POST', url, dataObj });
+};
+
+//categories API
+export const getCategories = () => {
+	const url = catEP;
+	return apiProcessor({ method: 'GET', url });
 };
