@@ -52,6 +52,7 @@ const CategoryTable = () => {
 										Edit
 									</Button>
 									<Button
+										title="You can only delete if Child category does not exist"
 										onClick={() => handleOnDelete(item._id)}
 										variant="danger"
 										className="mx-1"
