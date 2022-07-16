@@ -1,7 +1,33 @@
 import { setCategories } from './CategoriesSlice';
-import { getCategories } from '../../helpers/axiosHelpers';
-
+import {
+	getCategories,
+	postCategories,
+	deleteCategories,
+} from '../../helpers/axiosHelpers';
+import { toast } from 'react-toastify';
 export const fetchCategoriesAction = () => async (dispatch) => {
 	const response = await getCategories();
 	response.status === 'success' && dispatch(setCategories(response.result));
+};
+
+export const postCategoriesAction = (dataObj) => async (dispatch) => {
+	const responsePromise = postCategories(dataObj);
+	toast.promise(responsePromise, {
+		pending: 'Please wait...',
+	});
+	const result = await responsePromise;
+	toast[result.status](result.message);
+
+	result.status === 'success' && dispatch(fetchCategoriesAction());
+};
+
+export const deleteCategoriesAction = (_id) => async (dispatch) => {
+	const responsePromise = deleteCategories(_id);
+	toast.promise(responsePromise, {
+		pending: 'Please wait...',
+	});
+	const result = await responsePromise;
+	toast[result.status](result.message);
+
+	result.status === 'success' && dispatch(fetchCategoriesAction());
 };
