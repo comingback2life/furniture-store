@@ -1,6 +1,7 @@
 import express from 'express';
 import { newCategoryValidation } from '../middlewares/joi-validations/categoryValidation.js';
 import {
+	getAllCategories,
 	getCategories,
 	insertCategory,
 	updateCategory,
@@ -40,7 +41,7 @@ router.get('/', async (req, res, next) => {
 		const filter = {
 			status: 'active',
 		};
-		const result = await getCategories(filter);
+		const result = await getAllCategories();
 		res.json({
 			status: 'success',
 			message: 'Categories Found',

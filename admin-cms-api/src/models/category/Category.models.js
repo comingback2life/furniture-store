@@ -6,6 +6,11 @@ export const insertCategory = (obj) => {
 export const getCategories = (filter) => {
 	return CategorySchema.find(filter);
 };
+
+export const getAllCategories = () => {
+	//for admin to provide unfiltered results.
+	return CategorySchema.find();
+};
 export const getOneCategory = (filter) => {
 	return CategorySchema.findOne(filter);
 };
