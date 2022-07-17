@@ -24,9 +24,9 @@ const CategoryForm = () => {
 		console.log(form);
 	};
 	const handleOnSubmit = (e) => {
+		e.preventDefault();
 		const parentCatId = form.parentCatId ? form.parentCatId : undefined;
 		dispatch(postCategoriesAction({ ...form, parentCatId }));
-		e.preventDefault();
 	};
 	return (
 		<Form onSubmit={handleOnSubmit}>
