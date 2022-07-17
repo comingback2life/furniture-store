@@ -6,6 +6,7 @@ import {
 	fetchCategoriesAction,
 	deleteCategoriesAction,
 } from '../../pages/categories/CategoriesAction';
+import { MyVerticallyCenteredModal } from '../modal/Modal';
 
 const CategoryTable = () => {
 	const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const CategoryTable = () => {
 	};
 	return (
 		<div>
+			<MyVerticallyCenteredModal show={false} />
 			<p className="text-lead"> {categories.length} Categories found !</p>
 
 			<Table striped bordered hover>
