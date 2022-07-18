@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postCategoriesAction } from '../../pages/categories/CategoriesAction';
+import {
+	postCategoriesAction,
+	updateCategoriesAction,
+} from '../../pages/categories/CategoriesAction';
 import { MyVerticallyCenteredModal } from '../modal/Modal';
+import { updateCategory } from '../../helpers/axiosHelpers';
 const initialState = {
 	status: 'inactive',
 	catName: '',
@@ -16,7 +20,7 @@ const EditCategory = ({ selectedCategory }) => {
 
 	useEffect(() => {
 		setForm(selectedCategory);
-	}, [form]);
+	}, [selectedCategory]);
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
@@ -30,33 +34,37 @@ const EditCategory = ({ selectedCategory }) => {
 		console.log(form);
 	};
 	const handleOnSubmit = (e) => {
-		const parentCatId = form.parentCatId ? form.parentCatId : undefined;
-		//dispatch(postCategoriesAction({ ...form, parentCatId }));
-		//dispatch action to update the category
 		e.preventDefault();
+		const { parentCatId, catName, status } = form;
+		dispatch(updateCategoriesAction({ parentCatId, catName, status }));
+		//dispatch action to update the category
 	};
+
+	console.log(form);
 	return (
 		<MyVerticallyCenteredModal title="Edit Category">
 			<Form onSubmit={handleOnSubmit}>
-				<Row className="g-3">
-					<Col sm="2 p-1">
+				<Row className="">
+					<Col md="10 p-3">
 						<Form.Check
 							name="status"
 							type="switch"
 							id="custom-switch"
 							label="Status"
+							checked={form.status === 'active'}
 							onChange={handleOnChange}
 						/>
 					</Col>
-					<Col sm="4">
+					<Col md="10 p-3">
 						<Form.Control
 							name="catName"
 							placeholder="Category Name"
 							onChange={handleOnChange}
+							value={form.catName}
 							required
 						/>
 					</Col>
-					<Col sm="4 ">
+					<Col md="10 p-3">
 						<Form.Group as={Col} controlId="formGridState">
 							<Form.Select
 								name="parentCatId"
@@ -64,10 +72,15 @@ const EditCategory = ({ selectedCategory }) => {
 								onChange={handleOnChange}
 							>
 								<option value="">**Select Parent Category**</option>
+
 								{categories.map((item) => {
 									return (
 										!item.parentCatId && (
-											<option value={item._id} key={item._id}>
+											<option
+												value={item._id}
+												key={item._id}
+												selected={item._id === form.parentCatId}
+											>
 												{item.catName}
 											</option>
 										)
@@ -76,7 +89,7 @@ const EditCategory = ({ selectedCategory }) => {
 							</Form.Select>
 						</Form.Group>
 					</Col>
-					<Col sm="1">
+					<Col md="5">
 						<Button type="submit">Update Category</Button>
 					</Col>
 				</Row>

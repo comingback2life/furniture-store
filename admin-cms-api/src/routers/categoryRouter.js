@@ -106,4 +106,33 @@ router.delete('/', async (req, res, next) => {
 		next(error);
 	}
 });
+
+//update category
+router.put('/', newCategoryValidation, async (req, res, next) => {
+	try {
+		console.log(req.body);
+		return;
+		const slug = slugify(req.body.catName, {
+			lower: true,
+			trim: true,
+		});
+		const result = await insertCategory({ ...req.body, slug });
+		result?._id
+			? res.json({
+					status: 'success',
+					message: 'New Category has been added',
+			  })
+			: res.json({
+					status: 'error',
+					message: 'Category could not be added, please try again later',
+			  });
+	} catch (error) {
+		error.status = 500;
+		if (error.message.includes('E11000 duplicate key error')) {
+			error.status = 200;
+			error.message = 'Category already exists.';
+		}
+		next(error);
+	}
+});
 export default router;
