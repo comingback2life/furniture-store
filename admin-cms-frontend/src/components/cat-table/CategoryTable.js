@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,9 +6,12 @@ import {
 	fetchCategoriesAction,
 	deleteCategoriesAction,
 } from '../../pages/categories/CategoriesAction';
+import { toggleModal } from '../../system-state/systemSlice';
+import EditCategory from '../cat-form/EditCategory';
 
 const CategoryTable = () => {
 	const dispatch = useDispatch();
+	const [selectedCategory, setSelectedCategory] = useState({});
 	const { categories } = useSelector((state) => state.categories);
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
@@ -19,8 +22,14 @@ const CategoryTable = () => {
 			dispatch(deleteCategoriesAction(_id));
 		}
 	};
+	const handleOnEdit = (category) => {
+		setSelectedCategory(category);
+		dispatch(toggleModal());
+	};
 	return (
 		<div>
+			<EditCategory selectedCategory={selectedCategory} />
+
 			<p className="text-lead"> {categories.length} Categories found !</p>
 
 			<Table striped bordered hover>
@@ -48,10 +57,15 @@ const CategoryTable = () => {
 								<td>{item.catName}</td>
 								<td>{item.parentCatId}</td>
 								<td>
-									<Button variant="warning" className="mx-1">
+									<Button
+										variant="warning"
+										className="mx-1"
+										onClick={() => handleOnEdit(item)}
+									>
 										Edit
 									</Button>
 									<Button
+										title="You can only delete if Child category does not exist"
 										onClick={() => handleOnDelete(item._id)}
 										variant="danger"
 										className="mx-1"
