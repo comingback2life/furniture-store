@@ -26,6 +26,8 @@ const CategoryTable = () => {
 		setSelectedCategory(category);
 		dispatch(toggleModal());
 	};
+	const childrenCategories = categories.filter((item) => !item.parentCatId);
+	const parentCategories = categories.filter((item) => item.parentCatId);
 	return (
 		<div>
 			<EditCategory selectedCategory={selectedCategory} />
@@ -36,44 +38,82 @@ const CategoryTable = () => {
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Status</th>
 						<th>Name</th>
-						<th>Parent Category</th>
+						<th>Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					{categories.map((item, i) => {
+					{parentCategories.map((item, i) => {
 						return (
-							<tr key={item._id}>
-								<td>{i + 1}</td>
-								<td
-									className={
-										item.status === 'active' ? 'text-success' : 'text-danger'
+							<>
+								<tr key={item._id}>
+									<td>{i + 1}</td>
+									<td>{item.catName}</td>
+									<td
+										className={
+											item.status === 'active' ? 'text-success' : 'text-danger'
+										}
+									>
+										{item.status}
+									</td>
+
+									<td>
+										<Button
+											variant="warning"
+											className="mx-1"
+											onClick={() => handleOnEdit(item)}
+										>
+											Edit
+										</Button>
+										<Button
+											title="You can only delete if Child category does not exist"
+											onClick={() => handleOnDelete(item._id)}
+											variant="danger"
+											className="mx-1"
+										>
+											Delete
+										</Button>
+									</td>
+								</tr>
+
+								{childrenCategories.map((cat, index) => {
+									if (cat.parentCatId === item._id) {
+										return (
+											<tr key={cat._id}>
+												<td>{i + 1}</td>
+												<td>{cat.catName}</td>
+												<td
+													className={
+														cat.status === 'active'
+															? 'text-success'
+															: 'text-danger'
+													}
+												>
+													{cat.status}
+												</td>
+												<td>
+													<Button
+														variant="warning"
+														className="mx-1"
+														onClick={() => handleOnEdit(cat)}
+													>
+														Edit
+													</Button>
+													<Button
+														title="You can only delete if Child category does not exist"
+														onClick={() => handleOnDelete(cat._id)}
+														variant="danger"
+														className="mx-1"
+													>
+														Delete
+													</Button>
+												</td>
+											</tr>
+										);
 									}
-								>
-									{item.status}
-								</td>
-								<td>{item.catName}</td>
-								<td>{item.parentCatId}</td>
-								<td>
-									<Button
-										variant="warning"
-										className="mx-1"
-										onClick={() => handleOnEdit(item)}
-									>
-										Edit
-									</Button>
-									<Button
-										title="You can only delete if Child category does not exist"
-										onClick={() => handleOnDelete(item._id)}
-										variant="danger"
-										className="mx-1"
-									>
-										Delete
-									</Button>
-								</td>
-							</tr>
+								})}
+							</>
 						);
 					})}
 				</tbody>
