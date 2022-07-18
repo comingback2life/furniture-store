@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +9,15 @@ const initialState = {
 	catName: '',
 	parentCatId: '',
 };
-const EditCategory = () => {
+const EditCategory = ({ selectedCategory }) => {
 	const dispatch = useDispatch();
-	const [form, setForm] = useState(initialState);
+	const [form, setForm] = useState(selectedCategory);
 	const { categories } = useSelector((state) => state.categories);
+
+	useEffect(() => {
+		setForm(selectedCategory);
+	}, [form]);
+
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
 		if (name === 'status') {
