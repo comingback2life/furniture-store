@@ -7,7 +7,7 @@ import {
 	updateCategoriesAction,
 } from '../../pages/categories/CategoriesAction';
 import { MyVerticallyCenteredModal } from '../modal/Modal';
-import { updateCategory } from '../../helpers/axiosHelpers';
+import { updateCategories } from '../../helpers/axiosHelpers';
 const initialState = {
 	status: 'inactive',
 	catName: '',
@@ -35,8 +35,8 @@ const EditCategory = ({ selectedCategory }) => {
 	};
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		const { parentCatId, catName, status } = form;
-		dispatch(updateCategoriesAction({ parentCatId, catName, status }));
+		const { _id, parentCatId, catName, status } = form;
+		dispatch(updateCategoriesAction({ _id, parentCatId, catName, status }));
 		//dispatch action to update the category
 	};
 

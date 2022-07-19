@@ -46,7 +46,7 @@ export const postCategories = (dataObj) => {
 	const url = catEP;
 	return apiProcessor({ method: 'POST', url, dataObj });
 };
-export const updateCategory = (dataObj) => {
+export const updateCategories = (dataObj) => {
 	const url = catEP;
 	return apiProcessor({ method: 'PUT', url, dataObj });
 };

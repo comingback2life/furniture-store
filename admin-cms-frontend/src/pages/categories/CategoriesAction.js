@@ -4,6 +4,7 @@ import {
 	postCategories,
 	deleteCategories,
 	updateCategory,
+	updateCategories,
 } from '../../helpers/axiosHelpers';
 import { toast } from 'react-toastify';
 export const fetchCategoriesAction = () => async (dispatch) => {
@@ -33,7 +34,7 @@ export const deleteCategoriesAction = (_id) => async (dispatch) => {
 	result.status === 'success' && dispatch(fetchCategoriesAction());
 };
 export const updateCategoriesAction = (dataObj) => async (dispatch) => {
-	const responsePromise = updateCategory(dataObj);
+	const responsePromise = updateCategories(dataObj);
 	toast.promise(responsePromise, {
 		pending: 'Please wait...',
 	});

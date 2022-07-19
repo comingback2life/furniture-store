@@ -57,7 +57,7 @@ router.patch('/', async (req, res, next) => {
 	try {
 		const { _id, status } = req.body;
 		if (!_id || !status) {
-			throw new error('Invalid Datase');
+			throw new error('Invalid Dataset');
 		}
 		const result = await updateCategory(_id, { status });
 		result?._id
@@ -110,28 +110,23 @@ router.delete('/', async (req, res, next) => {
 //update category
 router.put('/', newCategoryValidation, async (req, res, next) => {
 	try {
-		console.log(req.body);
-		return;
+		const { _id, ...rest } = req.body;
 		const slug = slugify(req.body.catName, {
 			lower: true,
 			trim: true,
 		});
-		const result = await insertCategory({ ...req.body, slug });
+		const result = await updateCategory(_id, rest);
+		console.log(result);
 		result?._id
 			? res.json({
 					status: 'success',
-					message: 'New Category has been added',
+					message: 'Category has been updated',
 			  })
 			: res.json({
 					status: 'error',
-					message: 'Category could not be added, please try again later',
+					message: 'Category could not be updated, please try again later',
 			  });
 	} catch (error) {
-		error.status = 500;
-		if (error.message.includes('E11000 duplicate key error')) {
-			error.status = 200;
-			error.message = 'Category already exists.';
-		}
 		next(error);
 	}
 });
