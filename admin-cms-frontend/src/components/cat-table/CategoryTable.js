@@ -26,8 +26,8 @@ const CategoryTable = () => {
 		setSelectedCategory(category);
 		dispatch(toggleModal());
 	};
-	const childrenCategories = categories.filter((item) => !item.parentCatId);
-	const parentCategories = categories.filter((item) => item.parentCatId);
+	const parentCategories = categories.filter((item) => !item.parentCatId);
+	const childrenCategories = categories.filter((item) => item.parentCatId);
 	return (
 		<div>
 			<EditCategory selectedCategory={selectedCategory} />
@@ -82,7 +82,7 @@ const CategoryTable = () => {
 										return (
 											<tr key={cat._id}>
 												<td>{i + 1}</td>
-												<td>{cat.catName}</td>
+												<td> ==> {cat.catName}</td>
 												<td
 													className={
 														cat.status === 'active'
