@@ -74,5 +74,12 @@ POST http://localhost:8000/api/v1/products
 Content-Type: application/json
 
 {
-  "name":"Product Name"
+
+		"name": "C-Shaped Sofa",
+		"SKU":"c-shaped-frontends",
+		"description": "Lorem ipsum ipsum lorem",
+		"quantity":100,
+		"price": 3000,
+		"salePrice": 0,
+		"saleDate":null
 }

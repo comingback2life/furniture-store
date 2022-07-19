@@ -21,14 +21,17 @@ const productSchema = new mongoose.Schema(
 			index: 1,
 			required: true,
 			maxLength: [20, 'SKU cannot be more than 20 characters'],
+			trim: true,
 		},
 		slug: {
 			type: String,
 			unique: true,
 			index: 1,
 			required: true,
+			trim: true,
 		},
 		description: {
+			type: String,
 			required: true,
 			maxLength: 5000,
 		},
@@ -46,7 +49,7 @@ const productSchema = new mongoose.Schema(
 		],
 		thumbnailImage: {
 			type: String,
-			required: true,
+			//required: true,
 			default: '',
 		},
 		price: {

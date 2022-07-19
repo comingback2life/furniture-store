@@ -5,7 +5,7 @@ import {
 	EMAIL,
 	PHONE,
 	ADDRESS,
-	DOB,
+	DATE,
 	PASSWORD,
 	REQUIREDSTR,
 	validator,
@@ -17,7 +17,7 @@ export const newAdminValidator = (req, res, next) => {
 		lName: LNAME,
 		email: EMAIL,
 		phone: PHONE,
-		dob: DOB,
+		dob: DATE,
 		address: ADDRESS,
 		userPassword: PASSWORD,
 	});
