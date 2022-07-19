@@ -16,7 +16,7 @@ export const Header = () => {
 							dispatch(toggleSideBar());
 						}}
 					>
-						<i class="fa-solid fa-bars"></i>
+						<i className="fa-solid fa-bars"></i>
 					</Button>
 					<LinkContainer to="/">
 						<Navbar.Brand>Furniture Store Admin</Navbar.Brand>

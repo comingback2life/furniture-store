@@ -2,6 +2,7 @@ import axios from 'axios';
 const rootURL = 'http://localhost:8000/api/v1';
 const adminEP = rootURL + '/admin';
 const catEP = rootURL + '/categories';
+const productsEP = rootURL + '/products';
 // Admin APIs
 const apiProcessor = async ({ method, url, dataObj }) => {
 	try {
@@ -53,4 +54,11 @@ export const updateCategories = (dataObj) => {
 export const deleteCategories = (_id) => {
 	const url = catEP;
 	return apiProcessor({ method: 'DELETE', url, dataObj: { _id } });
+};
+
+// products API
+
+export const getProducts = () => {
+	const url = productsEP;
+	return apiProcessor({ method: 'GET', url });
 };

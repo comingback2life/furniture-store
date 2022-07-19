@@ -69,7 +69,9 @@ Content-Type: application/json
 
 
 ###Product
+GET http://localhost:8000/api/v1/products
 
+###POST to products
 POST http://localhost:8000/api/v1/products
 Content-Type: application/json
 

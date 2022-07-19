@@ -35,6 +35,11 @@ const productSchema = new mongoose.Schema(
 			required: true,
 			maxLength: 5000,
 		},
+		catId: {
+			type: mongoose.Schema.Types.ObjectId,
+			default: null,
+			ref: 'Category',
+		},
 		quantity: {
 			type: Number,
 			required: true,
