@@ -65,3 +65,14 @@ Content-Type: application/json
   "_id":"62cf84a43463ad9844ed93c3",
   "status":"inactive"
 }
+
+
+
+###Product
+
+POST http://localhost:8000/api/v1/products
+Content-Type: application/json
+
+{
+  "name":"Product Name"
+}
