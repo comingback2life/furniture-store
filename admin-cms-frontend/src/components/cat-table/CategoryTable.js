@@ -37,7 +37,6 @@ const CategoryTable = () => {
 			<Table striped bordered hover>
 				<thead>
 					<tr>
-						<th>#</th>
 						<th>Name</th>
 						<th>Status</th>
 						<th>Action</th>
@@ -48,7 +47,6 @@ const CategoryTable = () => {
 						return (
 							<>
 								<tr key={item._id}>
-									<td>{i + 1}</td>
 									<td>{item.catName}</td>
 									<td
 										className={
@@ -76,13 +74,14 @@ const CategoryTable = () => {
 										</Button>
 									</td>
 								</tr>
-
 								{childrenCategories.map((cat, index) => {
 									if (cat.parentCatId === item._id) {
 										return (
 											<tr key={cat._id}>
-												<td>{i + 1}</td>
-												<td> ==> {cat.catName}</td>
+												<td>
+													{' '}
+													<i class="fa-solid fa-arrow-right"></i> {cat.catName}
+												</td>
 												<td
 													className={
 														cat.status === 'active'
