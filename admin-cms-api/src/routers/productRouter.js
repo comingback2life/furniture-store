@@ -1,10 +1,27 @@
 import express from 'express';
 import slugify from 'slugify';
 import { newProductsValidation } from '../middlewares/joi-validations/productsValidation.js';
-import { insertProduct } from '../models/product/Product.model.js';
+import {
+	getMultipleProducts,
+	getProduct,
+	insertProduct,
+} from '../models/product/Product.model.js';
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {});
+router.get('/', async (req, res, next) => {
+	try {
+		const products = await getMultipleProducts();
+
+		res.json({
+			status: 'success',
+			message: 'Products listing successful',
+			products,
+		});
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
+});
 router.post('/', newProductsValidation, async (req, res, next) => {
 	try {
 		const { name } = req.body;

@@ -8,6 +8,7 @@ import { EmailVerification } from './pages/register-login/EmailVerification';
 import { AdminProfile } from './pages/admin-profile/AdminProfile';
 import { Dashboard } from './pages/dashboard-page/Dashboard';
 import CategoriesPage from './pages/categories/CategoriesPage';
+import ProductPage from './pages/product/ProductPage';
 function App() {
 	return (
 		<div>
@@ -18,6 +19,7 @@ function App() {
 					<Route path="/admin/profile" element={<AdminProfile />}></Route>
 					<Route path="/admin/register" element={<RegisterPage />}></Route>
 					<Route path="/admin/login" element={<LoginPage />}></Route>
+					<Route path="/products" element={<ProductPage />}></Route>
 					<Route
 						path="/admin/verify-email"
 						element={<EmailVerification />}
