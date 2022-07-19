@@ -20,6 +20,7 @@ const productSchema = new mongoose.Schema(
 			unique: true,
 			index: 1,
 			required: true,
+			maxLength: [20, 'SKU cannot be more than 20 characters'],
 		},
 		slug: {
 			type: String,
