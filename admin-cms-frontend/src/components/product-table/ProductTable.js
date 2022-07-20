@@ -17,13 +17,14 @@ const ProductTable = () => {
 	// };
 	return (
 		<div>
-			<p className="text-lead"> {products.length} Categories found !</p>
+			<p className="text-lead"> {products.length} Products found !</p>
 
 			<Table striped bordered hover>
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Name</th>
+						<th>SKU</th>
 						<th>Status</th>
 						<th>Qty</th>
 						<th>Price</th>
@@ -38,6 +39,7 @@ const ProductTable = () => {
 							<tr key={item._id}>
 								<td>{i + 1}</td>
 								<td>{item.name}</td>
+								<td>{item.SKU}</td>
 								<td
 									className={
 										item.status === 'active' ? 'text-success' : 'text-danger'
@@ -46,7 +48,7 @@ const ProductTable = () => {
 									{item.status}
 								</td>
 								<td>{item.quantity}</td>
-								<td>{item.price}</td>
+								<td>${item.price.toLocaleString('en-AU')}</td>
 								<td>{item.salePrice || '-'}</td>
 								<td>{item.salesDate || '-'}</td>
 								<td>
