@@ -77,10 +77,10 @@ Content-Type: application/json
 
 {
 
-		"name": "C-Xhaped Sofa",
-		"SKU":"c-shaped-frontends",
+		"name": "C-Shaped Sofa",
+		"SKU":"c-shaped-sofa",
 		"description": "Lorem ipsum ipsum lorem",
-		"quantity":100,
+		"quantity":1002,
 		"price": 3000,
 		"salePrice": 0,
 		"saleDate":null
