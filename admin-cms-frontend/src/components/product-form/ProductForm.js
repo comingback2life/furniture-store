@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../custom-input/CustomInput';
-
+import { fetchCategoriesAction } from '../../pages/categories/CategoriesAction';
 export const ProductForm = () => {
+	const dispatch = useDispatch();
 	const { categories } = useSelector((state) => state.categories);
+	const [form, setForm] = useState({});
+	useEffect(() => {
+		dispatch(fetchCategoriesAction());
+	}, []);
+
+	const handleOnChange = (e) => {
+		let { checked, name, value } = e.target;
+		setForm({
+			...form,
+			[name]: value,
+		});
+	};
+
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		console.log(form);
+	};
 	const inputFields = [
 		{
 			name: 'name',
@@ -62,20 +80,23 @@ export const ProductForm = () => {
 	];
 
 	return (
-		<Form>
+		<Form className="mb-5" onSubmit={handleOnSubmit}>
 			<Form.Group className="mb-3">
 				<Form.Check
 					name="status"
 					type="switch"
 					id="custom-switch"
 					label="Status"
+					onChange={handleOnChange}
+					required
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Select
 					name="parentCatId"
 					defaultValue="Choose..."
-					// onChange={handleOnChange}
+					onChange={handleOnChange}
+					required
 				>
 					<option value="">**Select Parent Category**</option>
 					{categories.map((item) => {
@@ -90,7 +111,7 @@ export const ProductForm = () => {
 				</Form.Select>
 			</Form.Group>
 			{inputFields.map((item, i) => {
-				return <CustomInput key={i} {...item} />;
+				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 			})}
 			<Button variant="primary" type="submit">
 				Submit
