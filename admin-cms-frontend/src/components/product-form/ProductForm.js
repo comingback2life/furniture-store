@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useSelector } from 'react-redux';
 import { CustomInput } from '../custom-input/CustomInput';
 
 export const ProductForm = () => {
+	const { categories } = useSelector((state) => state.categories);
 	const inputFields = [
 		{
 			name: 'name',
@@ -52,7 +54,8 @@ export const ProductForm = () => {
 		{
 			name: 'description',
 			label: 'Description',
-			type: 'text',
+			as: 'textarea',
+			rows: 10,
 			placeholder: 'Product Description',
 			required: true,
 		},
@@ -60,6 +63,32 @@ export const ProductForm = () => {
 
 	return (
 		<Form>
+			<Form.Group className="mb-3">
+				<Form.Check
+					name="status"
+					type="switch"
+					id="custom-switch"
+					label="Status"
+				/>
+			</Form.Group>
+			<Form.Group className="mb-3">
+				<Form.Select
+					name="parentCatId"
+					defaultValue="Choose..."
+					// onChange={handleOnChange}
+				>
+					<option value="">**Select Parent Category**</option>
+					{categories.map((item) => {
+						return (
+							!item.parentCatId && (
+								<option value={item._id} key={item._id}>
+									{item.catName}
+								</option>
+							)
+						);
+					})}
+				</Form.Select>
+			</Form.Group>
 			{inputFields.map((item, i) => {
 				return <CustomInput key={i} {...item} />;
 			})}
