@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { ProductForm } from '../../components/product-form/ProductForm.js';
 import ProductTable from '../../components/product-table/ProductTable.js';
 import AdminLayout from '../layouts/AdminLayout.js';
 
@@ -16,6 +17,7 @@ const NewProduct = () => {
 			</div>
 			<h3 className="mt-2 mb-4 text-center">Add New Product</h3>
 			<hr />
+			<ProductForm />
 		</AdminLayout>
 	);
 };
