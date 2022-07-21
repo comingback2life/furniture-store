@@ -14,6 +14,9 @@ export const ProductForm = () => {
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
+		if (name === 'status') {
+			value = checked ? 'active' : 'inactive';
+		}
 		setForm({
 			...form,
 			[name]: value,
@@ -88,7 +91,6 @@ export const ProductForm = () => {
 					id="custom-switch"
 					label="Status"
 					onChange={handleOnChange}
-					required
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
