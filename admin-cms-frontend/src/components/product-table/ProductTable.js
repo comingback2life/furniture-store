@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form, FormCheck } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsAction } from '../../pages/product/productActions';
 const ProductTable = () => {
 	const dispatch = useDispatch();
+	const [ids, setIds] = useState([]);
 	const { products } = useSelector((state) => state.products);
 	useEffect(() => {
 		dispatch(fetchProductsAction());
 	}, []);
 
-	// const handleOnDelete = (_id) => {
-	// 	if (window.confirm('Are you sure you want to delete this category?')) {
-	// 		dispatch(deleteCategoriesAction(_id));
-	// 	}
-	// };
+	const handleOnCheckChange = (e) => {
+		const { checked, value } = e.target;
+		if (value === 'all') {
+			if (checked) {
+				const allIds = products.map((item) => item._id);
+				console.log(allIds);
+				setIds(allIds);
+			} else {
+				setIds([]);
+			}
+			return;
+		}
+		checked
+			? setIds([...ids, value])
+			: setIds(ids.filter((ids) => ids !== value));
+	};
+
 	return (
-		<div>
+		<div style={{ overflowX: 'scroll' }} className="mb-5">
 			<p className="text-lead"> {products.length} Products found !</p>
 
 			<Table striped bordered hover>
 				<thead>
 					<tr>
+						<th>
+							<Form.Check
+								name="status"
+								onChange={handleOnCheckChange}
+								value="all"
+							/>
+						</th>
 						<th>#</th>
 						<th>Name</th>
 						<th>SKU</th>
@@ -29,7 +49,7 @@ const ProductTable = () => {
 						<th>Qty</th>
 						<th>Price</th>
 						<th>Sale Price</th>
-						<th>Sale End Date</th>
+						<th>Sale Date</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -37,6 +57,14 @@ const ProductTable = () => {
 					{products.map((item, i) => {
 						return (
 							<tr key={item._id}>
+								<td>
+									<Form.Check
+										name="status"
+										onChange={handleOnCheckChange}
+										value={item._id}
+										checked={ids.includes(item._id)}
+									/>
+								</td>
 								<td>{i + 1}</td>
 								<td>{item.name}</td>
 								<td>{item.SKU}</td>
@@ -50,18 +78,16 @@ const ProductTable = () => {
 								<td>{item.quantity}</td>
 								<td>${item.price.toLocaleString('en-AU')}</td>
 								<td>{item.salePrice || '-'}</td>
-								<td>{item.salesDate || '-'}</td>
+								<td>
+									{item.saleStartDate
+										? new Date(item.saleStartDate).toLocaleDateString() +
+										  '-' +
+										  new Date(item.saleEndDate).toLocaleDateString()
+										: '-'}
+								</td>
 								<td>
 									<Button variant="warning" className="mx-1">
 										Edit
-									</Button>
-									<Button
-										title="You can only delete if Child category does not exist"
-										// onClick={() => handleOnDelete(item._id)}
-										variant="danger"
-										className="mx-1"
-									>
-										Delete
 									</Button>
 								</td>
 							</tr>
@@ -69,6 +95,18 @@ const ProductTable = () => {
 					})}
 				</tbody>
 			</Table>
+			<div>
+				{ids.length > 0 && (
+					<Button
+						title="You can only delete if Child category does not exist"
+						// onClick={() => handleOnDelete(item._id)}
+						variant="danger"
+						className="mx-1"
+					>
+						Delete
+					</Button>
+				)}
+			</div>
 		</div>
 	);
 };

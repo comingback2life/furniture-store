@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../custom-input/CustomInput';
 import { fetchCategoriesAction } from '../../pages/categories/CategoriesAction';
+import { postProductsAction } from '../../pages/product/productActions';
+
 export const ProductForm = () => {
 	const dispatch = useDispatch();
 	const { categories } = useSelector((state) => state.categories);
@@ -25,7 +27,10 @@ export const ProductForm = () => {
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		console.log(form);
+		if (!form.status) {
+			form.status = 'inactive';
+		}
+		dispatch(postProductsAction(form));
 	};
 	const inputFields = [
 		{
@@ -68,7 +73,7 @@ export const ProductForm = () => {
 			type: 'date',
 		},
 		{
-			name: 'saleDate',
+			name: 'saleEndDate',
 			label: 'Sale End Date',
 			type: 'date',
 		},
@@ -95,19 +100,17 @@ export const ProductForm = () => {
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Select
-					name="parentCatId"
+					name="catId"
 					defaultValue="Choose..."
 					onChange={handleOnChange}
 					required
 				>
-					<option value="">**Select Parent Category**</option>
+					<option value="">**Select Category**</option>
 					{categories.map((item) => {
 						return (
-							!item.parentCatId && (
-								<option value={item._id} key={item._id}>
-									{item.catName}
-								</option>
-							)
+							<option value={item._id} key={item._id}>
+								{item.catName}
+							</option>
 						);
 					})}
 				</Form.Select>
