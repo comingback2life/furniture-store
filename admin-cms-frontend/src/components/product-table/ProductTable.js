@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, FormCheck } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsAction } from '../../pages/product/productActions';
+import {
+	deleteProductsAction,
+	fetchProductsAction,
+} from '../../pages/product/productActions';
 const ProductTable = () => {
 	const dispatch = useDispatch();
 	const [ids, setIds] = useState([]);
@@ -99,7 +102,7 @@ const ProductTable = () => {
 				{ids.length > 0 && (
 					<Button
 						title="You can only delete if Child category does not exist"
-						// onClick={() => handleOnDelete(item._id)}
+						onClick={() => dispatch(deleteProductsAction(ids)) && setIds([])}
 						variant="danger"
 						className="mx-1"
 					>
