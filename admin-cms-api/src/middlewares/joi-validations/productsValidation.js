@@ -28,3 +28,22 @@ export const newProductsValidation = (req, res, next) => {
 		next(error);
 	}
 };
+export const updateProductsValidation = (req, res, next) => {
+	try {
+		const schema = Joi.object({
+			_id: SHORTSTR.required(),
+			catId: SHORTSTR.required(),
+			status: SHORTSTR.required(),
+			name: SHORTSTR.required(),
+			description: LONGSTR.required(),
+			quantity: QUANTITY.required(),
+			price: PRICE.required(),
+			salePrice: PRICE,
+			saleEndDate: DATE.allow(null),
+			saleStartDate: DATE.allow(null),
+		});
+		validator(schema, req, res, next);
+	} catch (error) {
+		next(error);
+	}
+};

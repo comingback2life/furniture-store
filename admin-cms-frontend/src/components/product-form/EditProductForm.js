@@ -4,7 +4,10 @@ import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../custom-input/CustomInput';
 import { fetchCategoriesAction } from '../../pages/categories/CategoriesAction';
-import { postProductsAction } from '../../pages/product/productActions';
+import {
+	postProductsAction,
+	updateProductAction,
+} from '../../pages/product/productActions';
 
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
@@ -33,7 +36,22 @@ export const EditProductForm = () => {
 		if (!form.status) {
 			form.status = 'inactive';
 		}
-		dispatch(postProductsAction(form));
+		if (!window.confirm('Are you sure you want to update the product')) return;
+		const {
+			__v,
+			updatedAt,
+			thumbnailImage,
+			slug,
+			SKU,
+			ratings,
+			image,
+			createdAt,
+			...rest
+		} = form;
+		rest.salePrice = Number(rest.salePrice) ? +rest.salePrice : 0;
+		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : null;
+		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : null;
+		dispatch(updateProductAction(rest));
 	};
 	const inputFields = [
 		{
@@ -90,13 +108,13 @@ export const EditProductForm = () => {
 			name: 'saleStartDate',
 			label: 'Sale Start Date',
 			type: 'date',
-			value: form.saleStartDate ? form.saleStartDate.split('T')[0] : null,
+			value: form.saleStartDate ? form.saleStartDate.split('T')[0] : '',
 		},
 		{
 			name: 'saleEndDate',
 			label: 'Sale End Date',
 			type: 'date',
-			value: form.saleEndDate ? form.saleEndDate.split('T')[0] : null,
+			value: form.saleEndDate ? form.saleEndDate.split('T')[0] : '',
 		},
 		{
 			name: 'description',

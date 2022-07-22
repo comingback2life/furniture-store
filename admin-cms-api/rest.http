@@ -87,3 +87,22 @@ Content-Type: application/json
 }
 ###Get Single Product
 GET http://localhost:8000/api/v1/products/62d9f7bb3cb4cbb968a3d490
+
+
+###Update products
+PUT http://localhost:8000/api/v1/products/
+Content-Type: application/json
+
+{
+"catId": "62d4a6c33da55c09f436f448",
+"description": "\nok",
+"name": "C-shaped Sofap",
+"price": 100,
+"quantity": 10,
+"saleEndDate": null,
+"salePrice": 0,
+"saleStartDate": "",
+"slug": "c-shaped-sofas",
+"status": "inactive",
+"_id": "62d9f7bb3cb4cbb968a3d490"
+}

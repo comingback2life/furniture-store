@@ -75,3 +75,8 @@ export const deleteProducts = (ids) => {
 	const url = productsEP;
 	return apiProcessor({ method: 'DELETE', url, dataObj: ids });
 };
+
+export const updateProducts = (dataObj) => {
+	const url = productsEP;
+	return apiProcessor({ method: 'PUT', url, dataObj });
+};
