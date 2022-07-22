@@ -9,9 +9,11 @@ import {
 } from '../models/product/Product.model.js';
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/:_id?', async (req, res, next) => {
+	//optional IDs
+	const { _id } = req.params;
 	try {
-		const products = await getMultipleProducts();
+		const products = _id ? await getProduct() : await getMultipleProducts();
 
 		res.json({
 			status: 'success',

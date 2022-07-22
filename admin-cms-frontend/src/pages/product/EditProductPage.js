@@ -1,11 +1,16 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ProductForm } from '../../components/product-form/ProductForm.js';
-import ProductTable from '../../components/product-table/ProductTable.js';
+import { EditProductForm } from '../../components/product-form/EditProductForm.js';
 import AdminLayout from '../layouts/AdminLayout.js';
 
 const EditProductPage = () => {
+	const { _id } = useParams();
+	console.log(_id);
+
+	useEffect(() => {}, []);
 	return (
 		<AdminLayout>
 			<div className="">
@@ -17,7 +22,7 @@ const EditProductPage = () => {
 			</div>
 			<h3 className="mt-2 mb-4 text-center">Edit Product</h3>
 			<hr />
-			<ProductForm />
+			<EditProductForm />
 		</AdminLayout>
 	);
 };
