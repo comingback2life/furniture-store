@@ -18,7 +18,7 @@ export const EditProductForm = () => {
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
 		setForm(selectedProducts);
-	}, [selectedProducts, categories]);
+	}, [selectedProducts]);
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
@@ -48,6 +48,9 @@ export const EditProductForm = () => {
 			createdAt,
 			...rest
 		} = form;
+		rest.salePrice = Number(rest.salePrice) ? +rest.salePrice : 0;
+		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : null;
+		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : null;
 		dispatch(updateProductAction(rest));
 	};
 	const inputFields = [
@@ -105,13 +108,13 @@ export const EditProductForm = () => {
 			name: 'saleStartDate',
 			label: 'Sale Start Date',
 			type: 'date',
-			value: form.saleStartDate ? form.saleStartDate.split('T')[0] : null,
+			value: form.saleStartDate ? form.saleStartDate.split('T')[0] : '',
 		},
 		{
 			name: 'saleEndDate',
 			label: 'Sale End Date',
 			type: 'date',
-			value: form.saleEndDate ? form.saleEndDate.split('T')[0] : null,
+			value: form.saleEndDate ? form.saleEndDate.split('T')[0] : '',
 		},
 		{
 			name: 'description',

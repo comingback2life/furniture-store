@@ -60,9 +60,7 @@ router.post('/', newProductsValidation, async (req, res, next) => {
 router.put('/', updateProductsValidation, async (req, res, next) => {
 	try {
 		const { _id, ...rest } = req.body;
-		rest.salesPrice = Number(salesPrice) ? +salesPrice : 0;
-		rest.saleEndDate = saleEndDate ? saleEndDate : null;
-		rest.saleStartDate = saleStartDate ? saleStartDate : null;
+
 		const result = await updateProductById(_id, rest);
 		result?._id
 			? res.json({
