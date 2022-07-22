@@ -63,6 +63,10 @@ export const getProducts = () => {
 	return apiProcessor({ method: 'GET', url });
 };
 
+export const getSingleProduct = (_id) => {
+	const url = productsEP + '/' + _id;
+	return apiProcessor({ method: 'GET', url });
+};
 export const postProducts = (dataObj) => {
 	const url = productsEP;
 	return apiProcessor({ method: 'POST', url, dataObj });
