@@ -5,7 +5,7 @@ import { ProductForm } from '../../components/product-form/ProductForm.js';
 import ProductTable from '../../components/product-table/ProductTable.js';
 import AdminLayout from '../layouts/AdminLayout.js';
 
-const EditProduct = () => {
+const EditProductPage = () => {
 	return (
 		<AdminLayout>
 			<div className="">
@@ -21,4 +21,4 @@ const EditProduct = () => {
 		</AdminLayout>
 	);
 };
-export default EditProduct;
+export default EditProductPage;
