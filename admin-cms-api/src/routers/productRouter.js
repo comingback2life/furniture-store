@@ -1,11 +1,15 @@
 import express from 'express';
 import slugify from 'slugify';
-import { newProductsValidation } from '../middlewares/joi-validations/productsValidation.js';
+import {
+	newProductsValidation,
+	updateProductsValidation,
+} from '../middlewares/joi-validations/productsValidation.js';
 import {
 	deleteManyProducts,
 	getMultipleProducts,
 	getProduct,
 	insertProduct,
+	updateProductById,
 } from '../models/product/Product.model.js';
 const router = express.Router();
 
@@ -53,7 +57,24 @@ router.post('/', newProductsValidation, async (req, res, next) => {
 		next(error);
 	}
 });
-router.put('/', (req, res, next) => {});
+router.put('/', updateProductsValidation, async (req, res, next) => {
+	try {
+		const { _id, ...rest } = req.body;
+
+		const result = await updateProductById(_id, rest);
+		result?._id
+			? res.json({
+					status: 'success',
+					message: 'Product has been updated',
+			  })
+			: res.json({
+					status: 'error',
+					message: 'Unable to update product. Please try again later',
+			  });
+	} catch (error) {
+		next(error);
+	}
+});
 router.patch('/', (req, res, next) => {});
 router.delete('/', async (req, res, next) => {
 	try {

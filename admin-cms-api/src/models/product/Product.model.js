@@ -14,6 +14,9 @@ export const getMultipleProducts = (filter) => {
 export const updateProduct = (filter, updateObj) => {
 	return ProductSchema.findOneAndUpdate(filter, updateObj, { new: true });
 };
+export const updateProductById = (_id, updateObj) => {
+	return ProductSchema.findByIdAndUpdate(_id, updateObj, { new: true });
+};
 export const deleteProduct = (filter) => {
 	return ProductSchema.findOneAndDelete(filter);
 };
