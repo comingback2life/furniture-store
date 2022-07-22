@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, FormCheck } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
 	deleteProductsAction,
 	fetchProductsAction,
@@ -89,9 +90,11 @@ const ProductTable = () => {
 										: '-'}
 								</td>
 								<td>
-									<Button variant="warning" className="mx-1">
-										Edit
-									</Button>
+									<Link to={`/products/edit/${item._id}`}>
+										<Button variant="warning" className="mx-1">
+											Edit
+										</Button>
+									</Link>
 								</td>
 							</tr>
 						);

@@ -10,6 +10,7 @@ import { Dashboard } from './pages/dashboard-page/Dashboard';
 import CategoriesPage from './pages/categories/CategoriesPage';
 import ProductPage from './pages/product/ProductPage';
 import NewProduct from './pages/product/NewProduct';
+import EditProduct from './pages/product/EditProduct';
 function App() {
 	return (
 		<div>
@@ -22,6 +23,7 @@ function App() {
 					<Route path="/admin/login" element={<LoginPage />}></Route>
 					<Route path="/product/new" element={<NewProduct />}></Route>
 					<Route path="/products" element={<ProductPage />}></Route>
+					<Route path="/products/edit/:_id" element={<EditProduct />}></Route>
 					<Route
 						path="/admin/verify-email"
 						element={<EmailVerification />}
