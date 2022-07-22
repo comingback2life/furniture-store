@@ -13,7 +13,9 @@ router.get('/:_id?', async (req, res, next) => {
 	//optional IDs
 	const { _id } = req.params;
 	try {
-		const products = _id ? await getProduct() : await getMultipleProducts();
+		const products = _id
+			? await getProduct({ _id })
+			: await getMultipleProducts();
 
 		res.json({
 			status: 'success',

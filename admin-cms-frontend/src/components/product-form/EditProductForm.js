@@ -9,10 +9,13 @@ import { postProductsAction } from '../../pages/product/productActions';
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
 	const { categories } = useSelector((state) => state.categories);
+	const { selectedProducts } = useSelector((state) => state.products);
+
 	const [form, setForm] = useState({});
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
-	}, []);
+		setForm(selectedProducts);
+	}, [selectedProducts]);
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
@@ -39,6 +42,16 @@ export const EditProductForm = () => {
 			type: 'text',
 			placeholder: 'Product Name',
 			required: true,
+			value: form.name,
+		},
+		{
+			name: 'slug',
+			label: 'Slug',
+			type: 'text',
+			placeholder: 'Slug',
+			required: true,
+			value: form.slug,
+			disabled: true,
 		},
 		{
 			name: 'SKU',
@@ -46,6 +59,8 @@ export const EditProductForm = () => {
 			type: 'text',
 			placeholder: 'SKU',
 			required: true,
+			value: form.SKU,
+			disabled: true,
 		},
 		{
 			name: 'quantity',
@@ -53,6 +68,7 @@ export const EditProductForm = () => {
 			type: 'number',
 			placeholder: '10',
 			required: true,
+			value: form.quantity,
 		},
 		{
 			name: 'price',
@@ -60,22 +76,27 @@ export const EditProductForm = () => {
 			type: 'number',
 			placeholder: '100',
 			required: true,
+			value: form.price,
 		},
+
 		{
 			name: 'salePrice',
 			label: 'Sale Price',
 			type: 'number',
 			placeholder: '80',
+			value: form.salePrice,
 		},
 		{
 			name: 'saleStartDate',
 			label: 'Sale Start Date',
 			type: 'date',
+			value: form.saleStartDate ? form.saleStartDate.split('T')[0] : null,
 		},
 		{
 			name: 'saleEndDate',
 			label: 'Sale End Date',
 			type: 'date',
+			value: form.saleEndDate ? form.saleEndDate.split('T')[0] : null,
 		},
 		{
 			name: 'description',
@@ -84,6 +105,7 @@ export const EditProductForm = () => {
 			rows: 10,
 			placeholder: 'Product Description',
 			required: true,
+			value: form.description,
 		},
 	];
 
@@ -96,6 +118,7 @@ export const EditProductForm = () => {
 					id="custom-switch"
 					label="Status"
 					onChange={handleOnChange}
+					checked={form.status === 'active'}
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
@@ -108,7 +131,11 @@ export const EditProductForm = () => {
 					<option value="">**Select Category**</option>
 					{categories.map((item) => {
 						return (
-							<option value={item._id} key={item._id}>
+							<option
+								value={item._id}
+								key={item._id}
+								selected={item._id === selectedProducts.catId}
+							>
 								{item.catName}
 							</option>
 						);
@@ -119,7 +146,7 @@ export const EditProductForm = () => {
 				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 			})}
 			<Button variant="primary" type="submit">
-				Submit
+				Update Product
 			</Button>
 		</Form>
 	);

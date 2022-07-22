@@ -1,15 +1,22 @@
 import {
 	deleteProducts,
 	getProducts,
+	getSingleProduct,
 	postProducts,
 } from '../../helpers/axiosHelpers';
-import { setProducts } from './productSlice';
+import { setProducts, setSelectedProducts } from './productSlice';
 import { toast } from 'react-toastify';
 export const fetchProductsAction = () => async (dispatch) => {
 	const { status, products } = await getProducts();
 	status === 'success' && dispatch(setProducts(products));
 };
 
+export const fetchSingleProductAction = (_id) => async (dispatch) => {
+	const { status, products } = await getSingleProduct(_id);
+	status === 'success' && dispatch(setSelectedProducts(products));
+};
+
+//getSingleProduct
 export const postProductsAction = (dataObj) => async (dispatch) => {
 	const response = postProducts(dataObj);
 	toast.promise(response, {
