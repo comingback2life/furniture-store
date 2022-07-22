@@ -6,7 +6,7 @@ import { CustomInput } from '../custom-input/CustomInput';
 import { fetchCategoriesAction } from '../../pages/categories/CategoriesAction';
 import { postProductsAction } from '../../pages/product/productActions';
 
-export const ProductForm = () => {
+export const EditProductForm = () => {
 	const dispatch = useDispatch();
 	const { categories } = useSelector((state) => state.categories);
 	const [form, setForm] = useState({});

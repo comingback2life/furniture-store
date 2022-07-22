@@ -2,6 +2,7 @@ import express from 'express';
 import slugify from 'slugify';
 import { newProductsValidation } from '../middlewares/joi-validations/productsValidation.js';
 import {
+	deleteManyProducts,
 	getMultipleProducts,
 	getProduct,
 	insertProduct,
@@ -50,6 +51,26 @@ router.post('/', newProductsValidation, async (req, res, next) => {
 });
 router.put('/', (req, res, next) => {});
 router.patch('/', (req, res, next) => {});
-router.delete('/', (req, res, next) => {});
+router.delete('/', async (req, res, next) => {
+	try {
+		const ids = req.body;
+		if (ids.length) {
+			const result = await deleteManyProducts(ids);
+			if (result?.deletedCount) {
+				return res.json({
+					status: 'success',
+					message: 'Succesfully deleted products',
+				});
+			}
+		}
+		res.json({
+			status: 'error',
+			message: 'Unable to delete the product, please try again later',
+		});
+		console.log(req.body, 'From Delete');
+	} catch (error) {
+		next(error);
+	}
+});
 
 export default router;

@@ -12,14 +12,16 @@ export const newProductsValidation = (req, res, next) => {
 	try {
 		const schema = Joi.object({
 			_id: SHORTSTR.allow(''),
-			status: SHORTSTR,
+			catId: SHORTSTR.allow(null),
+			status: SHORTSTR.required(),
 			name: SHORTSTR.required(),
 			SKU: SHORTSTR.required(),
 			description: LONGSTR.required(),
 			quantity: QUANTITY.required(),
 			price: PRICE.required(),
-			salePrice: PRICE.required(),
-			saleDate: DATE.allow(null),
+			salePrice: PRICE,
+			saleEndDate: DATE.allow(null),
+			saleStartDate: DATE.allow(null),
 		});
 		validator(schema, req, res, next);
 	} catch (error) {

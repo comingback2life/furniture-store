@@ -17,3 +17,11 @@ export const updateProduct = (filter, updateObj) => {
 export const deleteProduct = (filter) => {
 	return ProductSchema.findOneAndDelete(filter);
 };
+
+export const deleteManyProducts = (ids) => {
+	return ProductSchema.deleteMany({
+		_id: {
+			$in: ids,
+		},
+	});
+};
