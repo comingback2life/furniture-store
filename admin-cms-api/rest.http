@@ -106,3 +106,32 @@ Content-Type: application/json
 "status": "inactive",
 "_id": "62d9f7bb3cb4cbb968a3d490"
 }
+
+
+#------ Payment Method API ------ 
+###Get all payment methods
+GET http://localhost:8000/api/v1/payment-methods
+
+###POST  payment methods
+POST  http://localhost:8000/api/v1/payment-methods
+Content-Type: application/json
+
+ {
+  "name":"Credit Card",
+  "status":"active",
+  "decription":"Use this method to pay by credit or debit card"
+}
+
+###DELETE payment methods
+DELETE http://localhost:8000/api/v1/payment-methods/ashdkajshdk
+
+
+###Update  payment methods
+PATCH  http://localhost:8000/api/v1/payment-methods
+Content-Type: application/json
+
+ {
+  "name":"Credit Card",
+  "status":"active",
+  "decription":"Use this method to pay by credit or debit card"
+}

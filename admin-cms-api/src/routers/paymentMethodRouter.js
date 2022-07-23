@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/', newCategoryValidation, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
 		console.log(req.body);
 		res.json({
@@ -19,10 +19,8 @@ router.post('/', newCategoryValidation, async (req, res, next) => {
 	}
 });
 
-router.get('/:_id', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 	try {
-		const { _id } = req.params;
-		console.log(_id);
 		// const filter = {
 		// 	status: 'active',
 		// };
@@ -30,7 +28,6 @@ router.get('/:_id', async (req, res, next) => {
 		res.json({
 			status: 'success',
 			message: 'Payment Methods Found',
-			result,
 		});
 	} catch (error) {
 		next(error);
@@ -38,11 +35,25 @@ router.get('/:_id', async (req, res, next) => {
 });
 
 //delete categories
-router.delete('/', async (req, res, next) => {
+router.delete('/:_id', async (req, res, next) => {
 	try {
+		const { _id } = req.params;
+		console.log(_id);
 		res.json({
 			status: 'success',
 			message: 'The payment method has been deleted',
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.patch('/', async (req, res, next) => {
+	try {
+		console.log(req.body);
+		res.json({
+			status: 'success',
+			message: 'to do update post',
 		});
 	} catch (error) {
 		next(error);
