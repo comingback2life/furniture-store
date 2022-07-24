@@ -5,9 +5,20 @@ import {
 	postPaymentMethod,
 } from '../../helpers/axiosHelpers';
 import { toggleModal } from '../../system-state/systemSlice';
-import { setPaymentMethod } from './PaymentMethodSlice.js';
+import {
+	setPaymentMethod,
+	selectedPaymentMethod,
+} from './PaymentMethodSlice.js';
 
 export const fetchPaymentMethods = () => async (dispatch) => {
+	//calll axios to call api
+	const response = await getPaymentMethods();
+
+	response.status === 'success' && dispatch(setPaymentMethod(response.result));
+	//get data and set to seate
+};
+
+export const fetchSinglePaymentMethod = (_id) => async (dispatch) => {
 	//calll axios to call api
 	const response = await getPaymentMethods();
 
@@ -37,4 +48,19 @@ export const deletePaymentMethodAction = (_id) => async (dispatch) => {
 	toast[status](message);
 	const { result } = await getPaymentMethods();
 	status === 'success' && dispatch(setPaymentMethod(result)); // empty array should not be passed at all cost
+};
+
+export const editPaymentMethodAction = (_id) => async (dispatch) => {
+	dispatch(toggleModal());
+	const response = await getPaymentMethods(_id);
+
+	// const response = deletePaymentMethod(_id);
+	// toast.promise(response, {
+	// 	pending: 'Please wait...',
+	// });
+	// const { status, message } = await response;
+	// toast[status](message);
+	// const { result } = await getPaymentMethods();
+	response.status === 'success' &&
+		dispatch(selectedPaymentMethod(response.result)); // empty array should not be passed at all cost
 };

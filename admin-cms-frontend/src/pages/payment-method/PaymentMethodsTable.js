@@ -7,6 +7,7 @@ import { PaymentMethodEditForm } from '../../components/paymentMethod-form/Payme
 import {
 	deletePaymentMethodAction,
 	fetchPaymentMethods,
+	editPaymentMethodAction,
 } from './PaymentMethodActions.js';
 import { toggleModal } from '../../system-state/systemSlice.js';
 export const PaymentMethodsTable = () => {
@@ -19,6 +20,7 @@ export const PaymentMethodsTable = () => {
 	const { paymentMethods } = useSelector((state) => state.paymentMethod);
 	return (
 		<div className="">
+			<PaymentMethodEditForm />
 			<p>{paymentMethods.length} Payment Methods found</p>
 			<Table striped bordered hover>
 				<thead>
@@ -49,12 +51,15 @@ export const PaymentMethodsTable = () => {
 									{status}
 								</td>
 								<td>
-									<Button variant="danger mx-1">
+									<Button
+										variant="danger mx-1"
+										onClick={() => dispatch(deletePaymentMethodAction(_id))}
+									>
 										<i className="fa-solid fa-trash-can"></i>
 									</Button>
 									<Button
 										variant="warning"
-										onClick={() => dispatch(toggleModal())}
+										onClick={() => dispatch(editPaymentMethodAction(_id))}
 									>
 										<i className="fa-solid fa-pen-to-square"></i>
 									</Button>

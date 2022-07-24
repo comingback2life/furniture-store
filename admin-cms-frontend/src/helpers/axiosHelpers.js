@@ -84,8 +84,8 @@ export const updateProducts = (dataObj) => {
 
 /// PaymentMethods
 
-export const getPaymentMethods = () => {
-	const url = paymentMethodsEp;
+export const getPaymentMethods = (_id) => {
+	const url = paymentMethodsEp + '/' + _id;
 	return apiProcessor({ method: 'GET', url });
 };
 
