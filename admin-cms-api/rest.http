@@ -117,13 +117,13 @@ POST  http://localhost:8000/api/v1/payment-methods
 Content-Type: application/json
 
  {
-  "name":"Cash on Delivery",
+  "name":"Card",
   "status":"active",
-  "description":"Use this method to pay by cash on delivery"
+  "description":"Use this method to pay by Card"
 }
 
 ###DELETE payment methods
-DELETE http://localhost:8000/api/v1/payment-methods/62dd29eb471ded572115daa9
+DELETE http://localhost:8000/api/v1/payment-methods/62dd42345437b3f0f8cf815a
 
 
 ###Update  payment methods

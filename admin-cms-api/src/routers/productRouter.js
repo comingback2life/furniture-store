@@ -92,7 +92,6 @@ router.delete('/', async (req, res, next) => {
 			status: 'error',
 			message: 'Unable to delete the product, please try again later',
 		});
-		console.log(req.body, 'From Delete');
 	} catch (error) {
 		next(error);
 	}

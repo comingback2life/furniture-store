@@ -47,12 +47,9 @@ router.get('/', async (req, res, next) => {
 router.delete('/:_id', async (req, res, next) => {
 	try {
 		const { _id } = req.params;
-		console.log(_id);
-		if (_id.length) {
+		if (_id) {
 			const result = await deletePaymentMethodById(_id);
-			console.log(result.deletedCount);
-			return;
-			if (result?.deletedCount) {
+			if (result?._id) {
 				return res.json({
 					status: 'success',
 					message: 'Payment method has been deleted.',
