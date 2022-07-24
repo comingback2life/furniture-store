@@ -3,8 +3,12 @@ import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPaymentMethods } from './PaymentMethodActions.js';
-
+import { PaymentMethodEditForm } from '../../components/paymentMethod-form/PaymentMethodEditForm.js';
+import {
+	deletePaymentMethodAction,
+	fetchPaymentMethods,
+} from './PaymentMethodActions.js';
+import { toggleModal } from '../../system-state/systemSlice.js';
 export const PaymentMethodsTable = () => {
 	const dispatch = useDispatch();
 
@@ -48,7 +52,10 @@ export const PaymentMethodsTable = () => {
 									<Button variant="danger mx-1">
 										<i className="fa-solid fa-trash-can"></i>
 									</Button>
-									<Button variant="warning">
+									<Button
+										variant="warning"
+										onClick={() => dispatch(toggleModal())}
+									>
 										<i className="fa-solid fa-pen-to-square"></i>
 									</Button>
 								</td>
