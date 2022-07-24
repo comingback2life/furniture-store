@@ -131,8 +131,8 @@ PUT  http://localhost:8000/api/v1/payment-methods
 Content-Type: application/json
 
  {
-  "_id":"62dd29eb471ded572115daa9",
-  "name":"Credit/DEBIT CARD",
+  "_id":"62dd42955437b3f0f8cf8161",
+  "name":"Card",
   "status":"inactive",
   "decription":"Use this method to pay by credit or debit card"
 }
