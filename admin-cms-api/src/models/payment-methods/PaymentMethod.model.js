@@ -4,7 +4,7 @@ export const insertPaymentMethod = (obj) => {
 	return PaymentMethodSchema(obj).save();
 };
 
-export const getCategories = (filter) => {
+export const getPaymentMethod = (filter) => {
 	return PaymentMethodSchema.find(filter);
 };
 

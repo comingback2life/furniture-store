@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/', newPaymentMethodValidation, async (req, res, next) => {
 	try {
 		console.log(req.body);
 		res.json({
