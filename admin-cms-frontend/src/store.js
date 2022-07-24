@@ -4,6 +4,7 @@ import systemReducer from './system-state/systemSlice.js';
 import adminProfileSlice from './pages/admin-profile/AdminProfileSlice.js';
 import categoryReducer from './pages/categories/CategoriesSlice.js';
 import productReducer from './pages/product/productSlice.js';
+import paymentMethodReducer from './pages/payment-method/PaymentMethodSlice.js';
 const store = configureStore({
 	reducer: {
 		signInUp: signInUpReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
 		admin: adminProfileSlice,
 		categories: categoryReducer,
 		products: productReducer,
+		paymentMethod: paymentMethodReducer,
 	},
 });
 export default store;
