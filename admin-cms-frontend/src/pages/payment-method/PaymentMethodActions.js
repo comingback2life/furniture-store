@@ -21,5 +21,5 @@ export const postPaymentMethodAction = (dataObj) => async (dispatch) => {
 	const { status, message } = await response;
 	toast[status](message);
 	const { result } = await getPaymentMethods();
-	status === 'success' && dispatch(setPaymentMethod(result));
+	status === 'success' && dispatch(setPaymentMethod(result)); // empty array should not be passed at all cost
 };
