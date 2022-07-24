@@ -1,19 +1,30 @@
 import express from 'express';
-
+import { newPaymentMethodValidation } from '../middlewares/joi-validations/paymentValidation.js';
+import {
+	deletePaymentMethodById,
+	getAllPaymentMethods,
+	insertPaymentMethod,
+	updatePaymentMethod,
+} from '../models/payment-methods/PaymentMethod.model.js';
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/', newPaymentMethodValidation, async (req, res, next) => {
 	try {
-		console.log(req.body);
-		res.json({
-			status: 'success',
-			message: 'to do ',
-		});
+		const result = await insertPaymentMethod(req.body);
+		result?._id
+			? res.json({
+					status: 'success',
+					message: 'Payment method has been added successfully.',
+			  })
+			: res.json({
+					status: 'error',
+					message: 'Payment method could not be added.',
+			  });
 	} catch (error) {
 		error.status = 500;
 		if (error.message.includes('E11000 duplicate key error')) {
 			error.status = 200;
-			error.message = 'Category already exists.';
+			error.message = 'Payment method already exists.';
 		}
 		next(error);
 	}
@@ -21,13 +32,11 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
 	try {
-		// const filter = {
-		// 	status: 'active',
-		// };
-		// const result = await getAllCategories();
+		const result = await getAllPaymentMethods();
 		res.json({
 			status: 'success',
 			message: 'Payment Methods Found',
+			result,
 		});
 	} catch (error) {
 		next(error);
@@ -38,22 +47,39 @@ router.get('/', async (req, res, next) => {
 router.delete('/:_id', async (req, res, next) => {
 	try {
 		const { _id } = req.params;
-		console.log(_id);
+		if (_id) {
+			const result = await deletePaymentMethodById(_id);
+			if (result?._id) {
+				return res.json({
+					status: 'success',
+					message: 'Payment method has been deleted.',
+				});
+			}
+		}
 		res.json({
-			status: 'success',
-			message: 'The payment method has been deleted',
+			status: 'error',
+			message: 'The payment method could not be deleted',
 		});
 	} catch (error) {
 		next(error);
 	}
 });
 
-router.patch('/', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
 	try {
-		console.log(req.body);
+		const { _id, ...rest } = req.body;
+		if (typeof _id === 'string') {
+			const result = await updatePaymentMethod(_id, rest);
+			if (result?._id) {
+				return res.json({
+					status: 'success',
+					message: 'Payment method has been updatedly successfully.',
+				});
+			}
+		}
 		res.json({
-			status: 'success',
-			message: 'to do update post',
+			status: 'error',
+			message: 'Unable to update payment method. Please try again later.',
 		});
 	} catch (error) {
 		next(error);
