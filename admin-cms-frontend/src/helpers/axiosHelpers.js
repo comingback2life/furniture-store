@@ -3,6 +3,7 @@ const rootURL = 'http://localhost:8000/api/v1';
 const adminEP = rootURL + '/admin';
 const catEP = rootURL + '/categories';
 const productsEP = rootURL + '/products';
+const paymentMethodsEp = rootURL + '/payment-methods';
 // Admin APIs
 const apiProcessor = async ({ method, url, dataObj }) => {
 	try {
@@ -79,4 +80,11 @@ export const deleteProducts = (ids) => {
 export const updateProducts = (dataObj) => {
 	const url = productsEP;
 	return apiProcessor({ method: 'PUT', url, dataObj });
+};
+
+/// PaymentMethods
+
+export const getPaymentMethods = () => {
+	const url = paymentMethodsEp;
+	return apiProcessor({ method: 'GET', url });
 };
