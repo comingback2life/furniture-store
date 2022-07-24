@@ -117,21 +117,22 @@ POST  http://localhost:8000/api/v1/payment-methods
 Content-Type: application/json
 
  {
-  "name":"Credit Card",
+  "name":"Cash on Delivery",
   "status":"active",
-  "decription":"Use this method to pay by credit or debit card"
+  "description":"Use this method to pay by cash on delivery"
 }
 
 ###DELETE payment methods
-DELETE http://localhost:8000/api/v1/payment-methods/ashdkajshdk
+DELETE http://localhost:8000/api/v1/payment-methods/62dd29eb471ded572115daa9
 
 
 ###Update  payment methods
-PATCH  http://localhost:8000/api/v1/payment-methods
+PUT  http://localhost:8000/api/v1/payment-methods
 Content-Type: application/json
 
  {
-  "name":"Credit Card",
-  "status":"active",
+  "_id":"62dd29eb471ded572115daa9",
+  "name":"Credit/DEBIT CARD",
+  "status":"inactive",
   "decription":"Use this method to pay by credit or debit card"
 }
