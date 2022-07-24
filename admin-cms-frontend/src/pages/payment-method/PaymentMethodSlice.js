@@ -4,11 +4,11 @@ const initialState = {
 	selectedPaymentMethod: {},
 };
 
-const PaymentMethodSlice = createSlice({
-	name: 'paymentMethodSlice',
+const paymentMethodSlice = createSlice({
+	name: 'paymentMethod',
 	initialState,
 	reducers: {
-		setPaymentMethods: (state, { payload }) => {
+		setPaymentMethod: (state, { payload }) => {
 			state.paymentMethods = payload;
 		},
 		setSelectedPaymentMethod: (state, { payload }) => {
@@ -17,6 +17,6 @@ const PaymentMethodSlice = createSlice({
 	},
 });
 
-const { reducer, actions } = PaymentMethodSlice;
-export const { setPaymentMethods, selectedPaymentMethod } = actions;
+const { reducer, actions } = paymentMethodSlice;
+export const { setPaymentMethod, selectedPaymentMethod } = actions;
 export default reducer;

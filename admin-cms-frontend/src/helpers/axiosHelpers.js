@@ -88,3 +88,8 @@ export const getPaymentMethods = () => {
 	const url = paymentMethodsEp;
 	return apiProcessor({ method: 'GET', url });
 };
+
+export const postPaymentMethod = (dataObj) => {
+	const url = paymentMethodsEp;
+	return apiProcessor({ method: 'POST', url, dataObj });
+};

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPaymentMethods } from './PaymentMethodActions';
+import { fetchPaymentMethods } from './PaymentMethodActions.js';
 
 export const PaymentMethodsTable = () => {
 	const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const PaymentMethodsTable = () => {
 				<tbody>
 					{paymentMethods.map(({ _id, status, name, description }, i) => {
 						return (
-							<tr key={_id}>
+							<tr key={status + 'name' + name}>
 								<td>{i + 1}</td>
 								<td>
 									{name}
