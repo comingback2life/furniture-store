@@ -2,23 +2,43 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { requestPasswordResetOTPAction } from '../../pages/admin-profile/AdminProfileAction';
+const initialState = {
+	otp: '',
+	password: '',
+	confirmPassword: '',
+};
 export const ResetPasswordOTPForm = () => {
 	const dispatch = useDispatch();
-	const { passResetResponse, isLoading } = useSelector((state) => state.admin);
-	const [showAlert, setShowAlert] = useState(true);
-	const emailRef = useRef();
 
-	useEffect(() => {}, []);
+	const { passResetResponse, isLoading } = useSelector((state) => state.admin);
+	const [form, setForm] = useState({});
+	const [showAlert, setShowAlert] = useState(true);
+	const [error, setError] = useState('');
+	const emailRef = useRef();
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		const email = emailRef.current.value;
-		dispatch(requestPasswordResetOTPAction({ email }));
 		setShowAlert(true);
+	};
+
+	const handleOnChange = (e) => {
+		const { name, value } = e.target;
+		setError('');
+		setForm({
+			...form,
+			[name]: value,
+		});
+		if (name === 'confirmPassword') {
+			const { password } = form;
+			password !== value && setError('Passwords do not match');
+			const passwordValidation = new RegExp(
+				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+			);
+			!passwordValidation.test(password) &&
+				setError('Password does not follow the rule');
+
+			!form.password && setError('New password must be provided');
+		}
 	};
 	return (
 		<div className="login-container">
@@ -29,7 +49,7 @@ export const ResetPasswordOTPForm = () => {
 							<div className="card-img-left d-none d-md-flex"></div>
 							<div className="card-body p-4 p-sm-5">
 								<h4 className="card-title text-center mb-5 fw-light">
-									Reset Password
+									Reset Password !
 								</h4>
 								{isLoading && <Spinner variant="primary" animation="border" />}
 								{passResetResponse.message && showAlert && (
@@ -48,23 +68,53 @@ export const ResetPasswordOTPForm = () => {
 								<Form onSubmit={handleOnSubmit}>
 									<div className="form-floating mb-3">
 										<input
-											ref={emailRef}
-											type="email"
+											onChange={handleOnChange}
+											type="number"
 											className="form-control"
 											id="floatingInputEmail"
 											name="email"
-											placeholder="name@example.com"
 											required
 										/>
-										<Form.Label>Email</Form.Label>
+										<Form.Label>OTP</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="password"
+											className="form-control"
+											id="floatingInputEmail"
+											name="password"
+											required
+										/>
+										<Form.Text>
+											Password must contain lowercase, UPPERCASE , symbol and a
+											number and should not be less than 8 characters.
+										</Form.Text>
+
+										<Form.Label>Password</Form.Label>
+									</div>
+									<div className="form-floating mb-3">
+										<input
+											onChange={handleOnChange}
+											type="password"
+											className="form-control"
+											id="floatingInputEmail"
+											name="confirmPassword"
+											required
+										/>
+										<Form.Text className="text-danger fw-bold mt-2">
+											{error}
+										</Form.Text>
+										<Form.Label>Confirm Password</Form.Label>
 									</div>
 
 									<div className="d-grid mb-2">
 										<button
 											className="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
 											type="submit"
+											disabled={error}
 										>
-											Reset😓
+											Update Password 🥳
 										</button>
 									</div>
 								</Form>
