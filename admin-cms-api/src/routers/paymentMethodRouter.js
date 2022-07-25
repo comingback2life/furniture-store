@@ -3,6 +3,7 @@ import { newPaymentMethodValidation } from '../middlewares/joi-validations/payme
 import {
 	deletePaymentMethodById,
 	getAllPaymentMethods,
+	getPaymentMethod,
 	insertPaymentMethod,
 	updatePaymentMethod,
 } from '../models/payment-methods/PaymentMethod.model.js';
@@ -30,9 +31,12 @@ router.post('/', newPaymentMethodValidation, async (req, res, next) => {
 	}
 });
 
-router.get('/', async (req, res, next) => {
+router.get('/:_id?', async (req, res, next) => {
 	try {
-		const result = await getAllPaymentMethods();
+		const { _id } = req.params;
+		const result = _id
+			? await getPaymentMethod({ _id })
+			: await getAllPaymentMethods();
 		res.json({
 			status: 'success',
 			message: 'Payment Methods Found',
