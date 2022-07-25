@@ -47,7 +47,7 @@ export const profileUpdateNotification = async (emailData) => {
 		
 		We have received a  change request for your account. 
 		
-		If you did not choose to do it, please ignore this email and contact administrator immediately
+		If you did not choose to do it, please contact administrator immediately
 			`, // html body
 	};
 	emailProcessor(mailBody);

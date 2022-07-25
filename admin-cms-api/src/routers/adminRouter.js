@@ -12,7 +12,11 @@ import {
 	getAdminFiltered,
 } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
-import { OTPSendNotification, sendMail } from '../helpers/emailHelper.js';
+import {
+	OTPSendNotification,
+	profileUpdateNotification,
+	sendMail,
+} from '../helpers/emailHelper.js';
 import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
 import {
 	deleteSession,
@@ -213,6 +217,10 @@ router.patch('/password', async (req, res, next) => {
 		if (session?._id) {
 			const updateUser = await updateAdmin({ email }, updateObj);
 			if (updateUser._id) {
+				profileUpdateNotification({
+					fName: updateUser.fName,
+					email: updateUser.email,
+				});
 				return res.json({
 					status: 'success',
 					message: 'Password has been updated',
