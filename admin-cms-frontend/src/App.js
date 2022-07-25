@@ -19,7 +19,7 @@ function App() {
 				<Routes>
 					{/* private route */}
 					<Route path="/admin/dashboard" element={<Dashboard />}></Route>
-					<Route path="/admin/profile" element={<AdminProfile />}></Route>
+					<Route path="/admin-profile" element={<AdminProfile />}></Route>
 					<Route path="/admin/register" element={<RegisterPage />}></Route>
 					<Route path="/product/new" element={<NewProduct />}></Route>
 					<Route path="/products" element={<ProductPage />}></Route>
