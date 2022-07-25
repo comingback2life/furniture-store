@@ -18,5 +18,5 @@ const paymentMethodSlice = createSlice({
 });
 
 const { reducer, actions } = paymentMethodSlice;
-export const { setPaymentMethod, selectedPaymentMethod } = actions;
+export const { setPaymentMethod, setSelectedPaymentMethod } = actions;
 export default reducer;

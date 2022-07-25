@@ -5,7 +5,7 @@ export const insertPaymentMethod = (obj) => {
 };
 
 export const getPaymentMethod = (filter) => {
-	return PaymentMethodSchema.find(filter);
+	return PaymentMethodSchema.findOne(filter);
 };
 
 export const getAllPaymentMethods = () => {

@@ -85,7 +85,7 @@ export const updateProducts = (dataObj) => {
 /// PaymentMethods
 
 export const getPaymentMethods = (_id) => {
-	const url = paymentMethodsEp + '/' + _id;
+	const url = _id ? paymentMethodsEp + '/' + _id : paymentMethodsEp;
 	return apiProcessor({ method: 'GET', url });
 };
 

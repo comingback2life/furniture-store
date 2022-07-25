@@ -7,7 +7,7 @@ import {
 import { toggleModal } from '../../system-state/systemSlice';
 import {
 	setPaymentMethod,
-	selectedPaymentMethod,
+	setSelectedPaymentMethod,
 } from './PaymentMethodSlice.js';
 
 export const fetchPaymentMethods = () => async (dispatch) => {
@@ -20,9 +20,10 @@ export const fetchPaymentMethods = () => async (dispatch) => {
 
 export const fetchSinglePaymentMethod = (_id) => async (dispatch) => {
 	//calll axios to call api
-	const response = await getPaymentMethods();
+	const response = await getPaymentMethods(_id);
 
-	response.status === 'success' && dispatch(setPaymentMethod(response.result));
+	response.status === 'success' &&
+		dispatch(setSelectedPaymentMethod(response.result));
 	//get data and set to seate
 };
 
@@ -52,15 +53,5 @@ export const deletePaymentMethodAction = (_id) => async (dispatch) => {
 
 export const editPaymentMethodAction = (_id) => async (dispatch) => {
 	dispatch(toggleModal());
-	const response = await getPaymentMethods(_id);
-
-	// const response = deletePaymentMethod(_id);
-	// toast.promise(response, {
-	// 	pending: 'Please wait...',
-	// });
-	// const { status, message } = await response;
-	// toast[status](message);
-	// const { result } = await getPaymentMethods();
-	response.status === 'success' &&
-		dispatch(selectedPaymentMethod(response.result)); // empty array should not be passed at all cost
+	dispatch(fetchSinglePaymentMethod(_id));
 };
