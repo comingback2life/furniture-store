@@ -3,6 +3,7 @@ import {
 	emailVerificationValidation,
 	newAdminValidator,
 	loginValidation,
+	updateAdminValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
 import {
 	insertAdmin,
@@ -117,6 +118,36 @@ router.patch('/', (req, res) => {
 		status: 'success',
 		message: 'Pacth Route for Admin got Hit',
 	});
+});
+
+//update admin profile
+
+router.put('/', updateAdminValidation, async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+		const user = await getAdmin({ email });
+		if (user?._id) {
+			const isMatched = verifyPassword(password, user.password);
+			if (isMatched) {
+				const { _id, ...rest } = req.body;
+				const updatedAdmin = await updateAdmin({ id }, rest);
+				if (updatedAdmin?._id) {
+					//send email if the admin profile has been updated
+					return res.json({
+						status: 'success',
+						message: 'Your profile has been updated succesfully',
+					});
+				}
+			}
+		}
+		res.json({
+			status: 'success',
+			message: 'Invalid request, the profile could not be updated',
+		});
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
 });
 
 export default router;
