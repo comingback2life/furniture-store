@@ -56,6 +56,7 @@ export const AdminProfile = () => {
 			label: 'Date',
 			name: 'dob',
 			type: 'date',
+			value: form.dob ? form.dob.substr(0, 10) : undefined,
 		},
 		{
 			label: 'Current Password',
