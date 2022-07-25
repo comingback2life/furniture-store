@@ -58,7 +58,7 @@ export const LoginForm = () => {
 										<input
 											ref={passRef}
 											type="password"
-											value="123Samip"
+											value="Samip@123"
 											className="form-control"
 											id="floatingPassword"
 											placeholder="Password"

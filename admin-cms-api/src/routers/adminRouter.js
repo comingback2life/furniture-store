@@ -14,7 +14,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { OTPSendNotification, sendMail } from '../helpers/emailHelper.js';
 import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
-import { insertSession } from '../models/session/Session.model.js';
+import {
+	deleteSession,
+	getSession,
+	insertSession,
+} from '../models/session/Session.model.js';
 import { createOTP } from '../helpers/randomGeneratorHelper.js';
 const router = express.Router();
 
@@ -198,11 +202,26 @@ router.post('/otp-request', async (req, res, next) => {
 
 router.patch('/password', async (req, res, next) => {
 	try {
-		console.log(req.body);
-
+		const { OTP, email, password } = req.body;
+		const session = await deleteSession({
+			token: OTP,
+			associate: email,
+		});
+		const updateObj = {
+			userPassword: encryptPassword(password),
+		};
+		if (session?._id) {
+			const updateUser = await updateAdmin({ email }, updateObj);
+			if (updateUser._id) {
+				return res.json({
+					status: 'success',
+					message: 'Password has been updated',
+				});
+			}
+		}
 		res.json({
-			status: 'success',
-			message: 'Password has been updated',
+			status: 'error',
+			message: 'Could not update user, please check OTP and try again',
 		});
 	} catch (error) {
 		next(error);

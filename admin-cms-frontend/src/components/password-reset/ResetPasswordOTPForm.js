@@ -26,8 +26,6 @@ export const ResetPasswordOTPForm = () => {
 			return setError('Passwords still do not match');
 		}
 		rest.email = passResetEmail;
-		console.log(rest);
-		return;
 		dispatch(resetPasswordAction(rest));
 	};
 
