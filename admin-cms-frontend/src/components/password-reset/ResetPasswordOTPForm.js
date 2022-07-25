@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestPasswordResetOTPAction } from '../../pages/admin-profile/AdminProfileAction';
-export const ResetPasswordForm = () => {
+export const ResetPasswordOTPForm = () => {
 	const dispatch = useDispatch();
 	const { passResetResponse, isLoading } = useSelector((state) => state.admin);
 	const [showAlert, setShowAlert] = useState(true);
