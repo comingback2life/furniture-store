@@ -10,18 +10,22 @@ import {
 	editPaymentMethodAction,
 } from './PaymentMethodActions.js';
 import { toggleModal } from '../../system-state/systemSlice.js';
-export const PaymentMethodsTable = () => {
+import { PaymentMethodForm } from '../../components/paymentMethod-form/PaymentMethodForm.js';
+export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 	const dispatch = useDispatch();
-	const [showForm, setShowForm] = useState(false);
 
 	useEffect(() => {
 		dispatch(fetchPaymentMethods());
 	}, []);
 
+	const handleOnEditModalShow = (_id) => {
+		setShowForm(false);
+		dispatch(editPaymentMethodAction(_id));
+	};
 	const { paymentMethods } = useSelector((state) => state.paymentMethod);
 	return (
 		<div className="">
-			{showForm && <PaymentMethodEditForm />}
+			{showForm ? <PaymentMethodForm /> : <PaymentMethodEditForm />}
 			<p>{paymentMethods.length} Payment Methods found</p>
 			<Table striped bordered hover>
 				<thead>
@@ -60,10 +64,7 @@ export const PaymentMethodsTable = () => {
 									</Button>
 									<Button
 										variant="warning"
-										onClick={() =>
-											setShowForm(true) &&
-											dispatch(editPaymentMethodAction(_id))
-										}
+										onClick={() => handleOnEditModalShow(_id)}
 									>
 										<i className="fa-solid fa-pen-to-square"></i>
 									</Button>
