@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	fetchPaymentMethods,
 	postPaymentMethodAction,
+	updatePaymentMethodAction,
 } from '../../pages/payment-method/PaymentMethodActions';
 
 import { CustomInput } from '../custom-input/CustomInput';
@@ -52,14 +53,15 @@ export const PaymentMethodEditForm = () => {
 		});
 	};
 
-	// const handleOnSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(postPaymentMethodAction(form));
-	// };
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		const { __v, createdAt, updatedAt, ...rest } = form;
+		dispatch(updatePaymentMethodAction(rest));
+	};
 	return (
 		<div>
 			<MyVerticallyCenteredModal title="Edit Payment Method">
-				<Form>
+				<Form onSubmit={handleOnSubmit}>
 					<Form.Check
 						type="switch"
 						name="status"
@@ -78,7 +80,7 @@ export const PaymentMethodEditForm = () => {
 					))}
 					<Form.Group>
 						<Button variant="btn btn-outline-success" type="submit">
-							Add Payment Method
+							Update Payment Method
 						</Button>
 					</Form.Group>
 				</Form>

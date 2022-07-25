@@ -93,6 +93,10 @@ export const postPaymentMethod = (dataObj) => {
 	const url = paymentMethodsEp;
 	return apiProcessor({ method: 'POST', url, dataObj });
 };
+export const updatePaymentMethod = (dataObj) => {
+	const url = paymentMethodsEp;
+	return apiProcessor({ method: 'PUT', url, dataObj });
+};
 export const deletePaymentMethod = (_id) => {
 	const url = paymentMethodsEp + '/' + _id;
 	return apiProcessor({ method: 'DELETE', url });
