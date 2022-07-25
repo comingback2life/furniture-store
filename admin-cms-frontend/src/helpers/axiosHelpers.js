@@ -38,6 +38,10 @@ export const postEmailVerification = async (dataObj) => {
 	const url = adminEP + '/verify-email';
 	return apiProcessor({ method: 'POST', url, dataObj });
 };
+export const updateAdminUser = async (dataObj) => {
+	const url = adminEP;
+	return apiProcessor({ method: 'PUT', url, dataObj });
+};
 
 //categories API
 export const getCategories = () => {

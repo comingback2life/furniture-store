@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../../components/custom-input/CustomInput';
 import AdminLayout from '../layouts/AdminLayout';
+import { updateAdminProfileAction } from './AdminProfileAction';
 
 export const AdminProfile = () => {
 	const { user } = useSelector((state) => state.admin);
 	const [form, setForm] = useState({});
-
+	const dispatch = useDispatch();
 	useEffect(() => {
 		setForm(user);
 	}, [user]);
@@ -60,7 +61,7 @@ export const AdminProfile = () => {
 		},
 		{
 			label: 'Current Password',
-			name: 'currentPassword',
+			name: 'userPassword',
 			type: 'password',
 			required: true,
 		},
@@ -76,7 +77,9 @@ export const AdminProfile = () => {
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		console.log(form);
+		const { createdAt, emailValidationCode, updatedAt, __v, status, ...rest } =
+			form;
+		dispatch(updateAdminProfileAction(rest));
 	};
 	return (
 		<AdminLayout>

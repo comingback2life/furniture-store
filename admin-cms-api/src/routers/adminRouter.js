@@ -124,18 +124,20 @@ router.patch('/', (req, res) => {
 
 router.put('/', updateAdminValidation, async (req, res, next) => {
 	try {
-		const { email, password } = req.body;
+		const { email, userPassword } = req.body;
 		const user = await getAdmin({ email });
 		if (user?._id) {
-			const isMatched = verifyPassword(password, user.password);
+			const isMatched = verifyPassword(userPassword, user.userPassword);
 			if (isMatched) {
-				const { _id, ...rest } = req.body;
-				const updatedAdmin = await updateAdmin({ id }, rest);
+				const { _id, password, ...rest } = req.body;
+				console.log({ _id }, rest);
+				const updatedAdmin = await updateAdmin({ _id }, rest);
 				if (updatedAdmin?._id) {
 					//send email if the admin profile has been updated
 					return res.json({
 						status: 'success',
 						message: 'Your profile has been updated succesfully',
+						user: updatedAdmin,
 					});
 				}
 			}
