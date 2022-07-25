@@ -18,7 +18,7 @@ export const AdminProfile = () => {
 			name: 'fName',
 			type: 'text',
 			trim: 'true',
-			value: user.fName,
+			value: form.fName,
 			required: true,
 		},
 		{
@@ -26,7 +26,7 @@ export const AdminProfile = () => {
 			name: 'lName',
 			type: 'text',
 			trim: 'true',
-			value: user.lName,
+			value: form.lName,
 			required: true,
 		},
 		{
@@ -34,22 +34,23 @@ export const AdminProfile = () => {
 			name: 'email',
 			type: 'email',
 			trim: 'true',
-			value: user.email,
+			value: form.email,
 			required: true,
+			disabled: true,
 		},
 		{
 			label: 'Phone',
 			name: 'phone',
 			type: 'text',
 			trim: 'true',
-			value: user.phone,
+			value: form.phone,
 		},
 		{
 			label: 'Address',
 			name: 'address',
 			type: 'text',
 			trim: 'true',
-			value: user.address,
+			value: form.address,
 		},
 		{
 			label: 'Date',
@@ -60,15 +61,29 @@ export const AdminProfile = () => {
 			label: 'Current Password',
 			name: 'currentPassword',
 			type: 'password',
+			required: true,
 		},
 	];
+
+	const handleOnChange = (e) => {
+		const { name, value } = e.target;
+		setForm({
+			...form,
+			[name]: value,
+		});
+	};
+
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		console.log(form);
+	};
 	return (
 		<AdminLayout>
 			<div>
 				<h3 className="display-6">Your Profile</h3>
-				<Form>
+				<Form onSubmit={handleOnSubmit}>
 					{inputFields.map((item, i) => {
-						return <CustomInput key={i} {...item} />;
+						return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 					})}
 					<Button type="submit">Update Profile</Button>
 				</Form>
