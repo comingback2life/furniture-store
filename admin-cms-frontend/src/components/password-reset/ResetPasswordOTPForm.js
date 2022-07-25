@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetPasswordAction } from '../../pages/admin-profile/AdminProfileAction.js';
 const initialState = {
 	otp: '',
 	password: '',
@@ -10,15 +11,24 @@ const initialState = {
 export const ResetPasswordOTPForm = () => {
 	const dispatch = useDispatch();
 
-	const { passResetResponse, isLoading } = useSelector((state) => state.admin);
+	const { passResetResponse, isLoading, passResetEmail } = useSelector(
+		(state) => state.admin
+	);
 	const [form, setForm] = useState({});
 	const [showAlert, setShowAlert] = useState(true);
 	const [error, setError] = useState('');
-	const emailRef = useRef();
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		setShowAlert(true);
+		const { confirmPassword, ...rest } = form;
+		if (confirmPassword !== rest.password) {
+			return setError('Passwords still do not match');
+		}
+		rest.email = passResetEmail;
+		console.log(rest);
+		return;
+		dispatch(resetPasswordAction(rest));
 	};
 
 	const handleOnChange = (e) => {
@@ -28,16 +38,15 @@ export const ResetPasswordOTPForm = () => {
 			...form,
 			[name]: value,
 		});
-		if (name === 'confirmPassword') {
+		if (name === 'confirmPassword' || name === 'password') {
 			const { password } = form;
+			!password && setError('New password must be provided');
 			password !== value && setError('Passwords do not match');
 			const passwordValidation = new RegExp(
 				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
 			);
 			!passwordValidation.test(password) &&
 				setError('Password does not follow the rule');
-
-			!form.password && setError('New password must be provided');
 		}
 	};
 	return (
@@ -71,8 +80,8 @@ export const ResetPasswordOTPForm = () => {
 											onChange={handleOnChange}
 											type="number"
 											className="form-control"
-											id="floatingInputEmail"
-											name="email"
+											id="OTP"
+											name="OTP"
 											required
 										/>
 										<Form.Label>OTP</Form.Label>
@@ -82,7 +91,7 @@ export const ResetPasswordOTPForm = () => {
 											onChange={handleOnChange}
 											type="password"
 											className="form-control"
-											id="floatingInputEmail"
+											id="password"
 											name="password"
 											required
 										/>
@@ -98,7 +107,7 @@ export const ResetPasswordOTPForm = () => {
 											onChange={handleOnChange}
 											type="password"
 											className="form-control"
-											id="floatingInputEmail"
+											id="confirmPassword"
 											name="confirmPassword"
 											required
 										/>

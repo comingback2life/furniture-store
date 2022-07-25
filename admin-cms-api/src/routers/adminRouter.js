@@ -193,4 +193,19 @@ router.post('/otp-request', async (req, res, next) => {
 		next(error);
 	}
 });
+
+//reset password
+
+router.patch('/password', async (req, res, next) => {
+	try {
+		console.log(req.body);
+
+		res.json({
+			status: 'success',
+			message: 'Password has been updated',
+		});
+	} catch (error) {
+		next(error);
+	}
+});
 export default router;
