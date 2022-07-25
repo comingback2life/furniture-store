@@ -9,6 +9,7 @@ import {
 	PASSWORD,
 	REQUIREDSTR,
 	validator,
+	LONGSTR,
 } from './constantValidators.js';
 
 export const newAdminValidator = (req, res, next) => {
@@ -25,6 +26,20 @@ export const newAdminValidator = (req, res, next) => {
 	validator(schema, req, res, next);
 };
 
+export const updateAdminValidation = (req, res, next) => {
+	const schema = Joi.object({
+		_id: LONGSTR.required(),
+		fName: FNAME,
+		lName: LNAME,
+		email: EMAIL,
+		phone: PHONE,
+		dob: DATE,
+		address: ADDRESS,
+		userPassword: PASSWORD,
+	});
+
+	validator(schema, req, res, next);
+};
 export const emailVerificationValidation = (req, res, next) => {
 	const schema = Joi.object({
 		email: EMAIL,

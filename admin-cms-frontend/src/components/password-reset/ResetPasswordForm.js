@@ -1,32 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRef } from 'react';
-import { Form } from 'react-bootstrap';
+import { Alert, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './LoginForm.css';
-import { postLoginUserAction } from '../../pages/register-login/signInUpAction';
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-export const LoginForm = () => {
+import { requestPasswordResetOTPAction } from '../../pages/admin-profile/AdminProfileAction';
+export const ResetPasswordForm = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	// const { isLoading } = useSelector((state) => state.signInUp);
-	const { user } = useSelector((state) => state.admin);
+	const { passResetResponse, isLoading } = useSelector((state) => state.admin);
+	const [showAlert, setShowAlert] = useState(true);
 	const emailRef = useRef();
-	const passRef = useRef(); //
 
-	useEffect(() => {
-		user._id && navigate('/admin/dashboard');
-	}, [user]);
+	useEffect(() => {}, []);
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		const email = emailRef.current.value;
-		const userPassword = passRef.current.value; //if we want values without the component being re-rendered, useRef is a good idea.
-		if (!email || !userPassword) {
-			return alert('Both fields must be filled');
-		}
-		dispatch(postLoginUserAction({ email, userPassword }));
-		//Call the API through action file
+		dispatch(requestPasswordResetOTPAction({ email }));
+		setShowAlert(true);
 	};
 	return (
 		<div className="login-container">
@@ -37,8 +29,22 @@ export const LoginForm = () => {
 							<div className="card-img-left d-none d-md-flex"></div>
 							<div className="card-body p-4 p-sm-5">
 								<h4 className="card-title text-center mb-5 fw-light">
-									Welcome Back !
+									Reset Password
 								</h4>
+								{isLoading && <Spinner variant="primary" animation="border" />}
+								{passResetResponse.message && showAlert && (
+									<Alert
+										variant={
+											passResetResponse.status === 'success'
+												? 'success'
+												: 'danger'
+										}
+										dismissible
+										onClose={() => setShowAlert(false)}
+									>
+										{passResetResponse.message}
+									</Alert>
+								)}
 								<Form onSubmit={handleOnSubmit}>
 									<div className="form-floating mb-3">
 										<input
@@ -47,37 +53,25 @@ export const LoginForm = () => {
 											className="form-control"
 											id="floatingInputEmail"
 											name="email"
-											value="callmesamip@gmail.com"
 											placeholder="name@example.com"
 											required
 										/>
 										<Form.Label>Email</Form.Label>
 									</div>
 
-									<div className="form-floating mb-3">
-										<input
-											ref={passRef}
-											type="password"
-											value="Samip@123"
-											className="form-control"
-											id="floatingPassword"
-											placeholder="Password"
-											name="userPassword"
-											required
-										/>
-										<Form.Label>Password</Form.Label>
-									</div>
 									<div className="d-grid mb-2">
 										<button
 											className="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
 											type="submit"
 										>
-											Login
+											Reset😓
 										</button>
 									</div>
 								</Form>
 								<div className="text-end mt-4">
-									<a href="/reset-password">Forgot Password ?</a>
+									<a href="/reset-password">
+										I remember it, take me to login ?
+									</a>
 								</div>
 							</div>
 						</div>

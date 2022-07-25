@@ -3,6 +3,7 @@ import {
 	emailVerificationValidation,
 	newAdminValidator,
 	loginValidation,
+	updateAdminValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
 import {
 	insertAdmin,
@@ -11,8 +12,18 @@ import {
 	getAdminFiltered,
 } from '../models/admin/Admin.models.js';
 import { v4 as uuidv4 } from 'uuid';
-import { sendActivationEmail } from '../helpers/emailHelper.js';
+import {
+	OTPSendNotification,
+	profileUpdateNotification,
+	sendMail,
+} from '../helpers/emailHelper.js';
 import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
+import {
+	deleteSession,
+	getSession,
+	insertSession,
+} from '../models/session/Session.model.js';
+import { createOTP } from '../helpers/randomGeneratorHelper.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -32,7 +43,7 @@ router.post('/', newAdminValidator, async (req, res, next) => {
 		if (result?._id) {
 			//create unique url and send it to the user
 			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
-			sendActivationEmail({ fName: result.fName, activationLink });
+			sendMail({ fName: result.fName, activationLink });
 			res.json({
 				status: 'success',
 				message: 'New admin has been created succesfully',
@@ -115,8 +126,113 @@ router.post('/login', loginValidation, async (req, res, next) => {
 router.patch('/', (req, res) => {
 	res.json({
 		status: 'success',
-		message: 'Pacth Route for Admin got Hit',
+		message: 'Patch Route for Admin got Hit',
 	});
 });
 
+//update admin profile
+
+router.put('/', updateAdminValidation, async (req, res, next) => {
+	try {
+		const { email, userPassword } = req.body;
+		const user = await getAdmin({ email });
+		if (user?._id) {
+			const isMatched = verifyPassword(userPassword, user.userPassword);
+			if (isMatched) {
+				const { _id, password, ...rest } = req.body;
+				console.log({ _id }, rest);
+				const updatedAdmin = await updateAdmin({ _id }, rest);
+				if (updatedAdmin?._id) {
+					//send email if the admin profile has been updated
+					return res.json({
+						status: 'success',
+						message: 'Your profile has been updated succesfully',
+						user: updatedAdmin,
+					});
+				}
+			}
+		}
+		res.json({
+			status: 'success',
+			message: 'Invalid request, the profile could not be updated',
+		});
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
+});
+
+// password reset via OTP
+
+router.post('/otp-request', async (req, res, next) => {
+	try {
+		const { email } = req.body;
+		if (email) {
+			const user = await getAdmin({ email });
+			if (user?._id) {
+				//Create OTP and send Email
+
+				const dataObj = {
+					token: createOTP(),
+					associate: email,
+					type: 'passwordReset',
+				};
+				const result = await insertSession(dataObj);
+				if (result?._id) {
+					res.json({
+						status: 'success',
+						message:
+							'Please check your email. If the email exists, the OTP will be sent.',
+					});
+
+					return OTPSendNotification({
+						token: result.token,
+						email: result.associate,
+					});
+				}
+			}
+		}
+		res.json({
+			status: 'error',
+			message: 'Invalid Request',
+		});
+	} catch (error) {
+		error.status = 500;
+		next(error);
+	}
+});
+
+//reset password
+
+router.patch('/password', async (req, res, next) => {
+	try {
+		const { OTP, email, password } = req.body;
+		const session = await deleteSession({
+			token: OTP,
+			associate: email,
+		});
+		const updateObj = {
+			userPassword: encryptPassword(password),
+		};
+		if (session?._id) {
+			const updateAdmin = await updateAdmin({ email }, updateObj);
+			if (updateAdmin._id) {
+				profileUpdateNotification({
+					fName: updateAdmin.fName,
+					email: updateAdmin.email,
+				});
+				return res.json({
+					status: 'success',
+					message: 'Password has been updated',
+				});
+			}
+		}
+		res.json({
+			status: 'error',
+			message: 'Could not update user, please check OTP and try again',
+		});
+	} catch (error) {
+		next(error);
+	}
+});
 export default router;
