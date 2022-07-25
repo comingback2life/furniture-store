@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
@@ -12,6 +12,7 @@ import {
 import { toggleModal } from '../../system-state/systemSlice.js';
 export const PaymentMethodsTable = () => {
 	const dispatch = useDispatch();
+	const [showForm, setShowForm] = useState(false);
 
 	useEffect(() => {
 		dispatch(fetchPaymentMethods());
@@ -20,7 +21,7 @@ export const PaymentMethodsTable = () => {
 	const { paymentMethods } = useSelector((state) => state.paymentMethod);
 	return (
 		<div className="">
-			<PaymentMethodEditForm />
+			{showForm && <PaymentMethodEditForm />}
 			<p>{paymentMethods.length} Payment Methods found</p>
 			<Table striped bordered hover>
 				<thead>
@@ -59,7 +60,10 @@ export const PaymentMethodsTable = () => {
 									</Button>
 									<Button
 										variant="warning"
-										onClick={() => dispatch(editPaymentMethodAction(_id))}
+										onClick={() =>
+											setShowForm(true) &&
+											dispatch(editPaymentMethodAction(_id))
+										}
 									>
 										<i className="fa-solid fa-pen-to-square"></i>
 									</Button>

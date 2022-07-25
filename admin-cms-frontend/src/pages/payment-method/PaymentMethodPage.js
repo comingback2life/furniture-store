@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { PaymentMethodForm } from '../../components/paymentMethod-form/PaymentMethodForm.js';
@@ -7,9 +7,10 @@ import AdminLayout from '../layouts/AdminLayout.js';
 import { PaymentMethodsTable } from './PaymentMethodsTable.js';
 const PaymentMethodPage = () => {
 	const dispatch = useDispatch();
+	const [showForm, setShowForm] = useState(false);
 	return (
 		<AdminLayout>
-			<PaymentMethodForm />
+			{showForm && <PaymentMethodForm />}
 			<Row>
 				<Col>
 					<p className="display-6">Payment Methods</p>
@@ -19,7 +20,7 @@ const PaymentMethodPage = () => {
 				<Col className="text-end mb-3">
 					<Button
 						variant="outline-success"
-						onClick={() => dispatch(toggleModal())}
+						onClick={() => setShowForm(true) && dispatch(toggleModal())}
 					>
 						<i className="fa-solid fa-plus"></i>
 						Add New Payment Method
