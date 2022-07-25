@@ -126,7 +126,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 router.patch('/', (req, res) => {
 	res.json({
 		status: 'success',
-		message: 'Pacth Route for Admin got Hit',
+		message: 'Patch Route for Admin got Hit',
 	});
 });
 
@@ -215,11 +215,11 @@ router.patch('/password', async (req, res, next) => {
 			userPassword: encryptPassword(password),
 		};
 		if (session?._id) {
-			const updateUser = await updateAdmin({ email }, updateObj);
-			if (updateUser._id) {
+			const updateAdmin = await updateAdmin({ email }, updateObj);
+			if (updateAdmin._id) {
 				profileUpdateNotification({
-					fName: updateUser.fName,
-					email: updateUser.email,
+					fName: updateAdmin.fName,
+					email: updateAdmin.email,
 				});
 				return res.json({
 					status: 'success',
