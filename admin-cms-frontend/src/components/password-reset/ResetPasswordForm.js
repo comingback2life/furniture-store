@@ -2,11 +2,10 @@ import React from 'react';
 import { useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import './LoginForm.css';
 import { postLoginUserAction } from '../../pages/register-login/signInUpAction';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	// const { isLoading } = useSelector((state) => state.signInUp);
@@ -37,7 +36,7 @@ export const LoginForm = () => {
 							<div className="card-img-left d-none d-md-flex"></div>
 							<div className="card-body p-4 p-sm-5">
 								<h4 className="card-title text-center mb-5 fw-light">
-									Welcome Back !
+									Reset Password
 								</h4>
 								<Form onSubmit={handleOnSubmit}>
 									<div className="form-floating mb-3">

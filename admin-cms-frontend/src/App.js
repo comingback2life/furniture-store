@@ -12,6 +12,7 @@ import ProductPage from './pages/product/ProductPage';
 import NewProduct from './pages/product/NewProduct';
 import EditProductPage from './pages/product/EditProductPage';
 import PaymentMethodPage from './pages/payment-method/PaymentMethodPage';
+import ResetPasswordPage from './pages/register-login/ResetPasswordPage';
 function App() {
 	return (
 		<div>
@@ -36,6 +37,7 @@ function App() {
 
 					{/**public routes */}
 					<Route path="/admin/login" element={<LoginPage />}></Route>
+					<Route path="/reset-password" element={<ResetPasswordPage />}></Route>
 					<Route path="*" element={<h2>404, Page Not Found</h2>}></Route>
 				</Routes>
 			</BrowserRouter>
