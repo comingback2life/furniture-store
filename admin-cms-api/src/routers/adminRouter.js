@@ -235,4 +235,6 @@ router.patch('/password', async (req, res, next) => {
 		next(error);
 	}
 });
+//Update password when the admin is logged in.
+
 export default router;
