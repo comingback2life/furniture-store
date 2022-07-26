@@ -34,7 +34,13 @@ export const ProductForm = () => {
 		if (!form.status) {
 			form.status = 'inactive';
 		}
-		dispatch(postProductsAction(form));
+		const formData = new FormData();
+		for (const key in form) {
+			formData.append(key, form[key]);
+		}
+		productImages.length &&
+			[...productImages].map((item) => formData.append('images', item));
+		dispatch(postProductsAction(formData));
 	};
 	const inputFields = [
 		{
@@ -64,6 +70,7 @@ export const ProductForm = () => {
 			multiple: true,
 			accept: 'image/*',
 			onChange: handleOnImageSelect,
+			required: true,
 		},
 		{
 			name: 'price',
