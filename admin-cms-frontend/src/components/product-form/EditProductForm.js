@@ -21,7 +21,7 @@ export const EditProductForm = () => {
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
 		setForm(selectedProducts);
-	}, [selectedProducts]);
+	}, [selectedProducts, categories]);
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
@@ -209,6 +209,7 @@ export const EditProductForm = () => {
 								name="thumbnailImage"
 								value={imageLink}
 								type="radio"
+								checked={imageLink === form.thumbnailImage} //if the localState has the thumbnail image and if it does check the radiobox
 							></Form.Check>
 							<img
 								src={
