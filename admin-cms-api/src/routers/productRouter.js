@@ -14,11 +14,10 @@ import {
 } from '../models/product/Product.model.js';
 const router = express.Router();
 
-const multerStorage = multer.diskStorage({
+const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		console.log(file, 'asasasasasas');
 		let error = null;
-		cb(error, './public/img/products');
+		cb(error, 'public/img/products');
 	},
 	filename: (req, file, cb) => {
 		const fullFileName = file.originalname;
@@ -26,7 +25,7 @@ const multerStorage = multer.diskStorage({
 	},
 });
 
-const upload = multer({ multerStorage });
+const upload = multer({ storage });
 
 router.get('/:_id?', async (req, res, next) => {
 	//optional IDs
@@ -52,7 +51,7 @@ router.post(
 	newProductsValidation,
 	async (req, res, next) => {
 		try {
-			console.log(req.body);
+			console.log(req.files);
 			return;
 			const { name } = req.body;
 			const slug = slugify(name, {

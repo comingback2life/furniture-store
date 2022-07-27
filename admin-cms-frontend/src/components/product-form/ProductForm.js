@@ -40,6 +40,9 @@ export const ProductForm = () => {
 		}
 		productImages.length &&
 			[...productImages].map((item) => formData.append('images', item));
+		formData.forEach((item) => {
+			console.log(item);
+		});
 		dispatch(postProductsAction(formData));
 	};
 	const inputFields = [
