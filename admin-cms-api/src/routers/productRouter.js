@@ -107,6 +107,7 @@ router.put(
 				? res.json({
 						status: 'success',
 						message: 'Product has been updated',
+						result,
 				  })
 				: res.json({
 						status: 'error',
