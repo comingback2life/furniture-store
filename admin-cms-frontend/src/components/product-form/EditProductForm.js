@@ -19,8 +19,7 @@ export const EditProductForm = () => {
 
 	const [form, setForm] = useState({});
 	useEffect(() => {
-		dispatch(fetchCategoriesAction());
-		setForm(selectedProducts);
+		dispatch(fetchCategoriesAction()) && setForm(selectedProducts);
 	}, [selectedProducts]);
 
 	const handleOnChange = (e) => {
