@@ -32,6 +32,9 @@ export const newProductsValidation = (req, res, next) => {
 };
 export const updateProductsValidation = (req, res, next) => {
 	try {
+		req.body.saleEndDate === 'null' ? null : req.body.saleEndDate;
+		req.body.saleStartDate === 'null' ? null : req.body.saleStartDate;
+
 		const schema = Joi.object({
 			_id: SHORTSTR.required(),
 			catId: SHORTSTR.required(),
@@ -43,6 +46,9 @@ export const updateProductsValidation = (req, res, next) => {
 			salePrice: PRICE,
 			saleEndDate: DATE.allow(null),
 			saleStartDate: DATE.allow(null),
+			images: LONGSTR.allow(null).allow(''),
+			thumbnailImage: SHORTSTR,
+			imageToDelete: LONGSTR.allow(null).allow(''),
 		});
 		validator(schema, req, res, next);
 	} catch (error) {

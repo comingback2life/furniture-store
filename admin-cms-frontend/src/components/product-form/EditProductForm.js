@@ -51,25 +51,25 @@ export const EditProductForm = () => {
 	console.log(form);
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
+
 		if (!form.status) {
 			form.status = 'inactive';
 		}
 		if (!window.confirm('Are you sure you want to update the product')) return;
-		const {
-			__v,
-			updatedAt,
-			thumbnailImage,
-			slug,
-			SKU,
-			ratings,
-			image,
-			createdAt,
-			...rest
-		} = form;
+
+		const { __v, updatedAt, slug, SKU, ratings, createdAt, ...rest } = form;
 		rest.salePrice = Number(rest.salePrice) ? +rest.salePrice : 0;
-		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : null;
-		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : null;
-		dispatch(updateProductAction(rest));
+		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : 'null';
+		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : 'null';
+
+		const formData = new FormData();
+		for (const key in rest) {
+			formData.append(key, rest[key]); //append formData in key:value pair
+		}
+		productImages.length &&
+			[...productImages].map((img) => formData.append('productImages', img));
+		formData.append('imageToDelete', imageToDelete);
+		dispatch(updateProductAction(formData));
 	};
 	const inputFields = [
 		{
