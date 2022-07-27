@@ -13,13 +13,21 @@ import {
 	updateProductById,
 } from '../models/product/Product.model.js';
 const router = express.Router();
-const storage = multer.diskStorage({
+
+const multerStorage = multer.diskStorage({
 	destination: (req, file, cb) => {
+		console.log(file, 'asasasasasas');
 		let error = null;
-		cb(error, 'public/img/products');
+		cb(error, './public/img/products');
 	},
-	filename: '',
+	filename: (req, file, cb) => {
+		const fullFileName = file.originalname;
+		cb(null, fullFileName);
+	},
 });
+
+const upload = multer({ multerStorage });
+
 router.get('/:_id?', async (req, res, next) => {
 	//optional IDs
 	const { _id } = req.params;
@@ -38,32 +46,40 @@ router.get('/:_id?', async (req, res, next) => {
 		next(error);
 	}
 });
-router.post('/', newProductsValidation, async (req, res, next) => {
-	try {
-		const { name } = req.body;
-		const slug = slugify(name, {
-			trim: true,
-			lower: true,
-		});
-		const result = await insertProduct({ ...req.body, slug });
-		result?._id
-			? res.json({
-					status: 'success',
-					message: 'Product added successfully',
-			  })
-			: res.json({
-					status: 'error',
-					message: 'Product could not be added',
-			  });
-	} catch (error) {
-		//duplicate slug and SKU should be checked
-		if (error.message.includes('E11000 duplicate key error collection')) {
-			error.message = 'Another product with similar name or SKU already exists';
-			error.status = 200;
+router.post(
+	'/',
+	upload.array('images', 5),
+	newProductsValidation,
+	async (req, res, next) => {
+		try {
+			console.log(req.body);
+			return;
+			const { name } = req.body;
+			const slug = slugify(name, {
+				trim: true,
+				lower: true,
+			});
+			const result = await insertProduct({ ...req.body, slug });
+			result?._id
+				? res.json({
+						status: 'success',
+						message: 'Product added successfully',
+				  })
+				: res.json({
+						status: 'error',
+						message: 'Product could not be added',
+				  });
+		} catch (error) {
+			//duplicate slug and SKU should be checked
+			if (error.message.includes('E11000 duplicate key error collection')) {
+				error.message =
+					'Another product with similar name or SKU already exists';
+				error.status = 200;
+			}
+			next(error);
 		}
-		next(error);
 	}
-});
+);
 router.put('/', updateProductsValidation, async (req, res, next) => {
 	try {
 		const { _id, ...rest } = req.body;
