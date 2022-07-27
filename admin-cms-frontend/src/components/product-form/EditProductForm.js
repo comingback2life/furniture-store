@@ -11,13 +11,15 @@ import {
 
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
+
 	const { categories } = useSelector((state) => state.categories);
 	const { selectedProducts } = useSelector((state) => state.products);
+	const [productImages, setProductImages] = useState([]);
+	const [imageToDelete, setImageToDelete] = useState([]);
 
 	const [form, setForm] = useState({});
 	useEffect(() => {
-		dispatch(fetchCategoriesAction());
-		setForm(selectedProducts);
+		dispatch(fetchCategoriesAction()) && setForm(selectedProducts);
 	}, [selectedProducts]);
 
 	const handleOnChange = (e) => {
@@ -31,27 +33,42 @@ export const EditProductForm = () => {
 		});
 	};
 
+	const handleOnImageSelect = (e) => {
+		const { files } = e.target;
+		setProductImages(files);
+	};
+
+	const handleOnImageDelete = (e) => {
+		const { name, checked, value } = e.target;
+		if (checked) {
+			setImageToDelete([...imageToDelete, value]);
+		} else {
+			setImageToDelete(imageToDelete.filter((imgPath) => imgPath !== value));
+		}
+	};
+
+	console.log(form);
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
+
 		if (!form.status) {
 			form.status = 'inactive';
 		}
 		if (!window.confirm('Are you sure you want to update the product')) return;
-		const {
-			__v,
-			updatedAt,
-			thumbnailImage,
-			slug,
-			SKU,
-			ratings,
-			image,
-			createdAt,
-			...rest
-		} = form;
+
+		const { __v, updatedAt, slug, SKU, ratings, createdAt, ...rest } = form;
 		rest.salePrice = Number(rest.salePrice) ? +rest.salePrice : 0;
-		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : null;
-		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : null;
-		dispatch(updateProductAction(rest));
+		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : 'null';
+		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : 'null';
+
+		const formData = new FormData();
+		for (const key in rest) {
+			formData.append(key, rest[key]); //append formData in key:value pair
+		}
+		productImages.length &&
+			[...productImages].map((img) => formData.append('productImages', img));
+		formData.append('imageToDelete', imageToDelete);
+		dispatch(updateProductAction(formData));
 	};
 	const inputFields = [
 		{
@@ -87,6 +104,14 @@ export const EditProductForm = () => {
 			placeholder: '10',
 			required: true,
 			value: form.quantity,
+		},
+		{
+			name: 'images',
+			type: 'file',
+			multiple: true,
+			accept: 'image/*',
+			onChange: handleOnImageSelect,
+			label: 'Images',
 		},
 		{
 			name: 'price',
@@ -161,9 +186,49 @@ export const EditProductForm = () => {
 				</Form.Select>
 			</Form.Group>
 			{inputFields.map((item, i) => {
-				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
+				return (
+					<CustomInput
+						key={i}
+						{...item}
+						onChange={
+							item.name === 'images' ? handleOnImageSelect : handleOnChange
+						}
+					/>
+				);
 			})}
-			<Button variant="primary" type="submit">
+			<hr />
+			<div className="d-flex">
+				{selectedProducts.images &&
+					selectedProducts.images.length > 0 &&
+					selectedProducts.images.map((imageLink) => (
+						<div className="imgs p-1">
+							<Form.Check
+								label="Thumbnail ?"
+								onChange={handleOnChange}
+								name="thumbnailImage"
+								value={imageLink}
+								type="radio"
+							></Form.Check>
+							<img
+								src={
+									process.env.REACT_APP_IMAGE_SERVER_URL + imageLink.substr(6)
+								}
+								crossorigin="anonymous"
+								alt="product-img"
+								key={imageLink}
+								width="150px"
+								className="img-thumbnail rounded"
+							/>
+
+							<Form.Check
+								label="Delete"
+								value={imageLink}
+								onChange={handleOnImageDelete}
+							></Form.Check>
+						</div>
+					))}
+			</div>
+			<Button variant="warning" type="submit">
 				Update Product
 			</Button>
 		</Form>
