@@ -11,8 +11,11 @@ import {
 
 export const EditProductForm = () => {
 	const dispatch = useDispatch();
+
 	const { categories } = useSelector((state) => state.categories);
 	const { selectedProducts } = useSelector((state) => state.products);
+	const [productImages, setProductImages] = useState([]);
+	const [imageToDelete, setImageToDelete] = useState([]);
 
 	const [form, setForm] = useState({});
 	useEffect(() => {
@@ -31,6 +34,21 @@ export const EditProductForm = () => {
 		});
 	};
 
+	const handleOnImageSelect = (e) => {
+		const { files } = e.target;
+		setProductImages(files);
+	};
+
+	const handleOnImageDelete = (e) => {
+		const { name, checked, value } = e.target;
+		if (checked) {
+			setImageToDelete([...imageToDelete, value]);
+		} else {
+			setImageToDelete(imageToDelete.filter((imgPath) => imgPath !== value));
+		}
+	};
+
+	console.log(form);
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		if (!form.status) {
@@ -93,8 +111,7 @@ export const EditProductForm = () => {
 			type: 'file',
 			multiple: true,
 			accept: 'image/*',
-			onChange: '',
-			required: true,
+			onChange: handleOnImageSelect,
 			label: 'Images',
 		},
 		{
@@ -170,27 +187,49 @@ export const EditProductForm = () => {
 				</Form.Select>
 			</Form.Group>
 			{inputFields.map((item, i) => {
-				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
+				return (
+					<CustomInput
+						key={i}
+						{...item}
+						onChange={
+							item.name === 'images' ? handleOnImageSelect : handleOnChange
+						}
+					/>
+				);
 			})}
+			<hr />
 			<div className="d-flex">
 				{selectedProducts.images &&
 					selectedProducts.images.length > 0 &&
-					selectedProducts.images.map((img) => (
+					selectedProducts.images.map((imageLink) => (
 						<div className="imgs p-1">
-							<Form.Check label="Thumbnail ?"></Form.Check>
+							<Form.Check
+								label="Thumbnail ?"
+								onChange={handleOnChange}
+								name="thumbnailImage"
+								value={imageLink}
+								type="radio"
+							></Form.Check>
 							<img
-								src={process.env.REACT_APP_IMAGE_SERVER_URL + img.substr(6)}
+								src={
+									process.env.REACT_APP_IMAGE_SERVER_URL + imageLink.substr(6)
+								}
 								crossorigin="anonymous"
 								alt="product-img"
-								key={img}
+								key={imageLink}
 								width="150px"
 								className="img-thumbnail rounded"
 							/>
-							<Form.Check label="Delete"></Form.Check>
+
+							<Form.Check
+								label="Delete"
+								value={imageLink}
+								onChange={handleOnImageDelete}
+							></Form.Check>
 						</div>
 					))}
 			</div>
-			<Button variant="primary" type="submit">
+			<Button variant="warning" type="submit">
 				Update Product
 			</Button>
 		</Form>
