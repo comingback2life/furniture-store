@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 		cb(error, 'public/img/products');
 	},
 	filename: (req, file, cb) => {
-		const fullFileName = file.originalname;
+		const fullFileName = Date.now() + '-' + file.originalname; //unique file name so that the image is not overriden
 		cb(null, fullFileName);
 	},
 });
@@ -52,8 +52,7 @@ router.post(
 	newProductsValidation,
 	async (req, res, next) => {
 		try {
-			console.log(req.body);
-			return;
+			const filePaths = req.files?.map((image) => image.path); //req.body has an object called files which holds the files
 			const { name } = req.body;
 			const slug = slugify(name, {
 				trim: true,
