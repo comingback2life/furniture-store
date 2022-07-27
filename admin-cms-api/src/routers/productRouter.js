@@ -58,7 +58,11 @@ router.post(
 				trim: true,
 				lower: true,
 			});
-			const result = await insertProduct({ ...req.body, slug });
+			const result = await insertProduct({
+				...req.body,
+				slug,
+				images: filePaths,
+			}); //filePaths consist the image-paths and images is the name in the schema.
 			result?._id
 				? res.json({
 						status: 'success',

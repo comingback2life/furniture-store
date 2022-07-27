@@ -3,11 +3,16 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import path from 'path';
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
+
+//serve static content
+const __dirname = path.resolve(); //absolute path for the API folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //dbConnection
 import { mongoConnect } from './src/config/dbConfig.js';
