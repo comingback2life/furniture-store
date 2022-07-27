@@ -21,7 +21,7 @@ export const EditProductForm = () => {
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
 		setForm(selectedProducts);
-	}, [selectedProducts, categories]);
+	}, [selectedProducts]);
 
 	const handleOnChange = (e) => {
 		let { checked, name, value } = e.target;
