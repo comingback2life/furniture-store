@@ -215,11 +215,11 @@ router.patch('/password', async (req, res, next) => {
 			userPassword: encryptPassword(password),
 		};
 		if (session?._id) {
-			const updateAdmin = await updateAdmin({ email }, updateObj);
-			if (updateAdmin._id) {
+			const updatedAdmin = await updateAdmin({ email }, updateObj);
+			if (updatedAdmin._id) {
 				profileUpdateNotification({
-					fName: updateAdmin.fName,
-					email: updateAdmin.email,
+					fName: updatedAdmin.fName,
+					email: updatedAdmin.email,
 				});
 				return res.json({
 					status: 'success',

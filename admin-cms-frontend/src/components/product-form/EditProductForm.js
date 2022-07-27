@@ -89,6 +89,15 @@ export const EditProductForm = () => {
 			value: form.quantity,
 		},
 		{
+			name: 'images',
+			type: 'file',
+			multiple: true,
+			accept: 'image/*',
+			onChange: '',
+			required: true,
+			label: 'Images',
+		},
+		{
 			name: 'price',
 			label: 'Price',
 			type: 'number',
@@ -167,14 +176,18 @@ export const EditProductForm = () => {
 				{selectedProducts.images &&
 					selectedProducts.images.length > 0 &&
 					selectedProducts.images.map((img) => (
-						<img
-							src={process.env.REACT_APP_IMAGE_SERVER_URL + img.substr(6)}
-							crossorigin="anonymous"
-							alt="product-img"
-							key={img}
-							width="250px"
-							className="img-thumbnail rounded"
-						></img>
+						<div className="imgs p-1">
+							<Form.Check label="Thumbnail ?"></Form.Check>
+							<img
+								src={process.env.REACT_APP_IMAGE_SERVER_URL + img.substr(6)}
+								crossorigin="anonymous"
+								alt="product-img"
+								key={img}
+								width="150px"
+								className="img-thumbnail rounded"
+							/>
+							<Form.Check label="Delete"></Form.Check>
+						</div>
 					))}
 			</div>
 			<Button variant="primary" type="submit">
