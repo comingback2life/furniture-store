@@ -10,6 +10,8 @@ import {
 
 export const newProductsValidation = (req, res, next) => {
 	try {
+		req.body.saleEndDate === 'null' ? null : req.body.saleEndDate;
+		req.body.saleStartDate === 'null' ? null : req.body.saleStartDate;
 		const schema = Joi.object({
 			_id: SHORTSTR.allow(''),
 			catId: SHORTSTR.allow(null),

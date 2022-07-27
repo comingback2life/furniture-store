@@ -16,6 +16,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
+		console.log(file);
 		let error = null;
 		cb(error, 'public/img/products');
 	},
@@ -51,7 +52,7 @@ router.post(
 	newProductsValidation,
 	async (req, res, next) => {
 		try {
-			console.log(req.files);
+			console.log(req.body);
 			return;
 			const { name } = req.body;
 			const slug = slugify(name, {
