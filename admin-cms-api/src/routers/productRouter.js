@@ -95,7 +95,7 @@ router.put(
 
 			//make new array for the images and replace in the database
 			const images = files.map((img) => img.path);
-			const oldImageList = [...rest.images]; //old images from the database
+			const oldImageList = rest.images.split(','); //old images from the database
 			const filteredImages = oldImageList.filter(
 				(images) => !imageToDelete.includes(images)
 			); //filter the old imagelist from the database if it is included in the imageToDeleteList
@@ -107,6 +107,7 @@ router.put(
 				? res.json({
 						status: 'success',
 						message: 'Product has been updated',
+						result,
 				  })
 				: res.json({
 						status: 'error',
