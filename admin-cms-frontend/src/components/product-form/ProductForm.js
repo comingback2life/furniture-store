@@ -10,6 +10,7 @@ export const ProductForm = () => {
 	const dispatch = useDispatch();
 	const { categories } = useSelector((state) => state.categories);
 	const [form, setForm] = useState({});
+	const [productImages, setProductImages] = useState([]);
 	useEffect(() => {
 		dispatch(fetchCategoriesAction());
 	}, []);
@@ -24,13 +25,25 @@ export const ProductForm = () => {
 			[name]: value,
 		});
 	};
-
+	const handleOnImageSelect = (e) => {
+		const { files } = e.target;
+		setProductImages(files);
+	};
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		if (!form.status) {
 			form.status = 'inactive';
 		}
-		dispatch(postProductsAction(form));
+		const formData = new FormData();
+		for (const key in form) {
+			formData.append(key, form[key]);
+		}
+		productImages.length &&
+			[...productImages].map((item) => formData.append('images', item));
+		formData.forEach((item) => {
+			console.log(item);
+		});
+		dispatch(postProductsAction(formData));
 	};
 	const inputFields = [
 		{
@@ -52,6 +65,14 @@ export const ProductForm = () => {
 			label: 'Quantity',
 			type: 'number',
 			placeholder: '10',
+			required: true,
+		},
+		{
+			name: 'images',
+			type: 'file',
+			multiple: true,
+			accept: 'image/*',
+			onChange: handleOnImageSelect,
 			required: true,
 		},
 		{
@@ -116,8 +137,17 @@ export const ProductForm = () => {
 				</Form.Select>
 			</Form.Group>
 			{inputFields.map((item, i) => {
-				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
+				return (
+					<CustomInput
+						key={i}
+						{...item}
+						onChange={
+							item.name === 'images' ? handleOnImageSelect : handleOnChange
+						}
+					/>
+				);
 			})}
+			<Form.Group className="mb-3"></Form.Group>
 			<Button variant="primary" type="submit">
 				Submit
 			</Button>
