@@ -100,7 +100,7 @@ router.put(
 				(images) => !imageToDelete.includes(images)
 			); //filter the old imagelist from the database if it is included in the imageToDeleteList
 
-			rest.images = [...filteredImages, ...images]; //filteredImages consists of the new imageList and the images are the newly addeded image from the form
+			rest.images = [filteredImages, images]; //filteredImages consists of the new imageList and the images are the newly addeded image from the form
 			//delete image from the file system
 			const result = await updateProductById(_id, rest);
 			result?._id
