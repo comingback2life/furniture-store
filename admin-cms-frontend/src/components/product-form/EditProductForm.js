@@ -163,6 +163,20 @@ export const EditProductForm = () => {
 			{inputFields.map((item, i) => {
 				return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 			})}
+			<div className="d-flex">
+				{selectedProducts.images &&
+					selectedProducts.images.length > 0 &&
+					selectedProducts.images.map((img) => (
+						<img
+							src={process.env.REACT_APP_IMAGE_SERVER_URL + img.substr(6)}
+							crossorigin="anonymous"
+							alt="product-img"
+							key={img}
+							width="250px"
+							className="img-thumbnail rounded"
+						></img>
+					))}
+			</div>
 			<Button variant="primary" type="submit">
 				Update Product
 			</Button>

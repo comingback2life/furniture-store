@@ -74,6 +74,7 @@ export const ProductForm = () => {
 			accept: 'image/*',
 			onChange: handleOnImageSelect,
 			required: true,
+			label: 'Images',
 		},
 		{
 			name: 'price',

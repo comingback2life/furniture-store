@@ -62,7 +62,8 @@ router.post(
 				...req.body,
 				slug,
 				images: filePaths,
-			}); //filePaths consist the image-paths and images is the name in the schema.
+				thumbnailImage: filePaths[0],
+			}); //filePaths consist the image-paths and images is the name in the schema
 			result?._id
 				? res.json({
 						status: 'success',
