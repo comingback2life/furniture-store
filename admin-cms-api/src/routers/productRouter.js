@@ -1,5 +1,6 @@
 import express from 'express';
 import slugify from 'slugify';
+import multer from 'multer';
 import {
 	newProductsValidation,
 	updateProductsValidation,
@@ -12,7 +13,13 @@ import {
 	updateProductById,
 } from '../models/product/Product.model.js';
 const router = express.Router();
-
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		let error = null;
+		cb(error, 'public/img/products');
+	},
+	filename: '',
+});
 router.get('/:_id?', async (req, res, next) => {
 	//optional IDs
 	const { _id } = req.params;
