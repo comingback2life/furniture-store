@@ -139,7 +139,7 @@ router.put('/', updateAdminValidation, async (req, res, next) => {
 		if (user?._id) {
 			const isMatched = verifyPassword(userPassword, user.userPassword);
 			if (isMatched) {
-				const { _id, password, ...rest } = req.body;
+				const { _id, userPassword, ...rest } = req.body;
 				console.log({ _id }, rest);
 				const updatedAdmin = await updateAdmin({ _id }, rest);
 				if (updatedAdmin?._id) {
