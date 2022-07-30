@@ -115,10 +115,23 @@ export const AdminProfile = () => {
 					{inputFields.map((item, i) => {
 						return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 					})}
-					<Button type="submit">Update Profile</Button>
+					<Button type="submit" className="m-3">
+						Update Profile
+					</Button>
 				</Form>
 				<hr />
-				<div className="update-password"></div>
+				<div className="update-password">
+					<Form onSubmit={handleOnSubmit}>
+						{resetPasswordFields.map((item, i) => {
+							return (
+								<CustomInput key={i} {...item} onChange={handleOnChange} />
+							);
+						})}
+						<Button type="submit" className="m-3">
+							Update Profile
+						</Button>
+					</Form>
+				</div>
 			</div>
 		</AdminLayout>
 	);
