@@ -4,6 +4,7 @@ import {
 	newAdminValidator,
 	loginValidation,
 	updateAdminValidation,
+	updateAdminPasswordValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
 import {
 	insertAdmin,
@@ -235,6 +236,39 @@ router.patch('/password', async (req, res, next) => {
 		next(error);
 	}
 });
+
 //Update password when the admin is logged in.
+router.patch(
+	'/update-password',
+	updateAdminPasswordValidation,
+	async (req, res, next) => {
+		try {
+			const { currentPassword, email, userPassword } = req.body;
+
+			const updateObj = {
+				userPassword: encryptPassword(userPassword),
+			};
+
+			// const updatedAdmin = await updateAdmin({ email }, updateObj);
+			// if (updatedAdmin._id) {
+			// 	profileUpdateNotification({
+			// 		fName: updatedAdmin.fName,
+			// 		email: updatedAdmin.email,
+			// 	});
+			// 	return res.json({
+			// 		status: 'success',
+			// 		message: 'Password has been updated',
+			// 	});
+			// }
+			res.json({
+				status: 'error',
+				message: 'Could not update user, please check OTP and try again',
+			});
+		} catch (error) {
+			error.status = 500;
+			next(error);
+		}
+	}
+);
 
 export default router;

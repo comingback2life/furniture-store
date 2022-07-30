@@ -116,13 +116,15 @@ export const AdminProfile = () => {
 	};
 	const handleOnPasswordSubmit = (e) => {
 		e.preventDefault();
-		const { confirmPassword, userPassword } = updatePasswordForm;
+		const { confirmPassword, userPassword, currentPassword } =
+			updatePasswordForm;
 		if (confirmPassword !== userPassword) {
 			return setError('Passwords still do not match');
 		}
 		const userObj = {
 			email: user.email,
 			userPassword,
+			currentPassword,
 		};
 		console.log(userObj);
 		// rest.email = passResetEmail;

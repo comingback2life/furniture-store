@@ -38,6 +38,15 @@ Content-Type: application/json
   "userPassword":"123Samip"
 }
 
+###Admin Update Password
+PATCH http://localhost:8000/api/v1/admin/update-password
+Content-Type: application/json
+
+{
+  "email":"callmesamip@gmail.com",
+  "userPassword":"1234",
+  "confirmPassword":"1234"
+}
 
 ### PATCH Admin API 
 PATCH http://localhost:8000/api/v1/admin
