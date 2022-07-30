@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../../components/custom-input/CustomInput';
 import AdminLayout from '../layouts/AdminLayout';
 import { updateAdminProfileAction } from './AdminProfileAction';
-
+const initialState = {
+	currentPassword: '',
+	userPassword: '',
+	confirmPassword: '',
+};
 export const AdminProfile = () => {
 	const { user } = useSelector((state) => state.admin);
 	const [form, setForm] = useState({});
@@ -112,14 +116,19 @@ export const AdminProfile = () => {
 	};
 	const handleOnPasswordSubmit = (e) => {
 		e.preventDefault();
-		// setShowAlert(true);
-		const { confirmPassword, ...rest } = form;
-		if (confirmPassword !== rest.password) {
+		const { confirmPassword, userPassword } = updatePasswordForm;
+		if (confirmPassword !== userPassword) {
 			return setError('Passwords still do not match');
 		}
+		const userObj = {
+			email: user.email,
+			userPassword,
+		};
+		console.log(userObj);
 		// rest.email = passResetEmail;
 		// dispatch(resetPasswordAction(rest));
 	};
+
 	const disableButtonOnError = () => {
 		!error && setDisableButton(false);
 	};
