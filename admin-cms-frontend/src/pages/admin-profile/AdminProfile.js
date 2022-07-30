@@ -9,10 +9,12 @@ import { updateAdminProfileAction } from './AdminProfileAction';
 export const AdminProfile = () => {
 	const { user } = useSelector((state) => state.admin);
 	const [form, setForm] = useState({});
+	const [updatePasswordForm, setPassUpdateForm] = useState({});
 	const dispatch = useDispatch();
 	useEffect(() => {
 		setForm(user);
 	}, [user]);
+
 	const inputFields = [
 		{
 			label: 'First Name',
@@ -63,6 +65,30 @@ export const AdminProfile = () => {
 			label: 'Current Password',
 			name: 'userPassword',
 			type: 'password',
+			required: true,
+		},
+	];
+
+	const resetPasswordFields = [
+		{
+			label: 'Current Password',
+			name: 'currentPassword',
+			type: 'password',
+			value: updatePasswordForm.currentPassword,
+			required: true,
+		},
+		{
+			label: 'New Password',
+			name: 'userPassword',
+			type: 'password',
+			value: updatePasswordForm.userPassword,
+			required: true,
+		},
+		{
+			label: 'Confirm Password',
+			name: 'confirmPassword',
+			type: 'password',
+			value: updatePasswordForm.confirmPassword,
 			required: true,
 		},
 	];
