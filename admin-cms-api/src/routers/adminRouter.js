@@ -243,26 +243,30 @@ router.patch(
 	updateAdminPasswordValidation,
 	async (req, res, next) => {
 		try {
-			const { currentPassword, email, userPassword } = req.body;
+			const { currentPassword, email, userPassword } = req.body; //currentPassword -> the password being used by the user
+			const user = await getAdmin({ email });
+			if (user?._id) {
+				const isMatched = verifyPassword(currentPassword, user.userPassword); //verify if the user password and the currentPassword is same
 
-			const updateObj = {
-				userPassword: encryptPassword(userPassword),
-			};
-
-			// const updatedAdmin = await updateAdmin({ email }, updateObj);
-			// if (updatedAdmin._id) {
-			// 	profileUpdateNotification({
-			// 		fName: updatedAdmin.fName,
-			// 		email: updatedAdmin.email,
-			// 	});
-			// 	return res.json({
-			// 		status: 'success',
-			// 		message: 'Password has been updated',
-			// 	});
-			// }
+				if (isMatched) {
+					const hashPassword = encryptPassword(userPassword);
+					const updatedUser = await updateAdmin(
+						{
+							_id: user._id, // filter by UserID
+						},
+						{ userPassword: hashPassword } //replace the userPassword with the new hash
+					);
+				}
+				if (updatedUser._id) {
+					return res.json({
+						status: 'success',
+						message: 'Your password has been updated successfully',
+					});
+				}
+			}
 			res.json({
 				status: 'error',
-				message: 'Could not update user, please check OTP and try again',
+				message: 'Could not update password, please try again later.',
 			});
 		} catch (error) {
 			error.status = 500;
