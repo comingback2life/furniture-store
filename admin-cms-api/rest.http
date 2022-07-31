@@ -44,8 +44,8 @@ Content-Type: application/json
 
 {
   "email":"callmesamip@gmail.com",
-  "userPassword":"1234",
-  "confirmPassword":"1234"
+  "userPassword":"Samip@1234",
+  "currentPassword":"Samip@123"
 }
 
 ### PATCH Admin API 

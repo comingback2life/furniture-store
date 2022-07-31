@@ -62,7 +62,7 @@ export const updateAdminPasswordValidation = (req, res, next) => {
 	const schema = Joi.object({
 		email: EMAIL,
 		userPassword: PASSWORD,
-		confirmPassword: PASSWORD,
+		currentPassword: PASSWORD,
 	});
 
 	validator(schema, req, res, next);

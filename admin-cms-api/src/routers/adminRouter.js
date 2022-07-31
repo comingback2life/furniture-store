@@ -245,9 +245,10 @@ router.patch(
 		try {
 			const { currentPassword, email, userPassword } = req.body; //currentPassword -> the password being used by the user
 			const user = await getAdmin({ email });
+			console.log(currentPassword, 'isHere');
 			if (user?._id) {
 				const isMatched = verifyPassword(currentPassword, user.userPassword); //verify if the user password and the currentPassword is same
-
+				console.log(isMatched);
 				if (isMatched) {
 					const hashPassword = encryptPassword(userPassword);
 					const updatedUser = await updateAdmin(
@@ -256,17 +257,17 @@ router.patch(
 						},
 						{ userPassword: hashPassword } //replace the userPassword with the new hash
 					);
-				}
-				if (updatedUser._id) {
-					profileUpdateNotification({
-						fName: updatedUser.fName,
-						email: updatedUser.email,
-					});
+					if (updatedUser._id) {
+						profileUpdateNotification({
+							fName: updatedUser.fName,
+							email: updatedUser.email,
+						});
 
-					return res.json({
-						status: 'success',
-						message: 'Your password has been updated successfully',
-					});
+						return res.json({
+							status: 'success',
+							message: 'Your password has been updated successfully',
+						});
+					}
 				}
 			}
 			res.json({
