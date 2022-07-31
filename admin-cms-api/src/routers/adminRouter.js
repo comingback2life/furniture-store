@@ -258,6 +258,11 @@ router.patch(
 					);
 				}
 				if (updatedUser._id) {
+					profileUpdateNotification({
+						fName: updatedUser.fName,
+						email: updatedUser.email,
+					});
+
 					return res.json({
 						status: 'success',
 						message: 'Your password has been updated successfully',
