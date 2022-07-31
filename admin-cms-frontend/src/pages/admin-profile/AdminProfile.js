@@ -5,15 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../../components/custom-input/CustomInput';
 import AdminLayout from '../layouts/AdminLayout';
 import { updateAdminProfileAction } from './AdminProfileAction';
-
+const initialState = {
+	currentPassword: '',
+	userPassword: '',
+	confirmPassword: '',
+};
 export const AdminProfile = () => {
 	const { user } = useSelector((state) => state.admin);
 	const [form, setForm] = useState({});
 	const [updatePasswordForm, setPassUpdateForm] = useState({});
+	const [error, setError] = useState('');
+	const [disableButton, setDisableButton] = useState(false);
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		setForm(user);
 	}, [user]);
+
+	//profile update
 
 	const inputFields = [
 		{
@@ -69,6 +78,62 @@ export const AdminProfile = () => {
 		},
 	];
 
+	const handleOnChange = (e) => {
+		const { name, value } = e.target;
+		setForm({
+			...form,
+			[name]: value,
+		});
+	};
+
+	const handleOnSubmit = (e) => {
+		e.preventDefault();
+		const { createdAt, emailValidationCode, updatedAt, __v, status, ...rest } =
+			form;
+		dispatch(updateAdminProfileAction(rest));
+	};
+
+	//password update
+
+	const handleOnPasswordChange = (e) => {
+		const { name, value } = e.target;
+		setError('');
+		setDisableButton(true);
+		setPassUpdateForm({
+			...updatePasswordForm,
+			[name]: value,
+		});
+		if (name === 'confirmPassword' || name === 'userPassword') {
+			const { userPassword } = updatePasswordForm;
+			!userPassword && setError('New password must be provided');
+			userPassword !== value && setError('Passwords do not match');
+			const passwordValidation = new RegExp(
+				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+			);
+			!passwordValidation.test(userPassword) &&
+				setError('Password does not follow the rule');
+		}
+	};
+	const handleOnPasswordSubmit = (e) => {
+		e.preventDefault();
+		const { confirmPassword, userPassword, currentPassword } =
+			updatePasswordForm;
+		if (confirmPassword !== userPassword) {
+			return setError('Passwords still do not match');
+		}
+		const userObj = {
+			email: user.email,
+			userPassword,
+			currentPassword,
+		};
+		console.log(userObj);
+		// rest.email = passResetEmail;
+		// dispatch(resetPasswordAction(rest));
+	};
+
+	const disableButtonOnError = () => {
+		!error && setDisableButton(false);
+	};
 	const resetPasswordFields = [
 		{
 			label: 'Current Password',
@@ -90,23 +155,10 @@ export const AdminProfile = () => {
 			type: 'password',
 			value: updatePasswordForm.confirmPassword,
 			required: true,
+			onBlur: disableButtonOnError,
 		},
 	];
 
-	const handleOnChange = (e) => {
-		const { name, value } = e.target;
-		setForm({
-			...form,
-			[name]: value,
-		});
-	};
-
-	const handleOnSubmit = (e) => {
-		e.preventDefault();
-		const { createdAt, emailValidationCode, updatedAt, __v, status, ...rest } =
-			form;
-		dispatch(updateAdminProfileAction(rest));
-	};
 	return (
 		<AdminLayout>
 			<div>
@@ -115,10 +167,38 @@ export const AdminProfile = () => {
 					{inputFields.map((item, i) => {
 						return <CustomInput key={i} {...item} onChange={handleOnChange} />;
 					})}
-					<Button type="submit">Update Profile</Button>
+					<Button type="submit" className="mt-3 mb-2">
+						Update Profile
+					</Button>
 				</Form>
 				<hr />
-				<div className="update-password"></div>
+				<div className="update-password">
+					<Form onSubmit={handleOnPasswordSubmit}>
+						{resetPasswordFields.map((item, i) => {
+							return (
+								<CustomInput
+									key={i}
+									{...item}
+									onChange={handleOnPasswordChange}
+								/>
+							);
+						})}
+						<Form.Group className="mb-3">
+							<Form.Text>
+								Password must contain lowercase, UPPERCASE , symbol and a number
+								and should not be less than 8 characters.
+							</Form.Text>
+						</Form.Group>
+						<Form.Text className="text-danger fw-bold mt-2">{error}</Form.Text>
+						<Button
+							type="submit"
+							disabled={disableButton}
+							className="d-flex mt-2 mb-3"
+						>
+							Update Profile
+						</Button>
+					</Form>
+				</div>
 			</div>
 		</AdminLayout>
 	);

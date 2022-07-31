@@ -4,6 +4,7 @@ import {
 	newAdminValidator,
 	loginValidation,
 	updateAdminValidation,
+	updateAdminPasswordValidation,
 } from '../middlewares/joi-validations/adminValidator.js';
 import {
 	insertAdmin,
@@ -139,7 +140,7 @@ router.put('/', updateAdminValidation, async (req, res, next) => {
 		if (user?._id) {
 			const isMatched = verifyPassword(userPassword, user.userPassword);
 			if (isMatched) {
-				const { _id, password, ...rest } = req.body;
+				const { _id, userPassword, ...rest } = req.body;
 				console.log({ _id }, rest);
 				const updatedAdmin = await updateAdmin({ _id }, rest);
 				if (updatedAdmin?._id) {
@@ -235,6 +236,49 @@ router.patch('/password', async (req, res, next) => {
 		next(error);
 	}
 });
+
 //Update password when the admin is logged in.
+router.patch(
+	'/update-password',
+	updateAdminPasswordValidation,
+	async (req, res, next) => {
+		try {
+			const { currentPassword, email, userPassword } = req.body; //currentPassword -> the password being used by the user
+			const user = await getAdmin({ email });
+			console.log(currentPassword, 'isHere');
+			if (user?._id) {
+				const isMatched = verifyPassword(currentPassword, user.userPassword); //verify if the user password and the currentPassword is same
+				console.log(isMatched);
+				if (isMatched) {
+					const hashPassword = encryptPassword(userPassword);
+					const updatedUser = await updateAdmin(
+						{
+							_id: user._id, // filter by UserID
+						},
+						{ userPassword: hashPassword } //replace the userPassword with the new hash
+					);
+					if (updatedUser._id) {
+						profileUpdateNotification({
+							fName: updatedUser.fName,
+							email: updatedUser.email,
+						});
+
+						return res.json({
+							status: 'success',
+							message: 'Your password has been updated successfully',
+						});
+					}
+				}
+			}
+			res.json({
+				status: 'error',
+				message: 'Could not update password, please try again later.',
+			});
+		} catch (error) {
+			error.status = 500;
+			next(error);
+		}
+	}
+);
 
 export default router;
