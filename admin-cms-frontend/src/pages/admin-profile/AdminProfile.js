@@ -4,7 +4,10 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from '../../components/custom-input/CustomInput';
 import AdminLayout from '../layouts/AdminLayout';
-import { updateAdminProfileAction } from './AdminProfileAction';
+import {
+	updateAdminProfileAction,
+	updatePasswordAction,
+} from './AdminProfileAction';
 const initialState = {
 	currentPassword: '',
 	userPassword: '',
@@ -126,9 +129,7 @@ export const AdminProfile = () => {
 			userPassword,
 			currentPassword,
 		};
-		console.log(userObj);
-		// rest.email = passResetEmail;
-		// dispatch(resetPasswordAction(rest));
+		dispatch(updatePasswordAction(userObj));
 	};
 
 	const disableButtonOnError = () => {

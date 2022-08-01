@@ -42,13 +42,17 @@ export const updateAdminUser = async (dataObj) => {
 	const url = adminEP;
 	return apiProcessor({ method: 'PUT', url, dataObj });
 };
+export const updateAdminPassword = async (dataObj) => {
+	const url = adminEP;
+	return apiProcessor({ method: 'PUT', url, dataObj });
+};
 
 export const requestPasswordOTP = async (dataObj) => {
 	const url = adminEP + '/otp-request';
 	return apiProcessor({ method: 'POST', url, dataObj });
 };
-export const updateAdminPassword = async (dataObj) => {
-	const url = adminEP + '/password';
+export const updateAdminPasswordLoggedIn = async (dataObj) => {
+	const url = adminEP + '/update-password';
 	return apiProcessor({ method: 'PATCH', url, dataObj });
 };
 //categories API
