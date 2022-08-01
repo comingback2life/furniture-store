@@ -24,7 +24,6 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	const data = await promiseData;
 	if (data.status === 'success') {
 		//create user state and store it
-		console.log(data);
 		dispatch(setUser(data.user));
 		return;
 	}
