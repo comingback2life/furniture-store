@@ -8,11 +8,7 @@ import {
 	updateAdminProfileAction,
 	updatePasswordAction,
 } from './AdminProfileAction';
-const initialState = {
-	currentPassword: '',
-	userPassword: '',
-	confirmPassword: '',
-};
+
 export const AdminProfile = () => {
 	const { user } = useSelector((state) => state.admin);
 	const [form, setForm] = useState({});
