@@ -102,7 +102,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 			if (isMatched) {
 				user.userPassword = undefined;
 				//for now
-				const tokensJWT = await createJWTs({ email: user.email });
+				const tokensJWT = createJWTs({ email: user.email });
 				res.json({
 					status: 'success',
 					message: 'User logged in successfully',
