@@ -25,11 +25,9 @@ export const signRefreshJWT = async (payload) => {
 };
 
 export const createJWTs = async (payload) => {
-	const accessJWT = await signAccessJWT(payload);
-	const refreshJWT = await signRefreshJWT(payload);
 	return {
-		accessJWT,
-		refreshJWT,
+		accessJWT: await signAccessJWT(payload),
+		refreshJWT: await signRefreshJWT(payload),
 	};
 };
 

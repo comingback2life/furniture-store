@@ -109,7 +109,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 					status: 'success',
 					message: 'User logged in successfully',
 					user,
-					...tokensJWT,
+					...tokensJWT, //rather than having a tokensJWT object, we spread it so that we can access accessJWT and refreshJWT
 				});
 
 				return;
