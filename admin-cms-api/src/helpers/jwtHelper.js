@@ -24,12 +24,13 @@ export const signRefreshJWT = async (payload) => {
 	return refreshJWT;
 };
 
-export const createJWTs = (payload) => {
+export const createJWTs = async (payload) => {
+	const accessJWT = await signAccessJWT(payload);
+	const refreshJWT = await signRefreshJWT(payload);
 	return {
-		accessJWT: signAccessJWT(payload),
-		refreshJWT: signRefreshJWT(payload),
+		accessJWT,
+		refreshJWT,
 	};
-	console.log(accessJWT, refreshJWT);
 };
 
 export const verifyAccessJWT = (jwtToken) => {
