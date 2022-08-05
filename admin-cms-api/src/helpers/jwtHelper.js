@@ -29,6 +29,7 @@ export const createJWTs = (payload) => {
 		accessJWT: signAccessJWT(payload),
 		refreshJWT: signRefreshJWT(payload),
 	};
+	console.log(accessJWT, refreshJWT);
 };
 
 export const verifyAccessJWT = (jwtToken) => {

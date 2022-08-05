@@ -101,6 +101,7 @@ router.post('/login', loginValidation, async (req, res, next) => {
 			const isMatched = verifyPassword(userPassword, user.userPassword);
 			if (isMatched) {
 				user.userPassword = undefined;
+				user.refreshJWT = undefined;
 				//for now
 				const tokensJWT = createJWTs({ email: user.email });
 				res.json({
