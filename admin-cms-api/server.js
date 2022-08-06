@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
+import { adminAuthMiddleware } from './src/middlewares/auth-middleware/authMiddleware.js';
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -24,7 +25,7 @@ import productRouter from './src/routers/productRouter.js';
 import paymentMethodRouter from './src/routers/paymentMethodRouter.js';
 
 app.use('/api/v1/admin', adminRouter);
-app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/categories', adminAuthMiddleware, categoryRouter); //category router only has private routes hence can apply auth middleware at the top
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/payment-methods', paymentMethodRouter);
 //app error handling
