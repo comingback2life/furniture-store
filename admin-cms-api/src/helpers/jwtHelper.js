@@ -32,6 +32,10 @@ export const createJWTs = async (payload) => {
 };
 
 export const verifyAccessJWT = (jwtToken) => {
-	return jwt.verify(jwtToken, process.env.JWT_ACCESS_SECRET);
+	try {
+		return jwt.verify(jwtToken, process.env.JWT_ACCESS_SECRET);
+	} catch (error) {
+		return error.message;
+	}
 	//send token and type to the session Table
 };

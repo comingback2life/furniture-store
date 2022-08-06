@@ -9,5 +9,9 @@ export const getSession = (filter) => {
 };
 
 export const deleteSession = (filter) => {
-	return SessionSchema.findOneAndDelete(filter);
+	try {
+		return SessionSchema.findOneAndDelete(filter);
+	} catch (error) {
+		return error.message;
+	}
 };
