@@ -3,11 +3,7 @@ import { useRef } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordAction } from '../../pages/admin-profile/AdminProfileAction.js';
-const initialState = {
-	otp: '',
-	password: '',
-	confirmPassword: '',
-};
+
 export const ResetPasswordOTPForm = () => {
 	const dispatch = useDispatch();
 
