@@ -111,10 +111,6 @@ router.delete('/', async (req, res, next) => {
 router.put('/', newCategoryValidation, async (req, res, next) => {
 	try {
 		const { _id, ...rest } = req.body;
-		const slug = slugify(req.body.catName, {
-			lower: true,
-			trim: true,
-		});
 		const result = await updateCategory(_id, rest);
 		console.log(result);
 		result?._id
