@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRef } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordAction } from '../../pages/admin-profile/AdminProfileAction.js';
