@@ -67,6 +67,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlw
 }
 ###GET CATEGORY 
 GET http://localhost:8000/api/v1/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY1OTc1NzI5OSwiZXhwIjoxNjU5NzU4MTk5fQ.2DRYZEvlO05nzHT6hEnU64q2QXJ_shKFbXJ3E6ACrJA
 
 ###UPDATE  CATEGORY 
 PATCH http://localhost:8000/api/v1/categories
