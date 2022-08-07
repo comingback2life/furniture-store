@@ -2,17 +2,9 @@ import React, { useEffect } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	postCategoriesAction,
-	updateCategoriesAction,
-} from '../../pages/categories/CategoriesAction';
+import { updateCategoriesAction } from '../../pages/categories/CategoriesAction';
 import { MyVerticallyCenteredModal } from '../modal/Modal';
-import { updateCategories } from '../../helpers/axiosHelpers';
-const initialState = {
-	status: 'inactive',
-	catName: '',
-	parentCatId: '',
-};
+
 const EditCategory = ({ selectedCategory }) => {
 	const dispatch = useDispatch();
 	const [form, setForm] = useState(selectedCategory);
