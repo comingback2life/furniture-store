@@ -1,16 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './RegisterForm.styles.css';
 import { postUserAction } from '../../pages/register-login/signInUpAction';
 import { useNavigate } from 'react-router-dom';
 export const RegisterForm = () => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [form, setForm] = useState({});
 	const [error, setError] = useState(false);
-	const { isLoading, response } = useSelector((state) => state.signInUp);
 	const handleOnChange = (e) => {
 		const { name, value } = e.target;
 		setForm({
