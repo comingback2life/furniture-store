@@ -8,10 +8,11 @@ export const adminAuthMiddleware = async (req, res, next) => {
 		if (authorization) {
 			//check if the JWT token is valid and not expired.
 			const decodedDetails = verifyAccessJWT(authorization);
-			if ((decodedDetails = 'token expired')) {
+			console.log(decodedDetails);
+			if (decodedDetails === 'jwt expired') {
 				return res.status(403).json({
 					status: 'Error',
-					message: 'Expired Token',
+					message: 'Expired Token!',
 				});
 			}
 			if (decodedDetails?.email) {

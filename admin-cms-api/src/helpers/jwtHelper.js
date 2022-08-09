@@ -6,7 +6,7 @@ import { insertSession } from './../models/session/Session.model.js';
 export const signAccessJWT = async (payload) => {
 	console.log(payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-		expiresIn: '15m',
+		expiresIn: '1m',
 	});
 	const obj = {
 		token: accessJWT,
@@ -18,7 +18,7 @@ export const signAccessJWT = async (payload) => {
 
 export const signRefreshJWT = async (payload) => {
 	const refreshJWT = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
-		expiresIn: '30d',
+		expiresIn: '1m',
 	});
 	await updateAdmin({ email: payload.email }, { refreshJWT }); //payload consists of email and the filter value can be used as the email.
 	return refreshJWT;
