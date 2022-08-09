@@ -35,6 +35,10 @@ export const verifyAccessJWT = (jwtToken) => {
 	try {
 		return jwt.verify(jwtToken, process.env.JWT_ACCESS_SECRET);
 	} catch (error) {
+		if (error.message === 'jwt expired') {
+			deleteSession({ type: 'jwt', token: jwtToken });
+		} //if expired JWT delete token
+
 		return error.message;
 	}
 	//send token and type to the session Table
