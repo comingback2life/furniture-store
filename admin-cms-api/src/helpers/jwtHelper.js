@@ -6,7 +6,7 @@ import { insertSession } from './../models/session/Session.model.js';
 export const signAccessJWT = async (payload) => {
 	console.log(payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-		expiresIn: '1m',
+		expiresIn: '30d',
 	});
 	const obj = {
 		token: accessJWT,

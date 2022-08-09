@@ -44,8 +44,8 @@ Content-Type: application/json
 
 {
   "email":"callmesamip@gmail.com",
-  "userPassword":"Samip@1234",
-  "currentPassword":"Samip@123"
+  "userPassword":"Samip@123",
+  "currentPassword":"Samip@1234"
 }
 
 ### PATCH Admin API 
@@ -58,7 +58,7 @@ PATCH http://localhost:8000/api/v1/admin
 ###POST Category
 POST  http://localhost:8000/api/v1/categories
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY1OTc1NzI5OSwiZXhwIjoxNjU5NzU4MTk5fQ.2DRYZEvlO05nzHT6hEnU64q2QXJ_shKFbXJ3E6ACrJA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY1OTc1NzI5OSwiZXhwIjoxNjU5NzU4MTk5fQ.2DRYZEvlO05nzHT6hEnU64q2QXJ_shKF
 
 {
   "status":"inactive",
