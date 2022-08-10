@@ -34,7 +34,11 @@ import { adminAuthMiddleware } from '../middlewares/auth-middleware/authMiddlewa
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', adminAuthMiddleware, (req, res) => {
+	try {
+	} catch (error) {
+		next(error);
+	}
 	res.json({
 		status: 'success',
 		message: 'Get Route for Admin got Hit',

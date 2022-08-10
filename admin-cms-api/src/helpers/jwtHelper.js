@@ -7,7 +7,7 @@ import {
 //payload must be an object
 
 export const signAccessJWT = async (payload) => {
-	console.log(payload);
+	console.log('isPayLoad', payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
 		expiresIn: '2m',
 	});

@@ -54,13 +54,13 @@ PATCH http://localhost:8000/api/v1/admin
 
 ###Request NEW Admin JWT 
 GET http://localhost:8000/api/v1/admin/accessjwt
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzNzg1MSwiZXhwIjoxNjYwMTM3OTExfQ.SIBame4eKirGKarwMf0LeLfDPZlPaGsbmuwXWjz2UUM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzODg0NywiZXhwIjoxNjYwMTM4OTA3fQ.YCTsaI8Qmg0IPqzJsk_Hup6ssyrEVLE4DNUbfejxneI
 ######## Category Routers
 
 ###POST Category
 POST  http://localhost:8000/api/v1/categories
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzNDYxMSwiZXhwIjoxNjYwMTM0NjcxfQ.XhtuqEK35EI8bvKkBUTFdn9pdVBXCkSXVLEN-spGk1Y
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzOTQ0OSwiZXhwIjoxNjYwMTM5NTY5fQ.zyS0OKlBp2FWz-v2zFKZlcyz7UFUsJjXNGKr778fB50
 
 {
   "status":"inactive",
