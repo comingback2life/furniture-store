@@ -9,7 +9,7 @@ import {
 export const signAccessJWT = async (payload) => {
 	console.log(payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-		expiresIn: '30d',
+		expiresIn: '1m',
 	});
 	const obj = {
 		token: accessJWT,

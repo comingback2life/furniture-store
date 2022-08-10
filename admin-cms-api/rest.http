@@ -58,7 +58,7 @@ PATCH http://localhost:8000/api/v1/admin
 ###POST Category
 POST  http://localhost:8000/api/v1/categories
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY1OTc1NzI5OSwiZXhwIjoxNjU5NzU4MTk5fQ.2DRYZEvlO05nzHT6hEnU64q2QXJ_shKF
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzNDYxMSwiZXhwIjoxNjYwMTM0NjcxfQ.XhtuqEK35EI8bvKkBUTFdn9pdVBXCkSXVLEN-spGk1Y
 
 {
   "status":"inactive",

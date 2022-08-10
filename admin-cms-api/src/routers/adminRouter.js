@@ -286,4 +286,15 @@ router.patch(
 	}
 );
 
+//Return a new access token for login
+
+router.get('/accessjwt', (req, res, next) => {
+	try {
+		const refreshJWT = req.headers.authorization;
+		console.log(refreshJWT);
+	} catch (error) {
+		next(error);
+	}
+});
+
 export default router;
