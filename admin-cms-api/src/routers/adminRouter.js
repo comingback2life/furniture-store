@@ -30,6 +30,8 @@ import {
 	signAccessJWT,
 	verifyRefreshJWT,
 } from '../helpers/jwtHelper.js';
+import { adminAuthMiddleware } from '../middlewares/auth-middleware/authMiddleware.js';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -39,35 +41,40 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.post('/', newAdminValidator, async (req, res, next) => {
-	try {
-		const hashPassword = encryptPassword(req.body.userPassword);
-		req.body.userPassword = hashPassword;
-		req.body.emailValidationCode = uuidv4();
-		//create unique email validation code for email validation
-		const result = await insertAdmin(req.body);
-		if (result?._id) {
-			//create unique url and send it to the user
-			const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
-			sendMail({ fName: result.fName, activationLink });
-			res.json({
-				status: 'success',
-				message: 'New admin has been created succesfully',
-			});
-		} else {
-			res.json({
-				status: 'success',
-				message: 'Unable to create admin',
-			});
+router.post(
+	'/',
+	adminAuthMiddleware,
+	newAdminValidator,
+	async (req, res, next) => {
+		try {
+			const hashPassword = encryptPassword(req.body.userPassword);
+			req.body.userPassword = hashPassword;
+			req.body.emailValidationCode = uuidv4();
+			//create unique email validation code for email validation
+			const result = await insertAdmin(req.body);
+			if (result?._id) {
+				//create unique url and send it to the user
+				const activationLink = `${process.env.ROOT_URL}/admin/verify-email/?c=${result.emailValidationCode}&e=${result.email}`;
+				sendMail({ fName: result.fName, activationLink });
+				res.json({
+					status: 'success',
+					message: 'New admin has been created succesfully',
+				});
+			} else {
+				res.json({
+					status: 'success',
+					message: 'Unable to create admin',
+				});
+			}
+		} catch (error) {
+			error.status = 500;
+			if (error.message.includes('E11000 duplicate key error')) {
+				(error.message = 'Email already exists'), (error.status = 400);
+			}
+			next(error);
 		}
-	} catch (error) {
-		error.status = 500;
-		if (error.message.includes('E11000 duplicate key error')) {
-			(error.message = 'Email already exists'), (error.status = 400);
-		}
-		next(error);
 	}
-});
+);
 
 router.post('/verify-email', emailVerificationValidation, async (req, res) => {
 	const filter = req.body;
@@ -142,35 +149,40 @@ router.patch('/', (req, res) => {
 
 //update admin profile
 
-router.put('/', updateAdminValidation, async (req, res, next) => {
-	try {
-		const { email, userPassword } = req.body;
-		const user = await getAdmin({ email });
-		if (user?._id) {
-			const isMatched = verifyPassword(userPassword, user.userPassword);
-			if (isMatched) {
-				const { _id, userPassword, ...rest } = req.body;
-				console.log({ _id }, rest);
-				const updatedAdmin = await updateAdmin({ _id }, rest);
-				if (updatedAdmin?._id) {
-					//send email if the admin profile has been updated
-					return res.json({
-						status: 'success',
-						message: 'Your profile has been updated succesfully',
-						user: updatedAdmin,
-					});
+router.put(
+	'/',
+	adminAuthMiddleware,
+	updateAdminValidation,
+	async (req, res, next) => {
+		try {
+			const { email, userPassword } = req.body;
+			const user = await getAdmin({ email });
+			if (user?._id) {
+				const isMatched = verifyPassword(userPassword, user.userPassword);
+				if (isMatched) {
+					const { _id, userPassword, ...rest } = req.body;
+					console.log({ _id }, rest);
+					const updatedAdmin = await updateAdmin({ _id }, rest);
+					if (updatedAdmin?._id) {
+						//send email if the admin profile has been updated
+						return res.json({
+							status: 'success',
+							message: 'Your profile has been updated succesfully',
+							user: updatedAdmin,
+						});
+					}
 				}
 			}
+			res.json({
+				status: 'success',
+				message: 'Invalid request, the profile could not be updated',
+			});
+		} catch (error) {
+			error.status = 500;
+			next(error);
 		}
-		res.json({
-			status: 'success',
-			message: 'Invalid request, the profile could not be updated',
-		});
-	} catch (error) {
-		error.status = 500;
-		next(error);
 	}
-});
+);
 
 // password reset via OTP
 
@@ -249,6 +261,7 @@ router.patch('/password', async (req, res, next) => {
 //Update password when the admin is logged in.
 router.patch(
 	'/update-password',
+	adminAuthMiddleware,
 	updateAdminPasswordValidation,
 	async (req, res, next) => {
 		try {
