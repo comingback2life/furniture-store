@@ -25,7 +25,7 @@ import {
 	insertSession,
 } from '../models/session/Session.model.js';
 import { createOTP } from '../helpers/randomGeneratorHelper.js';
-import { createJWTs } from '../helpers/jwtHelper.js';
+import { createJWTs, verifyRefreshJWT } from '../helpers/jwtHelper.js';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -288,11 +288,16 @@ router.patch(
 
 //Return a new access token for login
 
-router.get('/accessjwt', (req, res, next) => {
+router.get('/accessjwt', async (req, res, next) => {
 	try {
 		const refreshJWT = req.headers.authorization;
 		console.log(refreshJWT);
+		const decodedJWT = verifyRefreshJWT(refreshJWT);
+		if (decodedJWT?.email) {
+			const user = await getAdmin({ email: decodedJWT.email, refreshJWT });
+		}
 	} catch (error) {
+		console.log(error);
 		next(error);
 	}
 });

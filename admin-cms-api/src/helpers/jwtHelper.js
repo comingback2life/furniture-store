@@ -46,3 +46,7 @@ export const verifyAccessJWT = (jwtToken) => {
 	}
 	//send token and type to the session Table
 };
+
+export const verifyRefreshJWT = (jwtToken) => {
+	return jwt.verify(jwtToken, process.env.JWT_REFRESH_SECRET);
+};
