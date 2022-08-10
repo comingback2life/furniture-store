@@ -54,7 +54,7 @@ PATCH http://localhost:8000/api/v1/admin
 
 ###Request NEW Admin JWT 
 GET http://localhost:8000/api/v1/admin/accessjwt
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzNDk0OCwiZXhwIjoxNjYwMTM1MDA4fQ.jYsU9DerL7g9BdFf9TuTXLcDyZPJTDuUcQYq8l47bFc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzNTc0OCwiZXhwIjoxNjYwMTM1ODA4fQ.wvJ4tw1ISt3yr-IrsSQbZPD80uz_GCsjtRBoWJ12G7g
 ######## Category Routers
 
 ###POST Category

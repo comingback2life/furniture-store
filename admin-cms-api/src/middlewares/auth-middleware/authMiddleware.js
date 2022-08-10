@@ -11,7 +11,7 @@ export const adminAuthMiddleware = async (req, res, next) => {
 			console.log(decodedDetails);
 			if (decodedDetails === 'jwt expired') {
 				return res.status(403).json({
-					status: 'Error',
+					status: 'error',
 					message: 'Expired Token!',
 				});
 			}
