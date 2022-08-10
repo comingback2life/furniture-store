@@ -26,8 +26,8 @@ import paymentMethodRouter from './src/routers/paymentMethodRouter.js';
 
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/categories', adminAuthMiddleware, categoryRouter); //category router only has private routes hence can apply auth middleware at the top
-app.use('/api/v1/products', productRouter);
-app.use('/api/v1/payment-methods', paymentMethodRouter);
+app.use('/api/v1/products', adminAuthMiddleware, productRouter);
+app.use('/api/v1/payment-methods', adminAuthMiddleware, paymentMethodRouter);
 //app error handling
 app.use((err, req, res, next) => {
 	console.log(err);
