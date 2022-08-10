@@ -299,9 +299,10 @@ router.get('/accessjwt', async (req, res, next) => {
 		const decodedJWT = verifyRefreshJWT(refreshJWT);
 		if (decodedJWT?.email) {
 			const user = await getAdmin({ email: decodedJWT.email, refreshJWT });
+			console.log('======', user);
 			if (user?._id) {
 				const accessJWT = await signAccessJWT({ email: decodedJWT.email });
-				res.json({
+				return res.json({
 					status: 'success',
 					accessJWT,
 				});
