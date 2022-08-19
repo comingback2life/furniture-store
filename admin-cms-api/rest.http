@@ -3,7 +3,7 @@
 GET http://localhost:8000
 ### Get Admin API 
 GET http://localhost:8000/api/v1/admin
-
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5ODQ3NywiZXhwIjoxNjYwODk5Mzc3fQ.XjBpM0XOxLw6WniNldOvFBYkhgPENEEYoOYvWcuSYy0
 ### POST Admin API 
 POST http://localhost:8000/api/v1/admin
 Content-Type: application/json

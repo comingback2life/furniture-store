@@ -36,13 +36,17 @@ const router = express.Router();
 
 router.get('/', adminAuthMiddleware, (req, res) => {
 	try {
+		const user = req.adminInformation;
+		user.password = undefined;
+		user.adminInformation = undefined;
+		res.json({
+			status: 'success',
+			message: 'Get Route for Admin got Hit',
+			user,
+		});
 	} catch (error) {
 		next(error);
 	}
-	res.json({
-		status: 'success',
-		message: 'Get Route for Admin got Hit',
-	});
 });
 
 router.post(
