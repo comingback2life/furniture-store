@@ -24,6 +24,8 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	const data = await promiseData;
 	if (data.status === 'success') {
 		//create user state and store it
+		sessionStorage.setItem('accessJWT', data.accessJWT);
+		localStorage.setItem('refreshJWT', data.refreshJWT);
 		dispatch(setUser(data.user));
 		return;
 	}
