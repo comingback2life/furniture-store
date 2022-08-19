@@ -54,7 +54,7 @@ PATCH http://localhost:8000/api/v1/admin
 
 ###Request NEW Admin JWT 
 GET http://localhost:8000/api/v1/admin/accessjwt
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDEzODg0NywiZXhwIjoxNjYwMTM4OTA3fQ.YCTsaI8Qmg0IPqzJsk_Hup6ssyrEVLE4DNUbfejxneI
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5NTg5NCwiZXhwIjoxNjYwODk1OTU0fQ.Juid_OZAX-dpwwnPUGkKHjt4GUSAX_qAfP_e5hoZ5YA
 ######## Category Routers
 
 ###POST Category
@@ -149,8 +149,3 @@ Content-Type: application/json
   "name":"Card",
   "status":"inactive",
   "decription":"Use this method to pay by credit or debit card"
-}
- ####
-  "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5NDk3NCwiZXhwIjoxNjYwODk1MDM0fQ.gpweA-M0g7Pl0KxG4yYv_KQ8J3Zs82AyY53_OKNPtbM",
-  "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5NDk3NCwiZXhwIjoxNjYwODk1MDM0fQ.IbI0tgkOGIZogt1g7EIwEwfTJshlmo0Uu4QR3elJVW8"
-  ####

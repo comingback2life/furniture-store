@@ -314,7 +314,7 @@ router.get('/accessjwt', async (req, res, next) => {
 		const refreshJWT = req.headers.authorization;
 		console.log(refreshJWT);
 		const decodedJWT = verifyRefreshJWT(refreshJWT);
-		console.log(decodedJWT);
+		console.log('=================', decodedJWT);
 		if (decodedJWT?.email) {
 			const user = await getAdmin({ email: decodedJWT.email, refreshJWT });
 			if (user?._id) {
