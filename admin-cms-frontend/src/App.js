@@ -13,13 +13,22 @@ import NewProduct from './pages/product/NewProduct';
 import EditProductPage from './pages/product/EditProductPage';
 import PaymentMethodPage from './pages/payment-method/PaymentMethodPage';
 import ResetPasswordPage from './pages/register-login/ResetPasswordPage';
+import PrivateRoute from './components/privateRoutes/PrivateRoute';
 function App() {
 	return (
 		<div>
 			<BrowserRouter>
 				<Routes>
 					{/* private route */}
-					<Route path="/admin/dashboard" element={<Dashboard />}></Route>
+
+					<Route
+						path="/admin/dashboard"
+						element={
+							<PrivateRoute>
+								<Dashboard />
+							</PrivateRoute>
+						}
+					></Route>
 					<Route path="/admin-profile" element={<AdminProfile />}></Route>
 					<Route path="/admin/register" element={<RegisterPage />}></Route>
 					<Route path="/product/new" element={<NewProduct />}></Route>
