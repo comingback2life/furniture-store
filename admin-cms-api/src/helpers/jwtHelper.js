@@ -9,7 +9,7 @@ import {
 export const signAccessJWT = async (payload) => {
 	console.log('isPayLoad', payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-		expiresIn: '2m',
+		expiresIn: '1m',
 	});
 	const obj = {
 		token: accessJWT,
@@ -39,6 +39,7 @@ export const verifyAccessJWT = (jwtToken) => {
 		return jwt.verify(jwtToken, process.env.JWT_ACCESS_SECRET);
 	} catch (error) {
 		if (error.message === 'jwt expired') {
+			//being thrown from jwt.verify
 			deleteSession({ type: 'jwt', token: jwtToken });
 		} //if expired JWT delete token
 

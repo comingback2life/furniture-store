@@ -150,4 +150,7 @@ Content-Type: application/json
   "status":"inactive",
   "decription":"Use this method to pay by credit or debit card"
 }
-
+ ####
+  "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5NDk3NCwiZXhwIjoxNjYwODk1MDM0fQ.gpweA-M0g7Pl0KxG4yYv_KQ8J3Zs82AyY53_OKNPtbM",
+  "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGxtZXNhbWlwQGdtYWlsLmNvbSIsImlhdCI6MTY2MDg5NDk3NCwiZXhwIjoxNjYwODk1MDM0fQ.IbI0tgkOGIZogt1g7EIwEwfTJshlmo0Uu4QR3elJVW8"
+  ####
