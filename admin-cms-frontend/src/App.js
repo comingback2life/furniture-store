@@ -29,20 +29,70 @@ function App() {
 							</PrivateRoute>
 						}
 					></Route>
-					<Route path="/admin-profile" element={<AdminProfile />}></Route>
-					<Route path="/admin/register" element={<RegisterPage />}></Route>
-					<Route path="/product/new" element={<NewProduct />}></Route>
-					<Route path="/products" element={<ProductPage />}></Route>
-					<Route path="/payments" element={<PaymentMethodPage />}></Route>
+					<Route
+						path="/admin-profile"
+						element={
+							<PrivateRoute>
+								<AdminProfile />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path="/admin/register"
+						element={
+							<PrivateRoute>
+								<RegisterPage />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path="/product/new"
+						element={
+							<PrivateRoute>
+								<NewProduct />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path="/products"
+						element={
+							<PrivateRoute>
+								<ProductPage />
+							</PrivateRoute>
+						}
+					></Route>
+					<Route
+						path="/payments"
+						element={
+							<PrivateRoute>
+								<PaymentMethodPage />
+							</PrivateRoute>
+						}
+					></Route>
 					<Route
 						path="/products/edit/:_id"
-						element={<EditProductPage />}
+						element={
+							<PrivateRoute>
+								<EditProductPage />
+							</PrivateRoute>
+						}
 					></Route>
 					<Route
 						path="/admin/verify-email"
-						element={<EmailVerification />}
+						element={
+							<PrivateRoute>
+								<EmailVerification />
+							</PrivateRoute>
+						}
 					></Route>
-					<Route path="/categories" element={<CategoriesPage />}></Route>
+					<Route
+						path="/categories"
+						element={
+							<PrivateRoute>
+								<CategoriesPage />
+							</PrivateRoute>
+						}
+					></Route>
 
 					{/**public routes */}
 					<Route path="/admin/login" element={<LoginPage />}></Route>

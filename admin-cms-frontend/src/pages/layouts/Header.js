@@ -2,9 +2,10 @@ import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideBar } from '../../system-state/systemSlice';
 export const Header = () => {
+	const { user } = useSelector((state) => state.admin);
 	const dispatch = useDispatch();
 	return (
 		<div>
@@ -21,7 +22,6 @@ export const Header = () => {
 					<LinkContainer to="/">
 						<Navbar.Brand>Furniture Store Admin</Navbar.Brand>
 					</LinkContainer>
-
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ms-auto">
