@@ -32,3 +32,12 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	data.status === 'error' && toast[data.status](data.message);
 	dispatch(responseResolved(data));
 };
+
+export const fetchUserByToken = (accessJWT) => (dispatch) => {};
+
+export const autoLogin = () => (dispatch) => {
+	const accessJWT = sessionStorage.getItem('accessJWT');
+	const refreshJWT = localStorage.getItem('refreshJWT');
+	//if accessJWT exists, fetch the user and mount in the state
+	//if refreshJWT exists, fetch new accessJWT and fetch the user.
+};
