@@ -11,14 +11,20 @@ export const Header = () => {
 		<div>
 			<Navbar bg="none" expand="md" className="p-3">
 				<Container>
-					<Button
-						variant="btn-outline"
-						onClick={() => {
-							dispatch(toggleSideBar());
-						}}
-					>
-						<i className="fa-solid fa-bars"></i>
-					</Button>
+					{user?._id && (
+						<>
+							<Button
+								variant="btn-outline"
+								onClick={() => {
+									dispatch(toggleSideBar());
+								}}
+							>
+								{' '}
+								<i className="fa-solid fa-bars"></i>
+							</Button>
+						</>
+					)}
+
 					<LinkContainer to="/">
 						<Navbar.Brand>Furniture Store Admin</Navbar.Brand>
 					</LinkContainer>
