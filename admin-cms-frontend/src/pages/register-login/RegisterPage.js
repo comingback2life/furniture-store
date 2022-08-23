@@ -1,11 +1,10 @@
 import React from 'react';
 import { RegisterForm } from '../../components/register-form/RegisterForm';
-import { DefaultLayout } from '../layouts/DefaultLayout';
-
+import AdminLayout from '../layouts/AdminLayout';
 export const RegisterPage = () => {
 	return (
-		<DefaultLayout>
+		<AdminLayout>
 			<RegisterForm />
-		</DefaultLayout>
+		</AdminLayout>
 	);
 };

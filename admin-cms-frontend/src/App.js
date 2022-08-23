@@ -102,8 +102,6 @@ function App() {
 			</BrowserRouter>
 			<ToastContainer position="top-right" autoClose={2000} />
 			{/* Same as */}
-
-			{/**Register Page */}
 		</div>
 	);
 }
