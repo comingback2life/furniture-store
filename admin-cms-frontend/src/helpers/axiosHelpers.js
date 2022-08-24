@@ -30,6 +30,11 @@ export const postUser = async (dataObj) => {
 	return apiProcessor({ method: 'POST', url, dataObj });
 };
 
+export const getUser = async () => {
+	const url = adminEP;
+	return apiProcessor({ method: 'GET', url, dataObj });
+};
+
 export const loginUser = async (dataObj) => {
 	const url = adminEP + '/login';
 	return apiProcessor({ method: 'POST', url, dataObj });
