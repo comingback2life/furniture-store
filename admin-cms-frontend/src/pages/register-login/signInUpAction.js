@@ -42,5 +42,9 @@ export const autoLogin = () => (dispatch) => {
 	const accessJWT = sessionStorage.getItem('accessJWT');
 	const refreshJWT = localStorage.getItem('refreshJWT');
 	//if accessJWT exists, fetch the user and mount in the state
+	if (accessJWT) {
+		dispatch(fetchUserByToken());
+		return;
+	}
 	//if refreshJWT exists, fetch new accessJWT and fetch the user.
 };

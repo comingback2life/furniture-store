@@ -5,13 +5,13 @@ const catEP = rootURL + '/categories';
 const productsEP = rootURL + '/products';
 const paymentMethodsEp = rootURL + '/payment-methods';
 // Admin APIs
-const apiProcessor = async ({ method, url, dataObj, option }) => {
+const apiProcessor = async ({ method, url, dataObj, headers }) => {
 	try {
 		const { data } = await axios({
 			method,
 			url,
 			data: dataObj,
-			option,
+			headers,
 		});
 		return data;
 	} catch (error) {
@@ -36,10 +36,8 @@ export const getUser = async () => {
 	return apiProcessor({
 		method: 'GET',
 		url,
-		option: {
-			Headers: {
-				Authorization: sessionStorage.getItem('accessJWT'),
-			},
+		headers: {
+			Authorization: sessionStorage.getItem('accessJWT'),
 		},
 	});
 };
