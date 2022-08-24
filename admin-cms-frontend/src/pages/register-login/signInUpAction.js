@@ -1,4 +1,4 @@
-import { loginUser, postUser } from '../../helpers/axiosHelpers';
+import { getUser, loginUser, postUser } from '../../helpers/axiosHelpers';
 import { isPending, responseResolved } from './signInUpSlice';
 import { toast } from 'react-toastify';
 import { setUser } from '../admin-profile/AdminProfileSlice.js';
@@ -33,7 +33,10 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	dispatch(responseResolved(data));
 };
 
-export const fetchUserByToken = (accessJWT) => (dispatch) => {};
+export const fetchUserByToken = (accessJWT) => async (dispatch) => {
+	const response = await getUser();
+	response.status === 'success' && dispatch(setUser(response.user));
+};
 
 export const autoLogin = () => (dispatch) => {
 	const accessJWT = sessionStorage.getItem('accessJWT');
