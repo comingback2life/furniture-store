@@ -8,7 +8,7 @@ export const getSession = (filter) => {
 	return SessionSchema.findOne(filter);
 };
 
-export const deleteSession = (filter) => {
+export const deleteFromSession = (filter) => {
 	try {
 		return SessionSchema.findOneAndDelete(filter);
 	} catch (error) {

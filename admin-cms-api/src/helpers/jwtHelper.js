@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { updateAdmin } from '../models/admin/Admin.models.js';
 import {
-	deleteSession,
+	deleteFromSession,
 	insertSession,
 } from './../models/session/Session.model.js';
 //payload must be an object
@@ -9,7 +9,7 @@ import {
 export const signAccessJWT = async (payload) => {
 	console.log('isPayLoad', payload);
 	const accessJWT = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-		expiresIn: '15m',
+		expiresIn: '1s',
 	});
 	const obj = {
 		token: accessJWT,
@@ -21,7 +21,7 @@ export const signAccessJWT = async (payload) => {
 
 export const signRefreshJWT = async (payload) => {
 	const refreshJWT = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
-		expiresIn: '1m',
+		expiresIn: '1s',
 	});
 	await updateAdmin({ email: payload.email }, { refreshJWT }); //payload consists of email and the filter value can be used as the email.
 	return refreshJWT;
@@ -34,13 +34,13 @@ export const createJWTs = async (payload) => {
 	};
 };
 
-export const verifyAccessJWT = (jwtToken) => {
+export const verifyAccessJWT = async (jwtToken) => {
 	try {
 		return jwt.verify(jwtToken, process.env.JWT_ACCESS_SECRET);
 	} catch (error) {
 		if (error.message === 'jwt expired') {
 			//being thrown from jwt.verify
-			deleteSession({ type: 'jwt', token: jwtToken });
+			await deleteFromSession({ type: 'jwt', token: jwtToken });
 		} //if expired JWT delete token
 
 		return error.message;

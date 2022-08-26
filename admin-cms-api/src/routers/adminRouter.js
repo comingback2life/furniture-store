@@ -20,7 +20,7 @@ import {
 } from '../helpers/emailHelper.js';
 import { encryptPassword, verifyPassword } from '../helpers/bCryptHelper.js';
 import {
-	deleteSession,
+	deleteFromSession,
 	getSession,
 	insertSession,
 } from '../models/session/Session.model.js';
@@ -237,7 +237,7 @@ router.post('/otp-request', async (req, res, next) => {
 router.patch('/password', async (req, res, next) => {
 	try {
 		const { OTP, email, password } = req.body;
-		const session = await deleteSession({
+		const session = await deleteFromSession({
 			token: OTP,
 			associate: email,
 		});
