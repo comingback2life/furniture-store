@@ -13,6 +13,7 @@ const PaymentMethodPage = () => {
 		setShowForm(true);
 		dispatch(toggleModal());
 	};
+
 	return (
 		<AdminLayout>
 			<Row>
