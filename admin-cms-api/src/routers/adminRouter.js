@@ -332,6 +332,7 @@ router.get('/accessjwt', async (req, res, next) => {
 			message: 'Please login again!',
 		});
 	} catch (error) {
+		error.status = 401;
 		next(error);
 	}
 });
