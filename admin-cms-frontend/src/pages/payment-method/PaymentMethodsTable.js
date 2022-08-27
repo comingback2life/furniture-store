@@ -26,6 +26,7 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 
 	const handleOnDelete = (e) => {
 		dispatch(bulkDeletePaymentMethod(ids));
+		setIds([]);
 	};
 	const handleOnCheckedChange = (e) => {
 		const { checked, value } = e.target;
