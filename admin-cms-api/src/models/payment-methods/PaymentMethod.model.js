@@ -20,6 +20,14 @@ export const deletePaymentMethodById = (_id) => {
 	return PaymentMethodSchema.findByIdAndDelete(_id);
 };
 
+export const bulkDeletePaymentMethods = (ids) => {
+	return PaymentMethodSchema.deleteMany({
+		_id: {
+			$in: ids,
+		},
+	});
+};
+
 //@updateObj must be an obj and ID should be a string
 export const updatePaymentMethod = (_id, updateObj) => {
 	return PaymentMethodSchema.findByIdAndUpdate(_id, updateObj, { new: true });

@@ -23,6 +23,7 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 		dispatch(editPaymentMethodAction(_id));
 	};
 
+	const handleOnDelete = (e) => {};
 	const handleOnCheckedChange = (e) => {
 		const { checked, value } = e.target;
 		if (value === 'all') {
@@ -68,6 +69,7 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 										value={_id}
 										name="status"
 										onChange={handleOnCheckedChange}
+										checked={ids.includes(_id)}
 									/>
 								</td>
 								<td>{i + 1}</td>
@@ -104,6 +106,13 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 					})}
 				</tbody>
 			</Table>
+			{ids.length > 0 ? (
+				<Button variant="danger" onClick={handleOnDelete}>
+					Delete Payment Methods
+				</Button>
+			) : (
+				''
+			)}
 		</div>
 	);
 };

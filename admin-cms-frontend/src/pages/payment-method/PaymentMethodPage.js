@@ -35,11 +35,6 @@ const PaymentMethodPage = () => {
 					<PaymentMethodsTable showForm={showForm} setShowForm={setShowForm} />
 				</Col>
 			</Row>
-			<Row>
-				<Col>
-					<Button variant="danger">Delete Payment Methods</Button>
-				</Col>
-			</Row>
 		</AdminLayout>
 	);
 };

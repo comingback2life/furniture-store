@@ -240,3 +240,15 @@ export const deletePaymentMethod = (_id) => {
 		},
 	});
 };
+
+export const deletePaymentMethods = (dataObj) => {
+	const url = paymentMethodsEp + '/';
+	return apiProcessor({
+		method: 'DELETE',
+		url,
+		dataObj,
+		headers: {
+			Authorization: sessionStorage.getItem('accessJWT'),
+		},
+	});
+};

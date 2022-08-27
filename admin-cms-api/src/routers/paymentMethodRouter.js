@@ -5,6 +5,7 @@ import {
 	getAllPaymentMethods,
 	getPaymentMethod,
 	insertPaymentMethod,
+	bulkDeletePaymentMethods,
 	updatePaymentMethod,
 } from '../models/payment-methods/PaymentMethod.model.js';
 const router = express.Router();
@@ -47,7 +48,11 @@ router.get('/:_id?', async (req, res, next) => {
 	}
 });
 
-//delete categories
+//delete payment methods
+router.delete('/', (req, res, next) => {
+	console.log(req.body);
+});
+
 router.delete('/:_id', async (req, res, next) => {
 	try {
 		const { _id } = req.params;
