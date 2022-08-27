@@ -13,6 +13,7 @@ const PaymentMethodPage = () => {
 		setShowForm(true);
 		dispatch(toggleModal());
 	};
+
 	return (
 		<AdminLayout>
 			<Row>
@@ -32,11 +33,6 @@ const PaymentMethodPage = () => {
 			<Row>
 				<Col>
 					<PaymentMethodsTable showForm={showForm} setShowForm={setShowForm} />
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<Button variant="danger">Delete Payment Methods</Button>
 				</Col>
 			</Row>
 		</AdminLayout>

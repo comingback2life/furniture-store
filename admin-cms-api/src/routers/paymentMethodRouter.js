@@ -5,6 +5,7 @@ import {
 	getAllPaymentMethods,
 	getPaymentMethod,
 	insertPaymentMethod,
+	bulkDeletePaymentMethods,
 	updatePaymentMethod,
 } from '../models/payment-methods/PaymentMethod.model.js';
 const router = express.Router();
@@ -47,7 +48,24 @@ router.get('/:_id?', async (req, res, next) => {
 	}
 });
 
-//delete categories
+//delete payment methods
+router.delete('/', async (req, res, next) => {
+	const ids = req.body;
+	if (ids.length) {
+		const result = await bulkDeletePaymentMethods(ids);
+		if (result?.deletedCount) {
+			return res.json({
+				status: 'success',
+				message: 'Payment Methods Deleted Successfully',
+			});
+		}
+		res.json({
+			status: 'error',
+			message: 'Payment Method could not be deleted',
+		});
+	}
+});
+
 router.delete('/:_id', async (req, res, next) => {
 	try {
 		const { _id } = req.params;

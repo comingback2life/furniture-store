@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { PaymentMethodEditForm } from '../../components/paymentMethod-form/PaymentMethodEditForm.js';
@@ -8,12 +8,13 @@ import {
 	deletePaymentMethodAction,
 	fetchPaymentMethods,
 	editPaymentMethodAction,
+	bulkDeletePaymentMethod,
 } from './PaymentMethodActions.js';
-import { toggleModal } from '../../system-state/systemSlice.js';
 import { PaymentMethodForm } from '../../components/paymentMethod-form/PaymentMethodForm.js';
 export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 	const dispatch = useDispatch();
-
+	const { paymentMethods } = useSelector((state) => state.paymentMethod);
+	const [ids, setIds] = useState([]);
 	useEffect(() => {
 		dispatch(fetchPaymentMethods());
 	}, []);
@@ -22,7 +23,27 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 		setShowForm(false);
 		dispatch(editPaymentMethodAction(_id));
 	};
-	const { paymentMethods } = useSelector((state) => state.paymentMethod);
+
+	const handleOnDelete = (e) => {
+		dispatch(bulkDeletePaymentMethod(ids));
+		setIds([]);
+	};
+	const handleOnCheckedChange = (e) => {
+		const { checked, value } = e.target;
+		if (value === 'all') {
+			if (checked) {
+				const allIds = paymentMethods.map((item) => item._id);
+				console.log(allIds);
+				setIds(allIds);
+			} else {
+				setIds([]);
+			}
+			return;
+		}
+		checked
+			? setIds([...ids, value])
+			: setIds(ids.filter((ids) => ids !== value));
+	};
 	return (
 		<div className="">
 			{showForm ? <PaymentMethodForm /> : <PaymentMethodEditForm />}
@@ -30,6 +51,13 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 			<Table striped bordered hover>
 				<thead>
 					<tr>
+						<th>
+							<Form.Check
+								name="status"
+								onChange={handleOnCheckedChange}
+								value="all"
+							/>
+						</th>
 						<th>#</th>
 						<th>Payment Name</th>
 						<th>Status</th>
@@ -40,6 +68,14 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 					{paymentMethods.map(({ _id, status, name, description }, i) => {
 						return (
 							<tr key={status + 'name' + name}>
+								<td>
+									<Form.Check
+										value={_id}
+										name="status"
+										onChange={handleOnCheckedChange}
+										checked={ids.includes(_id)}
+									/>
+								</td>
 								<td>{i + 1}</td>
 								<td>
 									{name}
@@ -74,6 +110,13 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 					})}
 				</tbody>
 			</Table>
+			{ids.length > 0 ? (
+				<Button variant="danger" onClick={handleOnDelete}>
+					Delete Payment Methods
+				</Button>
+			) : (
+				''
+			)}
 		</div>
 	);
 };
