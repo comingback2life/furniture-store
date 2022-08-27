@@ -4,6 +4,7 @@ import {
 	getPaymentMethods,
 	postPaymentMethod,
 	updatePaymentMethod,
+	deletePaymentMethods,
 } from '../../helpers/axiosHelpers';
 import { toggleModal } from '../../system-state/systemSlice';
 import {
@@ -71,7 +72,7 @@ export const updatePaymentMethodAction = (dataObj) => async (dispatch) => {
 };
 
 export const bulkDeletePaymentMethod = (dataObj) => async (dispatch) => {
-	const response = deletePaymentMethods();
+	const response = deletePaymentMethods(dataObj);
 	toast.promise(response, {
 		pending: 'Please wait...',
 	});

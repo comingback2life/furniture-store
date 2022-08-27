@@ -49,8 +49,21 @@ router.get('/:_id?', async (req, res, next) => {
 });
 
 //delete payment methods
-router.delete('/', (req, res, next) => {
-	console.log(req.body);
+router.delete('/', async (req, res, next) => {
+	const ids = req.body;
+	if (ids.length) {
+		const result = await bulkDeletePaymentMethods(ids);
+		if (result?.deletedCount) {
+			return res.json({
+				status: 'success',
+				message: 'Payment Methods Deleted Successfully',
+			});
+		}
+		res.json({
+			status: 'error',
+			message: 'Payment Method could not be deleted',
+		});
+	}
 });
 
 router.delete('/:_id', async (req, res, next) => {

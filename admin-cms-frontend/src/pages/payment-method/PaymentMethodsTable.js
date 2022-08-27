@@ -8,6 +8,7 @@ import {
 	deletePaymentMethodAction,
 	fetchPaymentMethods,
 	editPaymentMethodAction,
+	bulkDeletePaymentMethod,
 } from './PaymentMethodActions.js';
 import { PaymentMethodForm } from '../../components/paymentMethod-form/PaymentMethodForm.js';
 export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
@@ -23,7 +24,9 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 		dispatch(editPaymentMethodAction(_id));
 	};
 
-	const handleOnDelete = (e) => {};
+	const handleOnDelete = (e) => {
+		dispatch(bulkDeletePaymentMethod(ids));
+	};
 	const handleOnCheckedChange = (e) => {
 		const { checked, value } = e.target;
 		if (value === 'all') {
