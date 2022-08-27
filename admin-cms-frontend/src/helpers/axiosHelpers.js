@@ -21,6 +21,24 @@ const apiProcessor = async ({ method, url, dataObj, headers }) => {
 			message = error.response.data.message;
 		}
 		if (message === 'Expired Token!') {
+			const { accessJWT } = await apiProcessor({
+				method: 'GET',
+				url: adminEP + '/accessjwt',
+				headers: {
+					Authorization: localStorage.getItem('refreshJWT'),
+				},
+			});
+			if (accessJWT) {
+				sessionStorage.setItem('accessJWT', accessJWT);
+				return apiProcessor({
+					method,
+					url,
+					dataObj,
+					headers: {
+						Authorization: accessJWT,
+					},
+				});
+			}
 		}
 
 		return {

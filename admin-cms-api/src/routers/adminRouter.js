@@ -316,7 +316,6 @@ router.patch(
 router.get('/accessjwt', async (req, res, next) => {
 	try {
 		const refreshJWT = req.headers.authorization;
-		console.log(refreshJWT);
 		const decodedJWT = verifyRefreshJWT(refreshJWT);
 		if (decodedJWT?.email) {
 			const user = await getAdmin({ email: decodedJWT.email, refreshJWT });
@@ -330,10 +329,9 @@ router.get('/accessjwt', async (req, res, next) => {
 		}
 		res.status(401).json({
 			status: 'error',
-			message: 'Please login again! ',
+			message: 'Please login again!',
 		});
 	} catch (error) {
-		console.log(error);
 		next(error);
 	}
 });
