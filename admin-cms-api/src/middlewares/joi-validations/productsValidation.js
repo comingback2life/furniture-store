@@ -32,8 +32,8 @@ export const newProductsValidation = (req, res, next) => {
 };
 export const updateProductsValidation = (req, res, next) => {
 	try {
-		req.body.saleEndDate === 'null' ? null : req.body.saleEndDate;
-		req.body.saleStartDate === 'null' ? null : req.body.saleStartDate;
+		req.body.saleEndDate === undefined ? null : req.body.saleEndDate;
+		req.body.saleStartDate === undefined ? null : req.body.saleStartDate;
 
 		const schema = Joi.object({
 			_id: SHORTSTR.required(),
@@ -44,8 +44,8 @@ export const updateProductsValidation = (req, res, next) => {
 			quantity: QUANTITY.required(),
 			price: PRICE.required(),
 			salePrice: PRICE,
-			saleEndDate: DATE.allow(null),
-			saleStartDate: DATE.allow(null),
+			saleEndDate: DATE.allow(null).allow(''),
+			saleStartDate: DATE.allow(null).allow(''),
 			images: LONGSTR.allow(null).allow(''),
 			thumbnailImage: SHORTSTR,
 			imageToDelete: LONGSTR.allow(null).allow(''),

@@ -59,8 +59,8 @@ export const EditProductForm = () => {
 
 		const { __v, updatedAt, slug, SKU, ratings, createdAt, ...rest } = form;
 		rest.salePrice = Number(rest.salePrice) ? +rest.salePrice : 0;
-		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : 'null';
-		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : 'null';
+		rest.saleEndDate = rest.saleEndDate ? rest.saleEndDate : undefined;
+		rest.saleStartDate = rest.saleStartDate ? rest.saleStartDate : undefined;
 
 		const formData = new FormData();
 		for (const key in rest) {
