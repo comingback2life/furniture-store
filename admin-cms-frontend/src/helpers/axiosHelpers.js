@@ -17,6 +17,14 @@ const apiProcessor = async ({ method, url, dataObj, headers }) => {
 	} catch (error) {
 		let message = error.response.data.message;
 
+		if (error.response && error.response.status === 401) {
+			sessionStorage.removeItem('accessJWT');
+			localStorage.removeItem('refreshJWT');
+			return {
+				status: 'error',
+				message: 'Unauthenticated!',
+			};
+		}
 		if (error.response && error.response.data) {
 			message = error.response.data.message;
 		}
