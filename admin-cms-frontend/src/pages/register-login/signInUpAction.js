@@ -45,6 +45,9 @@ export const autoLogin = () => (dispatch) => {
 	if (accessJWT) {
 		dispatch(fetchUserByToken());
 		return;
+	} else if (refreshJWT) {
+	} else {
+		dispatch(adminLogout());
 	}
 	//if refreshJWT exists, fetch new accessJWT and fetch the user.
 };
