@@ -48,3 +48,9 @@ export const autoLogin = () => (dispatch) => {
 	}
 	//if refreshJWT exists, fetch new accessJWT and fetch the user.
 };
+
+export const adminLogout = () => (dispatch) => {
+	sessionStorage.removeItem('accessJWT');
+	localStorage.removeItem('refreshJWT');
+	dispatch(setUser({}));
+};
