@@ -22,19 +22,22 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 		setShowForm(false);
 		dispatch(editPaymentMethodAction(_id));
 	};
+
 	const handleOnCheckedChange = (e) => {
 		const { checked, value } = e.target;
 		if (value === 'all') {
 			if (checked) {
 				const allIds = paymentMethods.map((item) => item._id);
+				console.log(allIds);
 				setIds(allIds);
 			} else {
 				setIds([]);
 			}
 			return;
 		}
-		checked ? setIds([...ids, value]) : setIds((ids) => ids !== value);
-		console.log(ids);
+		checked
+			? setIds([...ids, value])
+			: setIds(ids.filter((ids) => ids !== value));
 	};
 	return (
 		<div className="">
@@ -44,7 +47,11 @@ export const PaymentMethodsTable = ({ showForm, setShowForm }) => {
 				<thead>
 					<tr>
 						<th>
-							<Form.Check value="all" onChange={handleOnCheckedChange} />
+							<Form.Check
+								name="status"
+								onChange={handleOnCheckedChange}
+								value="all"
+							/>
 						</th>
 						<th>#</th>
 						<th>Payment Name</th>
