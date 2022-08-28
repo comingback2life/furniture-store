@@ -29,13 +29,7 @@ const apiProcessor = async ({ method, url, dataObj, headers }) => {
 			message = error.response.data.message;
 		}
 		if (message === 'Expired Token!') {
-			const { accessJWT } = await apiProcessor({
-				method: 'GET',
-				url: adminEP + '/accessjwt',
-				headers: {
-					Authorization: localStorage.getItem('refreshJWT'),
-				},
-			});
+			const accessJWT = await requestNewAcessJWT();
 			if (accessJWT) {
 				sessionStorage.setItem('accessJWT', accessJWT);
 				return apiProcessor({
@@ -54,6 +48,17 @@ const apiProcessor = async ({ method, url, dataObj, headers }) => {
 			message,
 		};
 	}
+};
+
+export const requestNewAcessJWT = async () => {
+	const { accessJWT } = await apiProcessor({
+		method: 'GET',
+		url: adminEP + '/accessjwt',
+		headers: {
+			Authorization: localStorage.getItem('refreshJWT'),
+		},
+	});
+	return accessJWT;
 };
 
 export const postUser = async (dataObj) => {
