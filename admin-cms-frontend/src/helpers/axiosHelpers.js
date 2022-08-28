@@ -58,6 +58,7 @@ export const requestNewAcessJWT = async () => {
 			Authorization: localStorage.getItem('refreshJWT'),
 		},
 	});
+	sessionStorage.setItem('accessJWT', accessJWT);
 	return accessJWT;
 };
 
