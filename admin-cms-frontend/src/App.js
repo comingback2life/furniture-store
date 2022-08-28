@@ -22,7 +22,7 @@ function App() {
 					{/* private route */}
 
 					<Route
-						path="/admin/dashboard"
+						path="/dashboard"
 						element={
 							<PrivateRoute>
 								<Dashboard />
@@ -38,7 +38,7 @@ function App() {
 						}
 					></Route>
 					<Route
-						path="/admin/register"
+						path="/register"
 						element={
 							<PrivateRoute>
 								<RegisterPage />
@@ -78,7 +78,7 @@ function App() {
 						}
 					></Route>
 					<Route
-						path="/admin/verify-email"
+						path="/verify-email"
 						element={
 							<PrivateRoute>
 								<EmailVerification />
@@ -95,7 +95,7 @@ function App() {
 					></Route>
 
 					{/**public routes */}
-					<Route path="/admin/login" element={<LoginPage />}></Route>
+					<Route path="/" element={<LoginPage />}></Route>
 					<Route path="/reset-password" element={<ResetPasswordPage />}></Route>
 					<Route path="*" element={<h2>404, Page Not Found</h2>}></Route>
 				</Routes>

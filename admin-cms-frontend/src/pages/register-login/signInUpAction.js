@@ -53,7 +53,6 @@ export const autoLogin = () => async (dispatch) => {
 	} else if (refreshJWT) {
 		const token = await requestNewAcessJWT();
 		token ? dispatch(fetchUserByToken()) : dispatch(adminLogout());
-		console.log(token);
 	} else {
 		dispatch(adminLogout());
 	}

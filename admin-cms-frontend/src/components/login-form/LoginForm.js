@@ -6,16 +6,24 @@ import './LoginForm.css';
 import { postLoginUserAction } from '../../pages/register-login/signInUpAction';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 export const LoginForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 	// const { isLoading } = useSelector((state) => state.signInUp);
 	const { user } = useSelector((state) => state.admin);
 	const emailRef = useRef();
 	const passRef = useRef(); //
 
 	useEffect(() => {
-		user._id && navigate('/admin/dashboard');
+		user._id &&
+			navigate(
+				(location.state &&
+					location.state.from &&
+					location.state.from.pathname) ||
+					'/dashboard'
+			);
 	}, [user]);
 
 	const handleOnSubmit = (e) => {
