@@ -15,15 +15,10 @@ export const LoginForm = () => {
 	const { user } = useSelector((state) => state.admin);
 	const emailRef = useRef();
 	const passRef = useRef(); //
-
+	const origin =
+		location.state && location.state.from && location.state.from.pathname;
 	useEffect(() => {
-		user._id &&
-			navigate(
-				(location.state &&
-					location.state.from &&
-					location.state.from.pathname) ||
-					'/dashboard'
-			);
+		user._id && navigate(origin || '/dashboard');
 	}, [user]);
 
 	const handleOnSubmit = (e) => {
