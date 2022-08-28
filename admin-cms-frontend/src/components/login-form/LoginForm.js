@@ -50,7 +50,6 @@ export const LoginForm = () => {
 											className="form-control"
 											id="floatingInputEmail"
 											name="email"
-											value="callmesamip@gmail.com"
 											placeholder="name@example.com"
 											required
 										/>
@@ -61,7 +60,6 @@ export const LoginForm = () => {
 										<input
 											ref={passRef}
 											type="password"
-											value="Samip@123"
 											className="form-control"
 											id="floatingPassword"
 											placeholder="Password"

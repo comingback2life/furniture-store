@@ -15,7 +15,7 @@ export const AdminSidebar = () => {
 				show={showAdminSideBar}
 				onHide={() => dispatch(toggleSideBar())}
 			>
-				<Offcanvas.Header closeButton>
+				<Offcanvas.Header closeButton onClick={() => {}}>
 					<Offcanvas.Title>
 						Hello, Admin <i className="fa-solid fa-users"></i>
 					</Offcanvas.Title>

@@ -42,7 +42,7 @@ export const Header = () => {
 									<Link to="/admin/register" className="nav-link">
 										Register New Admin
 									</Link>
-									<i class="fa-solid fa-bell mt-1 p-2"></i>
+									<i className="fa-solid fa-bell mt-1 p-2"></i>
 								</>
 							)}
 						</Nav>

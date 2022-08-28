@@ -38,7 +38,7 @@ export const postLoginUserAction = (user) => async (dispatch) => {
 	dispatch(responseResolved(data));
 };
 
-export const fetchUserByToken = (accessJWT) => async (dispatch) => {
+export const fetchUserByToken = () => async (dispatch) => {
 	const response = await getUser();
 	response.status === 'success' && dispatch(setUser(response.user));
 };
