@@ -1,13 +1,16 @@
 import React from 'react';
 import CustomCard from '../../components/custom-card/CustomCard';
 import AdminLayout from '../layouts/AdminLayout';
-import { FcPackage, FcApproval, FcHighPriority } from 'react-icons/fc';
+import { FcPackage, FcApproval, FcHighPriority, FcHome } from 'react-icons/fc';
 import { Col, Row } from 'react-bootstrap';
 export const Dashboard = () => {
 	return (
 		<AdminLayout>
 			<Row>
-				<p>Dashboard</p>
+				<span className="px-5 text-muted">
+					<FcHome />
+					/Dashboard
+				</span>
 			</Row>
 			<Row>
 				<Col>
