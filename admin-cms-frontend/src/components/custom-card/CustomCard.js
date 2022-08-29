@@ -1,14 +1,11 @@
 import React from 'react';
+
 import './customCard.css';
-const CustomCard = ({ children }) => {
+const CustomCard = ({ title, count, logo }) => {
 	return (
-		<div className="isCard mt-2 mb-3">
-			<div className="justify-content-between">
-				Total Products
-				<span className="d-flex justify-content-center display-4">
-					{children}
-				</span>
-			</div>
+		<div className="isCard mb-3">
+			<div className="isLogo">{logo}</div>
+			<span className="ms-auto">{title}</span>
 		</div>
 	);
 };
