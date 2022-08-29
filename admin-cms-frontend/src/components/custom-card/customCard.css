@@ -1,9 +1,7 @@
 .isCard {
 	border-bottom: 2px solid red;
 	border-top-right-radius: 5%;
-	min-width: 30%;
-	font-size: 16px;
-	font-weight: 500;
+	min-width: 20%;
 	font-family: Quicksand, sans-serif;
 	margin-right: 1.3rem;
 	box-shadow: 0 0 56px -8px rgb(0 0 0 / 17%);
@@ -23,4 +21,16 @@
 	margin-top: -4rem;
 	margin-left: -30px;
 	font-size: 50px;
+}
+.isCardCount {
+	margin: 0px;
+	font-size: 1.5rem;
+	line-height: 1.375;
+	font-weight: 700;
+	letter-spacing: 0.00735em;
+	opacity: 1;
+	text-transform: none;
+	vertical-align: unset;
+	text-decoration: none;
+	color: rgb(52, 71, 103);
 }
